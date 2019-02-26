@@ -1,4 +1,4 @@
-<?php include_once('header.php'); ?>
+<?php include_once('header.php'); include_once('connection.php')?>
 <div class="jumbotron bg-warning mt-5">
     <h1 class="display-4 text-center">Find out everything you've ever wanted to know about your favorite artists, albums, and songs.</h1>
     <hr>
