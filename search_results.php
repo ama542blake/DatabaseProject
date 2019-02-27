@@ -13,6 +13,7 @@
         
         if ($searchtype === 'artist') {
             echo "<form id='artist_selection' action='show_artist.php' method='post'>";
+            echo "<input type='hidden' name='selected_id">
             search_artist($search_query);
             echo "</form>";
         } else if ($searchtype === 'album') {
@@ -28,7 +29,8 @@
 
     function search_artist($query) {
         global $conn;
-        $query = "SELECT artist_id, artist_name FROM artist WHERE artist_name LIKE '${%query%}'";
+        //TODO: get error when using % in LIKE clause, so... fix that
+        $query = "SELECT artist_id, artist_name FROM artist WHERE artist_name LIKE '${query}'";
         $result = mysqli_query($conn, $query);
         
         while ($row = mysqli_fetch_assoc($result)) {
@@ -39,15 +41,30 @@
     }
 
     function search_album($query) {
+        global $conn;
+        //TODO: get error when using % in LIKE clause, so... fix that
+        $query = "SELECT album_id, album_name FROM album WHERE album_name LIKE '${query}'";
+        $result = mysqli_query($conn, $query);
         
+        while ($row = mysqli_fetch_assoc($result)) {
+            $id = $row['album_id'];
+            $name = $row['album_name'];
+            echo "<p class='form-submit-link' id='${id}'>${name}</p><br><hr><br>";
+        }
     }
 
     function search_song($query) {
+        global $conn;
+        //TODO: get error when using % in LIKE clause, so... fix that
+        $query = "SELECT song_id, song_name FROM song WHERE song_name LIKE '${query}'";
+        $result = mysqli_query($conn, $query);
         
+        while ($row = mysqli_fetch_assoc($result)) {
+            $id = $row['song_id'];
+            $name = $row['song_name'];
+            echo "<p class='form-submit-link' id='${id}'>${name}</p><br><hr><br>";
+        }
     }
+    
+    include_once('footer_search_results.php');
 ?>
-
-
-<div class='search_result'>
-    <a href="#" onclick="document.getElementById('myForm').submit();">Submit</a>
-</div>

@@ -37,3 +37,5 @@
 <div id="recentSongs">
 
 </div>
+
+<?php include_once('footer.php'); ?>
