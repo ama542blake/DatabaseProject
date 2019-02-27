@@ -1,8 +1,8 @@
 <div class="search_result">
 
 <?php
-    include_once('header.php');
-    include_once('connection.php');
+    include_once('includes/header.php');
+    include_once('includes/connection.php');
     
     if (!isset($_POST['searchquery'])) {
         echo 'Something went wrong. Please return to the search page and try again.';
@@ -66,5 +66,5 @@
         }
     }
     
-    include_once('footer_search_results.php');
+    include_once('includes/footer_search_results.php');
 ?>

@@ -1,4 +1,7 @@
-<?php include_once('header.php'); ?>
+<?php 
+    include_once('includes/header.php');
+    include_once('includes/connection.php'); 
+?>
 
 <div class="container">
     <div class="card bg-warning mt-5" id="login">
@@ -36,3 +39,7 @@
 
 
 <hr id="vr">
+
+<?php
+    include_once('includes/footer.php');
+?>

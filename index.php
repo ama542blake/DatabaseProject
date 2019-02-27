@@ -1,6 +1,6 @@
 <?php 
-    include_once('header.php'); 
-    include_once('connection.php');
+    include_once('includes/header.php'); 
+    include_once('includes/connection.php');
 ?>
 
 <div class="jumbotron bg-warning mt-5">
@@ -38,4 +38,4 @@
 
 </div>
 
-<?php include_once('footer.php'); ?>
+<?php include_once('includes/footer.php'); ?>

@@ -1,6 +1,6 @@
 <?php 
-    include_once('header.php');
-    include_once('connection.php');
+    include_once('includes/header.php');
+    include_once('includes/connection.php');
 
     function print_artist_info($id, $name, $is_band) {
      echo "<div id='${id}'>
@@ -27,13 +27,9 @@
             
         }
     }
+
+    include_once('includes/footer.php');
 ?>
 
 
-<div id='${id}'>
-    <ul>
-        <li>
-            <label class="infolabel">Artist Name:</label><p>${name}</p>
-        </li>
-    </ul>
-</div>
+

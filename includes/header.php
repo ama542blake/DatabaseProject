@@ -34,7 +34,7 @@
                         Add Information
                     </a>
                     <div class="dropdown-menu" id="addDropdown" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" id="addArtistLink" href="add_artist.php">Add album</a>
+                        <a class="dropdown-item" id="addArtistLink" href="add_artist.php">Add artist</a>
                         <a class="dropdown-item" id="addAlbumLink" href="add_album.php">Add album</a>
                         <a class="dropdown-item" id="addSongLink" href="add_song.php">Add song</a>
                     </div>
