@@ -3,7 +3,7 @@
     include_once('includes/connection.php');
 ?>
 
-<form action="add_artist_to_db.php" method="post">
+<form id="band_form" action="add_artist_to_db.php" method="post">
     <div class="form-group">
         <label>Artist name: 
             <input class="form-control" type="text" name="artist_name" required>
