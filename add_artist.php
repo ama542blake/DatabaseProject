@@ -9,10 +9,10 @@
             <input class="form-control" type="text" name="artist_name" required>
         </label>
         <label>Is this a solo artist or band? (has more than 1 member)?
-            <input id="solo_radio"class="form-check" type="radio" name="isband" value="0" required checked>Solo
-            <input id="band_radio" class="form-check" type="radio" name="isband" value="1" required>Band
+            <input id="solo_radio"class="form-check" type="radio" name="isband" value="0" required>Solo
+            <input id="band_radio" class="form-check" type="radio" name="isband" value="1" required checked>Band
         </label>
-        <input type="submit"> 
+        <input type="submit" class="btn btn-outline-dark"> 
     </div>
 </form>
 

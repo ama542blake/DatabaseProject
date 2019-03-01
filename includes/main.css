@@ -10,3 +10,12 @@ nav {
     font-weight: bold;
 }
 
+.container {
+    margin-top: 70px;
+}
+
+body {
+    background-color: #efa909;
+    color: black;
+    height: 100%;
+}

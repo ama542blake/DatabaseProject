@@ -1,5 +1,6 @@
 <!-- This footer is used only for the search results page, because it requires the search_results.js script -->
-
+    <!-- end of the div with the container class from header -->
+    </div>
 </body>
 
 
