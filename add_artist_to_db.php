@@ -4,7 +4,15 @@
     if (isset($_POST['artist_name'])) {
         $name = $_POST['artist_name'];
         $isband = $_POST['isband'];
-        $newArtistID = insert_artist($name, $isband);
+        // ISSUE
+        // this should not be returning NULL, but it does
+        echo getArtistID($name);
+        if (getArtistID($name) === 0) {
+            $newArtistID = insert_artist($name, $isband);
+            
+        } else {
+            echo ("<p id='band-exists-alert'>That band is already in the database</p>");
+        }
         
         // if solo artist is in a band
         if (isset($_POST['band_membership'])) {
@@ -15,9 +23,10 @@
                 // artist already exists, make sure is is a band, not solo artist
                 // TODO: this check should occur before the user submits the form, but I will deal with that later
                 if (getArtistIsBand($bandID) == 1) {
+                    echo 'yes';
                     insert_membership($bandID, $newArtistID);
                 } else {
-                    header("Location: add_artist.php");
+                    echo 'no';
                 }
             } else {
                 // band doesn't exist, so create an artist_entry for the band they are in, then create membership record

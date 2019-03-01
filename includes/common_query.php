@@ -9,14 +9,20 @@
         $query = "SELECT artist_id FROM artist WHERE artist_name = '${name}'";
         $result = mysqli_query($conn, $query);
         $row = mysqli_fetch_assoc($result);
-        if (count($row) === 0) {
-            return 0;
-        } else if (count($row) === 1) {
+        return gettype($row);
+        if (gettype($row) == "array") {
+            if (count($row) === 0) {
+                return 0;
+            } else if (count($row) === 1) {
+                return $row['artist_id'];
+            } else {
+                // error
+                return -1;
+            }
+        } else if (gettype($row) == "integer") {
             return $row['artist_id'];
-        } else {
-            // error
-            return -1;
         }
+        
     }
 
     function getArtistIsBand($artistID) {

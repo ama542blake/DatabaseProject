@@ -16,6 +16,6 @@ window.onload = function () {
 
 function getBandMembership() {
     return '<label id="band-membership-input">Band Membership (leave blank if the artist is not in a band):' +
-                '<input type="text" class="form-control" name="band_membership" required>' +
+                '<input type="text" class="form-control" name="band_membership">' +
             '</label>';
 }
