@@ -3,7 +3,7 @@ window.onload = function () {
     $('#solo_radio').click(function () {
         if (!$('#band-membership-input').length) {
             // needs to not be in body, but adding toform does't work.   
-            $("#band_form").append(getBandMembership());   
+            $("#submit-artist").before(getBandMembership());   
         }
          
         
@@ -15,7 +15,7 @@ window.onload = function () {
 }
 
 function getBandMembership() {
-    return '<label id="band-membership-input">Band Membership (leave blank if the artist is not in a band):' +
-                '<input type="text" class="form-control" name="band_membership">' +
+    return '<label id="band-membership-input" class="mb-3">Band Membership (optional):' +
+                '<input type="text" class="form-control input-info" name="band_membership">' +
             '</label>';
 }

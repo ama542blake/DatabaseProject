@@ -10,8 +10,12 @@ nav {
     font-weight: bold;
 }
 
+.input-info {
+    width: 60%;
+}
+
 .container {
-    margin-top: 70px;
+    margin-top: 70px;s
 }
 
 body {
