@@ -32,18 +32,4 @@
             }
         }
     }
-
-    // inserts an artist in to the database
-    function insertArtist($conn, $name, $isband) {
-        $query = "INSERT INTO artist (artist_name, artist_is_band) VALUES ('${name}', '${isband}')";
-        mysqli_query($conn, $query);
-        return mysqli_insert_id($conn);
-    }
-
-    // inserts a band membership record in the band_membership table
-    function insertMembership($conn, $bandID, $soloID) {
-        $query = "INSERT INTO band_membership (band_id, solo_id) VALUES ($bandID, $soloID)";
-        mysqli_query($conn, $query);
-        return mysqli_insert_id($conn);
-    }
 ?>
