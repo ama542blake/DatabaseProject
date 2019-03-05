@@ -8,11 +8,15 @@
         $albumName = $_POST['album_name'];
         $artistName = $_POST['album_artist'];
         $artworkArtistName = $_POST['album_artwork_artist'];
-
-        $artworkArtistID = getArtworkArtistID($conn, $artworkArtistName);
+        $releasedYear = $_POST['album_year_released'];
         
-        if(!($artworkArtistID)) {
-            $artworkArtistID = insertArtworkArtist($conn, $artworkArtistName);
+        if ($artworkArtistName) {
+            $artworkArtistID = getArtworkArtistID($conn, $artworkArtistName);
+            if(!$artworkArtistID) {
+                $artworkArtistID = insertArtworkArtist($conn, $artworkArtistName);
+            }
+        } else {
+            $artworkArtistID = NULL;
         }
         
         // check if an album with the name exists
@@ -22,14 +26,14 @@
             if (getAlbumID($conn, $artistID, $albumName, $artworkArtistID)) {
                 echo "${albumName} by ${artistName} is already in the database.";
             } else {
-                insertAlbum($conn, $artistID, $albumName, $artworkArtistID);
+                echo insertAlbum($conn, $artistID, $albumName, $artworkArtistID, $releasedYear);
             }
         } else {
             // album is not in database if the artist is not in the database
             // (can't have an album if there was no artist to create it)
             // TODO find a way to allow user to choose whether the artist is a band or solo, for now assume yes
             $newArtistID = insertArtist($conn, $artistName, 1);
-            insertAlbum($conn, $newArtistID, $albumName, $artworkArtistID);
+            echo insertAlbum($conn, $newArtistID, $albumName, $artworkArtistID, $releasedYear);
         }
     }   
 

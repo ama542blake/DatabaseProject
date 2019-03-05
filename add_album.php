@@ -10,6 +10,9 @@
         <label class="mb-3">Artist:
             <input class="form-control input-info" type="text" name="album_artist" required>
         </label>
+        <label class="mb-3">Year released:
+            <input class="form-control input-info" type="text" name="album_year_released" maxsize="4">
+        </label>
         <label class="mb-3">Album artwork artist:
             <input class="form-control input-info" type="text" name="album_artwork_artist">
         </label>

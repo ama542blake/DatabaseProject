@@ -1,4 +1,4 @@
-    <!-- end of the div with the container class from header -->
+        </div>    <!-- end of the div with the container class from header -->
     </div>
 </body>
 

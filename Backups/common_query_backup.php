@@ -62,24 +62,32 @@
        For example, if ($releasedYear), ", album_released_year" would be concatented to the query
     */
     function insertAlbum($conn, $artistID, $albumName, $artworkArtistID, $releasedYear) {
-        $query = insertAlbumStringBuilder($albumName, $artworkArtistID, $releasedYear);
-        $result = mysqli_query($conn, $query);
+        if ($artworkArtistID) {
+            if ($releasedYear) {
+                $query = "INSERT INTO album (album_name, album_artwork_artist, album_released_year)"
+                       . " VALUES ('${albumName}', ${artworkArtistID}, ${releasedYear})";
+                $result = mysqli_query($conn, $query);
+            } else {
+                $query = "INSERT INTO album (album_name, album_artwork_artist)"
+                       . " VALUES ('${albumName}', ${artworkArtistID})";
+                $result = mysqli_query($conn, $query);
+            }
+        } else { // query without an artwork artist id
+            if ($releasedYear) {
+                $query = "INSERT INTO album (album_name, album_released_year)"
+                       . " VALUES ('${albumName}', ${releasedYear})";
+                $result = mysqli_query($conn, $query);
+            } else {
+                $query = "INSERT INTO album (album_name)"
+                       . " VALUES ('${albumName}')";
+                $result = mysqli_query($conn, $query);
+            }
+        }
         if ($result) {
             $albumID = mysqli_insert_id($conn);
             insertArtistAlbum($conn, $artistID, $albumID);
             return $albumID;
         }
-    }
-
-    function insertAlbumStringBuilder($albumName, $artworkArtistID,  $releasedYear) {
-        $query = "INSERT INTO album (album_name";
-        if ($artworkArtistID) {$query .= ", album_artwork_artist";}
-        if ($releasedYear) {$query .= ", album_released_year";}
-        $query .= ") VALUES ('${albumName}'";
-        if ($artworkArtistID) {$query .= ", ${artworkArtistID}";}
-        if ($releasedYear) {$query .= ", ${releasedYear}";}
-        $query .= ")";
-        return $query;
     }
 
     function insertArtistAlbum($conn, $artistID, $albumID) {
