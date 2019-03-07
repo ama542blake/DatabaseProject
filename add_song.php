@@ -13,6 +13,9 @@
         <label>Artist:
             <input class="form-control input-info" type="text" name="artist_name" required>
         </label>
+        <label>Genre:
+            <input class="form-control input-info" type="text" name="genre">
+        </label>
         <label>Producer:
             <input class="form-control input-info" type="text" name="producer_name">
         </label>

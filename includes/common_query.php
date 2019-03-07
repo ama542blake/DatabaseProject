@@ -110,9 +110,9 @@
     // insert a song in to the database
     // note that the id of the album and artist are passed so that the relationships among the song/artist.album can 
     // automatically be created
-    function insertSong($conn, $songName, $albumID, $artistID, $producerID) {
+    function insertSong($conn, $songName, $albumID, $artistID, $producerID, $genreID) {
         getSongID($conn, $songName, $albumID, $artistID);
-        $query = insertSongStringBuilder($songName, $producerID);
+        $query = insertSongStringBuilder($songName, $producerID, $genreID);
         $result = mysqli_query($conn, $query);
         if ($result) {
             $songID = mysqli_insert_id($conn);
@@ -122,11 +122,13 @@
         }
     }
 
-    function insertSongStringBuilder($songName, $producerID) {
+    function insertSongStringBuilder($songName, $producerID, $genreID) {
         $query = "INSERT INTO song (song_name";
         if ($producerID) {$query .= ", song_producer";}
+        if ($genreID) {$query .= ", song_genre";}
         $query .= ") VALUES ('${songName}'";
         if ($producerID) {$query .= ", ${producerID}";}
+        if ($genreID) {$query .= ", ${genreID}";}
         $query .= ")";
         return $query;
     }
@@ -152,7 +154,7 @@
     // inserts a producer in to the database
     function insertProducer($conn, $name) {
         $query = "INSERT INTO producer (producer_name) " 
-               . "VALUES ${name}";
+               . "VALUES ('${name}')";
         $result = mysqli_query($conn, $query);
         if ($result) {
             return mysqli_insert_id($conn);
@@ -168,6 +170,30 @@
         if ($result) {
             $row = mysqli_fetch_assoc($result);
             return $row['producer_id'];
+        } else {
+            return 0;
+        }
+    }
+
+    // inserts a genre in to the database
+    function insertGenre($conn, $name) {
+        $query = "INSERT INTO genre (genre_name) " 
+               . "VALUES ('${name}')";
+        $result = mysqli_query($conn, $query);
+        if ($result) {
+            return mysqli_insert_id($conn);
+        } else {
+            return 0;
+        }
+     }
+
+    // returns the id of the genre if exists; returns 0 if the genre isn't found
+    function getGenreID($conn, $name) {
+        $query = "SELECT genre_id FROM producer WHERE genre_name LIKE '${name}'";
+        $result = mysqli_query($conn, $query);
+        if ($result) {
+            $row = mysqli_fetch_assoc($result);
+            return $row['genre_id'];
         } else {
             return 0;
         }
