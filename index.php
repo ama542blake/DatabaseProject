@@ -20,7 +20,6 @@
                 <label class="form-check=label"><input class="form-check-input" type="radio" name="searchtype" value="song">Song</label>
             </div>
         </div>
-
     </form>
 </div>
 

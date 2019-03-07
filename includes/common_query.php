@@ -1,6 +1,16 @@
 <?php
     // this module is for queries and functions that will be used in many places
 
+    /* user queries */
+    function userExists($conn, $username) {
+        $query = "SELECT COUNT(*) FROM user WHERE user_username = '${username}'";
+        $result = mysqli_query($conn, $query);
+        if ($result) {
+            $row = mysqli_fetch_assoc($result);
+            return var_dump($row);
+        }
+    }
+
     /* artist queries */
 
     // inserts an artist in to the database
