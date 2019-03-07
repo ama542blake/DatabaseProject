@@ -26,8 +26,8 @@
     function getArtistIsBand($conn, $artistID) {
         $query = "SELECT artist_is_band FROM artist WHERE artist_id = ${artistID}";
         $result = mysqli_query($conn, $query);
-        $row = mysqli_fetch_assoc($result);
-        if (count($row) === 1) {
+        if ($result) {
+            $row = mysqli_fetch_assoc($result);
             return $row['artist_is_band'];
         } else {
             // error
@@ -111,6 +111,7 @@
     // note that the id of the album and artist are passed so that the relationships among the song/artist.album can 
     // automatically be created
     function insertSong($conn, $songName, $albumID, $artistID, $producerID) {
+        getSongID($conn, $songName, $albumID, $artistID);
         $query = insertSongStringBuilder($songName, $producerID);
         $result = mysqli_query($conn, $query);
         if ($result) {
@@ -123,11 +124,28 @@
 
     function insertSongStringBuilder($songName, $producerID) {
         $query = "INSERT INTO song (song_name";
-        if ($producerID) {$query .= ", song_producer"}
+        if ($producerID) {$query .= ", song_producer";}
         $query .= ") VALUES ('${songName}'";
-        if ($producerID) {$query .= ", ${producerID}"}
+        if ($producerID) {$query .= ", ${producerID}";}
         $query .= ")";
         return $query;
+    }
+
+    // returns the id of the producer if exists; returns 0 if the producer isn't found
+    function getSongID($conn, $name, $albumID, $artistID) {
+        $query = "SELECT song.song_id FROM song "
+               . "JOIN album_song ON album_song.song_id = song.song_id "
+               . "JOIN artist_song ON artist_song.song_id = song.song_id "
+               . "WHERE song.song_name = '${name}' "
+               . "AND artist_song.artist_id = ${artistID} "
+               . "AND album_song.album_id = 6";
+        $result = mysqli_query($conn, $query);
+        if ($result) {
+            $row = mysqli_fetch_assoc($result);
+            return $row['song_id'];
+        } else {
+            return 0;
+        }
     }
     
 
@@ -149,7 +167,7 @@
         $result = mysqli_query($conn, $query);
         if ($result) {
             $row = mysqli_fetch_assoc($result);
-            return $row['producerID'];
+            return $row['producer_id'];
         } else {
             return 0;
         }

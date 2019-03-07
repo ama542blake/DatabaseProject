@@ -14,7 +14,7 @@
             <input class="form-control input-info" type="text" name="artist_name" required>
         </label>
         <label>Producer:
-            <input class="form-control input-info" type="text" name="artist_name">
+            <input class="form-control input-info" type="text" name="producer_name">
         </label>
         <input type="submit" id="submit-song" class="btn btn-outline-dark input-info">
     </div>
