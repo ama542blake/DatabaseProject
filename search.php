@@ -38,34 +38,65 @@
         $result = mysqli_query($conn, $query);
         
         if($result) {
-            $numResults = mysqli_num_rows($result);
             //used to count the artist number so that the array (0 indexed) can be properly populated
             $artistNum = 0;
             $artists = array();
             
             while ($row = mysqli_fetch_assoc($result)) {
-                $artistID = $row['artist_id'];
-                $artistName = $row['artist_name'];
+                $id = $row['artist_id'];
+                $name = $row['artist_name'];
                 //for now, we don't care about whether artist is solo or band in search, but may in future
                 
                 // add artist to array
                 $artists[$artistNum] = 
                     array(
-                            'name' => $artistName,
-                            'id' => $artistID
+                            'name' => $name,
+                            'id' => $id
                         );
                 $artistNum++;
             }
             // finally, print the results to the screen
             displayArtistSearchResult($artists);   
         } else {
-            echo "Your search yielded no results.";
+            echo "Your artist search yielded no results.";
         }
     }
 
     function searchAlbum($conn, $searchQuery) {
         $query = "SELECT * FROM album WHERE album_name LIKE '%${searchQuery}%' LIMIT 10";
         $result = mysqli_query($conn, $query);
+        
+        if($result) {
+            //used to count the artist number so that the array (0 indexed) can be properly populated
+            $albumNum = 0;
+            $albums = array();
+            
+            while ($row = mysqli_fetch_assoc($result)) {
+                echo $albumNum . "<br>";
+                $id = $row['album_id'];
+                $name = $row['album_name'];
+                if ($row['album_released_year']) {
+                    $yearReleased = $row['album_released_year'];
+                } else {
+                    $yearReleased = NULL;
+                }
+                //for now we don't care about who the artwork artist is, but we may in the future
+                
+                // add album to array
+                $album[$albumNum] = 
+                    array(
+                            'name' => $name,
+                            'id' => $id,
+                            'year' => $yearReleased
+                        );
+                $albumNum++;
+                echo "++" . $name . " -- " . $id . " -- " . $yearReleased . "<br>";
+            }
+            // finally, print the results to the screen
+            displayAlbumSearchResult($albums);   
+        } else {
+            echo "Your album search yielded no results.";
+        }
     }
 
     function searchSong($conn, $searchQuery) {
@@ -78,10 +109,21 @@
             $name = $artist['name'];
             $id = $artist['id'];
             echo "<div class='search-result' id='artist-results'>"
-           .    "<a href='#'>${name}</a>"
-           . " </div>";
+                .    "<a href='#'>${name}</a>"
+                . " </div>";
         }
-        
-        
+    }
+
+    // TODO: make these display the artist name(s), clean up the placement of  year, for now I just wanted to make this kind of work
+    function displayAlbumSearchResult($albums) {
+        echo count($albums);
+        foreach($albums as $album) {
+            $name = $album['name'];
+            $id = $album['id'];
+            $year = $album['year'];
+            echo "<div class='search-result' id='artist-results'>"
+                .    "<a href='#'>${name}</a><p> Released: ${year}"
+                . " </div>";
+        }
     }
 ?>
