@@ -89,8 +89,9 @@
                             'id' => $id,
                             'year' => $yearReleased
                         );
+                echo "<br> ----> " . var_dump($album[$albumNum]);
                 $albumNum++;
-                echo "++" . $name . " -- " . $id . " -- " . $yearReleased . "<br>";
+                //echo "++" . $name . " -- " . $id . " -- " . $yearReleased . "<br>";
             }
             // finally, print the results to the screen
             displayAlbumSearchResult($albums);   
@@ -116,14 +117,15 @@
 
     // TODO: make these display the artist name(s), clean up the placement of  year, for now I just wanted to make this kind of work
     function displayAlbumSearchResult($albums) {
-        echo count($albums);
+        echo count($albums) . "C";
         foreach($albums as $album) {
             $name = $album['name'];
             $id = $album['id'];
             $year = $album['year'];
             echo "<div class='search-result' id='artist-results'>"
-                .    "<a href='#'>${name}</a><p> Released: ${year}"
-                . " </div>";
+                .    "<a href='#'>${name}</a>";
+            if ($year) {echo "<p>(${year})</p>";}
+            echo "</div>";
+            }
         }
-    }
 ?>
