@@ -9,6 +9,9 @@
             echo ("<p id='band-exists-alert'>That artist is already in the database</p>");
         } else {
             $newArtistID = insertArtist($conn, $name, $isband);
+			header( "refresh:2; url=add_artist.php" );
+			echo "${name} successfully added. Redirecting...";
+			exit;
         }
         
         // if solo artist is in a band

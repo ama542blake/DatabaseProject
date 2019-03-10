@@ -23,7 +23,6 @@
         if (isset($_POST['genre'])) {
             $genreName = $_POST['genre'];
             $genreID = getGenreID($conn, $genreName);
-            echo $genreName;
             if (!$genreID) {
                 $genreID = insertGenre($conn, $genreName);
             }
@@ -45,9 +44,15 @@
         // finally, check if song is in database, if not, create it
         if (getSongID($conn, $songName, $albumID, $artistID)) {
             // song is in database
-            echo "${songName} by ${artistName} on the album ${albumName} is already in the database.";
+			header( "refresh:2; url=add_song.php" ); //displays message before redirecting
+            echo "${songName} by ${artistName} on the album ${albumName} is already in the database. Redirecting...";
+			exit; //redirects back to song page
         } else {
             insertSong($conn, $songName, $albumID, $artistID, $producerID, $genreID);
+			header( "refresh:2; url=add_song.php" );
+			echo " ${songName} by ${artistName} successfully added. Redirecting...";
+			exit;
+			
         }
     }
 

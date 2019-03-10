@@ -24,16 +24,24 @@
         $artistID = getArtistID($conn, $artistName);
         if ($artistID) {
             if (getAlbumID($conn, $artistID, $albumName, $artworkArtistID)) {
+				header( "refresh:2; url=add_album.php" );
                 echo "${albumName} by ${artistName} is already in the database.";
+				exit;
             } else {
-                echo insertAlbum($conn, $artistID, $albumName, $artworkArtistID, $releasedYear);
+				insertAlbum($conn, $artistID, $albumName, $artworkArtistID, $releasedYear);
+				header( "refresh:2; url=add_album.php" );
+				echo "${albumName} by ${artistName} successfully added. Redirecting...";
+                exit;
             }
         } else {
             // album is not in database if the artist is not in the database
             // (can't have an album if there was no artist to create it)
             // TODO find a way to allow user to choose whether the artist is a band or solo, for now assume yes
             $newArtistID = insertArtist($conn, $artistName, 1);
-            echo insertAlbum($conn, $newArtistID, $albumName, $artworkArtistID, $releasedYear);
+            insertAlbum($conn, $newArtistID, $albumName, $artworkArtistID, $releasedYear);
+			header( "refresh:2; url=add_album.php" );
+			echo "New Artist: ${artistName} and album successfully added. Redirecting...";
+			exit;
         }
     }   
 
