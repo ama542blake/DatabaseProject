@@ -43,15 +43,15 @@
             $artists = array();
             
             while ($row = mysqli_fetch_assoc($result)) {
-                $id = $row['artist_id'];
-                $name = $row['artist_name'];
+                $artistID = $row['artist_id'];
+                $artistName = $row['artist_name'];
                 //for now, we don't care about whether artist is solo or band in search, but may in future
                 
                 // add artist to array
                 $artists[$artistNum] = 
                     array(
-                            'name' => $name,
-                            'id' => $id
+                            'artistName' => $artistName,
+                            'artistID' => $artistID
                         );
                 $artistNum++;
             }
@@ -72,8 +72,8 @@
             $albums = array();
             
             while ($row = mysqli_fetch_assoc($result)) {
-                $id = $row['album_id'];
-                $name = $row['album_name'];
+                $albumID = $row['album_id'];
+                $albumName = $row['album_name'];
                 if ($row['album_released_year']) {
                     $yearReleased = $row['album_released_year'];
                 } else {
@@ -84,9 +84,9 @@
                 // add album to array
                 $albums[$albumNum] = 
                     array(
-                            'name' => $name,
-                            'id' => $id,
-                            'year' => $yearReleased
+                            'albumName' => $albumName,
+                            'albumID' => $albumID,
+                            'albumYear' => $yearReleased
                         );
                 $albumNum++;
             }
@@ -107,8 +107,8 @@
             $songs = array();
             
             while ($row = mysqli_fetch_assoc($result)) {
-                $id = $row['song_id'];
-                $name = $row['song_name'];
+                $songID = $row['song_id'];
+                $songName = $row['song_name'];
                 //set $producerName
                 if ($row['song_producer']) {
                     $producerID = $row['song_producer'];
@@ -138,15 +138,55 @@
                     $genreName = NULL;
                 }
                 
+                // get $albumID and $albumName
+                $albumIDQuery = "SELECT album_id FROM album_song WHERE song_id = ${songID}";
+                $albumIDResult = mysqli_query($conn, $albumIDQuery);
+                if ($albumIDResult) {
+                    $albumID = mysqli_fetch_assoc($albumIDResult)['album_id'];
+                    $albumNameQuery = "SELECT album_name FROM album WHERE album_id = ${albumID}";
+                    $albumNameResult = mysqli_query($conn, $albumNameQuery);
+                    if ($albumNameResult) {
+                        $albumName = mysqli_fetch_assoc($albumNameResult)['album_name'];
+                    } else {
+                        //TODO handle in a more comprehensive way
+                        $albumName = NULL;
+                    }
+                } else {
+                    //TODO handle this in a more comprehensive way 
+                    $albumID = NULL;
+                }
+                
+                // get $aristID and $artistName
+                $artistIDQuery = "SELECT artist_id FROM artist_song WHERE song_id=${songID}";
+                $artistIDResult = mysqli_query($conn, $artistIDQuery);
+                if ($artistIDResult) {
+                    $artistID = mysqli_fetch_assoc($artistIDResult)['artist_id'];
+                    $artistNameQuery = "SELECT artist_name FROM artist WHERE artist_id = ${artistID}";
+                    $artistNameResult = mysqli_query($conn, $artistNameQuery);
+                    if ($artistNameResult) {
+                        $artistName = mysqli_fetch_assoc($artistNameResult)['artist_name'];
+                    } else {
+                        //TODO handle in a more comprehensive way
+                        $artistName = NULL;
+                    }
+                } else {
+                    //TODO handle this in a more comprehensive way 
+                    $artistID = NULL;
+                }
+                
                 // add song to array
                 $songs[$songNum] = 
                     array(
-                            'name' => $name,
-                            'id' => $id,
+                            'songName' => $songName,
+                            'songID' => $songID,
                             'producerID' => $producerID,
                             'producerName' => $producerName,
                             'genreID' => $genreID,
-                            'genreName' => $genreName
+                            'genreName' => $genreName,
+                            'albumName' => $albumName,
+                            'albumID' => $albumID,
+                            'artistName' => $artistName,
+                            'artistID' => $artistID
                         );
                 $songNum++;
             }
@@ -159,11 +199,11 @@
 
     function displayArtistSearchResult($artists) {
         foreach($artists as $artist) {
-            $name = $artist['name'];
-            $id = $artist['id']; // need this to add to link to go that artist page
+            $artistName = $artist['artistName'];
+            $artistID = $artist['artistID']; // need this to add to link to go that artist page
             
             echo "<div class='search-result' id='artist-results'>"
-                .    "<a href='#'>${name}</a>"
+                .    "<a href='#'>${artistName}</a>"
                 . " </div>";
         }
     }
@@ -171,34 +211,36 @@
     // TODO: make these display the artist name(s), clean up the placement of  year, for now I just wanted to make this kind of work
     function displayAlbumSearchResult($albums) {
         foreach($albums as $album) {
-            $name = $album['name'];
-            $id = $album['id']; // need to to add to link to go to that album's page
-            $year = $album['year'];
+            $albumName = $album['albumName'];
+            $albumID = $album['albumID']; // need to to add to link to go to that album's page
+            $year = $album['albumYear'];
             
             echo "<div class='search-result' id='artist-results'>"
-                .    "<a href='#'>${name}</a>";
-            if ($year) {echo " - (${year})";}
+                .    "<a href='#'>${$albumName}</a>";
+            if ($albumYear) {echo " - (${albumYear})";}
             echo "</div>";
             }
         }
 
     function displaySongSearchResult($songs) {
         foreach($songs as $song) {
-            $name = $song['name'];
-            $id = $song['id'];
+            $songName = $song['songName'];
+            $songID = $song['songID'];
             $producerID = $song['producerID'];
             $producerName = $song['producerName'];
             $genreID = $song['genreID'];
             $genreName = $song['genreName'];
-            echo "name: ${name}<br>prodID: ${producerID}<br>producerName: ${producerName}";
+            $albumName = $song['albumName'];
+            $albumID = $song['albumID'];
+            $artistName = $song['artistName'];
+            $artistID = $song['artistID'];
             
-            
-            echo "<div class='search-result' id='artist-results'>"
-                .    "<a href='#'>${name}</a>";
-            //if ($genreName) {echo "Genre: (${genreName})";}
-            {echo "Genre: (${genreName})";}
-            {echo "Producer: (${producerName})";}
-            //if ($producerName) {echo "Producer: (${producerName})";}
+            echo "<div class='search-result' id='song-results'>"
+                .    "Song: <a href='display_song.php?song_id=${songID}&album_id=${albumID}&artist_id=${artistID}&producerID=${producerID}&genreID=${genreID}'>${songName}</a><br>";
+            echo "By: ${artistName}<br>";
+            echo "On: ${albumName}<br>";
+            if ($genreName) {echo "Genre: ${genreName}<br>";}
+            if ($producerName) {echo "Producer: ${producerName}<br>";}
             echo "</div>";
             }
         }
