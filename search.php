@@ -107,30 +107,29 @@
             $songs = array();
             
             while ($row = mysqli_fetch_assoc($result)) {
-                echo var_dump($row);
                 $id = $row['song_id'];
                 $name = $row['song_name'];
+                //set $producerName
                 if ($row['song_producer']) {
                     $producerID = $row['song_producer'];
-                    $query = "SELECT producer_name FROM producer WHERE producer_id = ${producerID}";
-                    $producerResult = mysqli_query($conn, $query);
+                    $producerQuery = "SELECT producer_name FROM producer WHERE producer_id = ${producerID}";
+                    $producerResult = mysqli_query($conn, $producerQuery);
                     if ($producerResult) {
-                        $producerName = mysqli_fetch_assoc($result)['producer_name'];
+                        $producerName = mysqli_fetch_assoc($producerResult)['producer_name'];
                     } else {
                         $producerName = NULL;
                     }
                 } else {
                     $producerID = NULL;
                     $producerName = NULL;
-                } echo "____<br>";
-                echo var_dump($row);
-                
+                }
+                // set $genreName
                 if ($row['song_genre']) {
                     $genreID = $row['song_genre'];
-                    $query = "SELECT genre_name FROM genre WHERE genre_id = ${genreID}";
-                    $genreResult = mysqli_query($conn, $query);
+                    $genreQuery = "SELECT genre_name FROM genre WHERE genre_id = ${genreID}";
+                    $genreResult = mysqli_query($conn, $genreQuery);
                     if ($genreResult) {
-                        $genreName = mysqli_fetch_assoc($result)['genre_id'];
+                        $genreName = mysqli_fetch_assoc($genreResult)['genre_name'];
                     } else {
                         $genreName = NULL;
                     }
@@ -191,11 +190,15 @@
             $producerName = $song['producerName'];
             $genreID = $song['genreID'];
             $genreName = $song['genreName'];
+            echo "name: ${name}<br>prodID: ${producerID}<br>producerName: ${producerName}";
+            
             
             echo "<div class='search-result' id='artist-results'>"
                 .    "<a href='#'>${name}</a>";
-            if ($genreName) {echo "Genre: (${genreName})";}
-            if ($producerName) {echo "Producer: (${producerName})";}
+            //if ($genreName) {echo "Genre: (${genreName})";}
+            {echo "Genre: (${genreName})";}
+            {echo "Producer: (${producerName})";}
+            //if ($producerName) {echo "Producer: (${producerName})";}
             echo "</div>";
             }
         }
