@@ -37,11 +37,22 @@
         $query = "SELECT artist_is_band FROM artist WHERE artist_id = ${artistID}";
         $result = mysqli_query($conn, $query);
         if ($result) {
-            $row = mysqli_fetch_assoc($result);
-            return $row['artist_is_band'];
+            $return mysqli_fetch_assoc($result)['artist_id_band'];
         } else {
             // error
             return -1;
+        }
+    }
+
+    // get the name of the artist given the artist ID
+    function getArtistName($conn, $artistID) {
+        $query = "SELECT artist_name FROM artist WHERE artist_id = ${artistID}";
+        $result = mysqli_query($conn, $query);
+        if ($result) {
+            return mysqli_fetch_assoc($result)['artist_name'];
+        } else {
+            // error
+            return NULL;
         }
     }
 
@@ -88,6 +99,18 @@
             }
         } else {
             return 0;
+        }
+    }
+
+    // get the name of the album given the album ID
+    function getAlbumName($conn, $albumID) {
+        $query = "SELECT album_name FROM album WHERE aalbum_id = ${albumID}";
+        $result = mysqli_query($conn, $query);
+        if ($result) {
+            return mysqli_fetch_assoc($result)['album_name'];
+        } else {
+            // error
+            return NULL;
         }
     }
 
@@ -159,6 +182,18 @@
             return 0;
         }
     }
+
+    // get the name of the song given the song ID
+    function getSongName($conn, $songID) {
+        $query = "SELECT song_name FROM song WHERE sond_id = ${songID}";
+        $result = mysqli_query($conn, $query);
+        if ($result) {
+            return mysqli_fetch_assoc($result)['song_name'];
+        } else {
+            // error
+            return NULL;
+        }
+    }   
     
 
     // inserts a producer in to the database
@@ -185,6 +220,18 @@
         }
     }
 
+    // get the name of the producer given the producer ID
+    function getProducerName($conn, $producerID) {
+        $query = "SELECT producer_name FROM producer WHERE producer_id = ${producerID}";
+        $result = mysqli_query($conn, $query);
+        if ($result) {
+            return mysqli_fetch_assoc($result)['producer_name'];
+        } else {
+            // error
+            return NULL;
+        }
+    }
+
     // inserts a genre in to the database
     function insertGenre($conn, $name) {
         $query = "INSERT INTO genre (genre_name) " 
@@ -206,6 +253,18 @@
             return $row['genre_id'];
         } else {
             return 0;
+        }
+    }
+
+    // get the name of the genre given the genre ID
+    function getGenreName($conn, $genreID) {
+        $query = "SELECT genre_name FROM genre WHERE genre_id = ${genreID}";
+        $result = mysqli_query($conn, $query);
+        if ($result) {
+            return mysqli_fetch_assoc($result)['genre_name'];
+        } else {
+            // error
+            return NULL;
         }
     }
 
