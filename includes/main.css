@@ -23,3 +23,12 @@ body {
     color: black;
     height: 100%;
 }
+#aboutWrapper{
+    background-image: url("../images/black-business-computer-6320.jpg");
+    background-size: cover;
+}
+#artistImageDiv{
+    background-image: url("../images/artist-guitar-guitarist-33597.jpg");
+    background-size: cover;
+    height: 15em;
+}
