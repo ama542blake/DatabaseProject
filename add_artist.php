@@ -2,7 +2,7 @@
     include_once('includes/header.php');
     include_once('includes/connection.php');
 ?>
-<div id="artistImageDiv" class="bold image-fluid text-white text-right p-5 rounded">
+<div id="artistImageDiv" class="addImageHeader bold image-fluid text-white text-right p-5 rounded">
      <h1>Add an Artist.</h1>
 </div>
 <form id="band_form" action="add_artist_to_db.php" method="post">

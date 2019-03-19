@@ -27,8 +27,16 @@ body {
     background-image: url("../images/black-business-computer-6320.jpg");
     background-size: cover;
 }
-#artistImageDiv{
-    background-image: url("../images/artist-guitar-guitarist-33597.jpg");
+.addImageHeader{
     background-size: cover;
     height: 15em;
+}
+#albumImageDiv{
+    background-image: url("../images/audio-close-up-electronics-1389429.jpg");
+}
+#artistImageDiv{
+    background-image: url("../images/artist-guitar-guitarist-33597.jpg");
+}
+#songImageDiv{
+    background-image: url("../images/antique-business-electronics-164901.jpg");
 }
