@@ -4,27 +4,18 @@
     include_once("includes/common_query.php");
     
     // make sure the essential variables are set
-    if ((isset($_GET['song_id'])) && (isset($_GET['album_id'])) && (isset($_GET['artist_id']))) {
-        $songID = $_GET['song_id'];
-        $songName = getSongName($conn, $songID);
+    if ((isset($_GET['album_id'])) && (isset($_GET['artist_id']))) {
         $albumID = $_GET['album_id'];
         $albumName = getAlbumName($conn, $albumID);
         $artistID = $_GET['artist_id'];
         $artistName = getArtistName($conn, $artistID);
         
-        if (isset($_GET['producer_id'])) {
-            $producerID = $_GET['producer_id'];
-            $producerName = getProducerName($conn, $producerID);
-        } else {
-            $producerID = NULL;
-            $producerName = NULL;
-        }
-        if (isset($_GET['genre_id'])) {
-            $genreID = $_GET['genre_id'];
-            $genreName = getGenreName($conn, $genreID);
-        } else {
-            $genreID = NULL;
-            $genreName = NULL;
+        // find the songs on the album
+        $albumSongIDs = array();
+        $albumSongIDs = getAlbumSongIDs($conn, $albumID);
+        $albumSongNames = array();
+        for ($i = 0; $i < count($albumSongIDs); $i++) {
+            $albumSongNames[$i] = getSongName($conn, $albumSongIDs[$i]);
         }
         
         echo "<div class='container' id='results'>"

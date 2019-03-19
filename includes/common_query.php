@@ -37,7 +37,7 @@
         $query = "SELECT artist_is_band FROM artist WHERE artist_id = ${artistID}";
         $result = mysqli_query($conn, $query);
         if ($result) {
-            $return mysqli_fetch_assoc($result)['artist_id_band'];
+            return mysqli_fetch_assoc($result)['artist_id_band'];
         } else {
             // error
             return -1;
@@ -104,10 +104,29 @@
 
     // get the name of the album given the album ID
     function getAlbumName($conn, $albumID) {
-        $query = "SELECT album_name FROM album WHERE aalbum_id = ${albumID}";
+        $query = "SELECT album_name FROM album WHERE album_id = ${albumID}";
         $result = mysqli_query($conn, $query);
         if ($result) {
             return mysqli_fetch_assoc($result)['album_name'];
+        } else {
+            // error
+            return NULL;
+        }
+    }
+
+    function getAlbumSongIDs($conn, $albumID) {
+        // used to index $idArray
+        $resultCount = 0;
+        // will be used to return all ID's from the query
+        $idArray = array();
+        
+        $query = "SELECT song_id FROM album_song WHERE album_id = ${albumID}";
+        $result = mysqli_query($conn, $query);
+        if ($result) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $idArray[$resultCount] = $row['song_id'];
+                $resultCount++;
+            }
         } else {
             // error
             return NULL;
@@ -185,7 +204,7 @@
 
     // get the name of the song given the song ID
     function getSongName($conn, $songID) {
-        $query = "SELECT song_name FROM song WHERE sond_id = ${songID}";
+        $query = "SELECT song_name FROM song WHERE song_id = ${songID}";
         $result = mysqli_query($conn, $query);
         if ($result) {
             return mysqli_fetch_assoc($result)['song_name'];
