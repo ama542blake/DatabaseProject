@@ -37,7 +37,7 @@
         $query = "SELECT artist_is_band FROM artist WHERE artist_id = ${artistID}";
         $result = mysqli_query($conn, $query);
         if ($result) {
-            $return mysqli_fetch_assoc($result)['artist_id_band'];
+            return mysqli_fetch_assoc($result)['artist_id_band'];
         } else {
             // error
             return -1;
