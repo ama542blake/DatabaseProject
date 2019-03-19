@@ -40,7 +40,7 @@
             $newArtistID = insertArtist($conn, $artistName, 1);
             insertAlbum($conn, $newArtistID, $albumName, $artworkArtistID, $releasedYear);
 			header( "refresh:2; url=add_album.php" );
-			echo "New Artist: ${artistName} and album successfully added. Redirecting...";
+			echo "New Artist: ${artistName} and album: ${albumName} successfully added. Redirecting...";
 			exit;
         }
     }   
