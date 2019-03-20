@@ -213,10 +213,10 @@
         foreach($albums as $album) {
             $albumName = $album['albumName'];
             $albumID = $album['albumID']; // need to to add to link to go to that album's page
-            $year = $album['albumYear'];
+            $albumYear = $album['albumYear'];
             
             echo "<div class='search-result' id='artist-results'>"
-                .    "<a href='#'>${$albumName}</a>";
+                .    "<a href='display_album.php?album_id=$(albumID)'>${albumName}</a>";
             if ($albumYear) {echo " - (${albumYear})";}
             echo "</div>";
             }

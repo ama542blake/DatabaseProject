@@ -45,6 +45,9 @@
     }
 
     // get the name of the artist given the artist ID
+    // TODO: replace this function in all places it is used with a function
+    // which takes an array of IDs and returns an array, order preserved,
+    // of all of the names of the artists called getArtistNames (NOTE the added s)
     function getArtistName($conn, $artistID) {
         $query = "SELECT artist_name FROM artist WHERE artist_id = ${artistID}";
         $result = mysqli_query($conn, $query);
@@ -113,6 +116,18 @@
             return NULL;
         }
     }
+    
+    // get the year of the album given the album ID
+    function getAlbumYear($conn, $albumID) {
+        $query = "SELECT album_year FROM album WHERE album_id = ${albumID}";
+        $result = mysqli_query($conn, $query);
+        if ($result) {
+            return mysqli_fetch_assoc($result)['album_year'];
+        } else {
+            // error
+            return NULL;
+        }
+    }
 
     function getAlbumSongIDs($conn, $albumID) {
         // used to index $idArray
@@ -132,6 +147,16 @@
             return NULL;
         }
     }
+    
+    // get the ID of the artist that did the artwork for the album
+    //TODO make this allow multiple artwork artists per album (will require changes to DB structure)
+    function getAlbumArtworkArtistID($conn, $albumID) {
+        $query = "SELECT artwork_artist_id FROM album WHERE album_id = ${albumID}";
+        $result = mysqli_query($conn, $query);
+        if ($result) {
+            return mysqli_fetch_assoc($result)['artwork_artist_id'];
+        }
+    }
 
     // inserts an artwork artist in to the database
     function insertArtworkArtist($conn, $name) {
@@ -145,7 +170,7 @@
         }
     }
 
-    // returns the id of the album artwrok artist if exists; returns 0 if the artwork artist isn't found
+    // returns the id of the album artwork artist if exists; returns 0 if the artwork artist isn't found
     function getArtworkArtistID($conn, $name) {
         $query = "SELECT artwork_artist_id FROM artwork_artist WHERE artwork_artist_name LIKE '${name}'";
         $result = mysqli_query($conn, $query);
@@ -156,6 +181,18 @@
             return 0;
         }
     } 
+
+    // returns the name of an artwork artist given the ID
+    function getArtworkArtistName($conn, $id) {
+        $query = "SELECT artwork_artist_name FROM artwork_artist WHERE artwork_artist_id = ${id}";
+        $result = mysqli_query($conn, $query);
+        if ($result) {
+            $row = mysqli_fetch_assoc($result);
+            return $row['artwork_artist_name'];
+        } else {
+            return 0;
+        }
+    }
 
     /* song queries */
 
@@ -295,6 +332,45 @@
                . "VALUES (${artistID}, ${albumID})";
         mysqli_query($conn, $query);
     }
+
+    // get all artists that contributed to an album
+    function getArtistIDsFromArtistAlbum($conn, $albumID) {
+        // used to index $idArray
+        $resultCount = 0;
+        // stores returned IDs from the query
+        $idArray = array();
+        
+        $query = "SELECT artist_id FROM artist_album WHERE album_id = ${albumID}";
+        $result = mysqli_query($conn, $query);
+        if ($result) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $idArray[$resultCount] = $row['artist_id'];
+                $resultCount++;
+            }
+            return $idArray;
+        } else {
+            return NULL;
+        }
+    }
+
+    // get all albums an artist has contributed to
+    function getAlbumIDsFromArtistAlbum($conn, $artistID) {
+        // used to index $idArray
+        $resultCount = 0;
+        // stores returned IDs from the query
+        $idArray = array();
+        
+        $query = "SELECT album_id FROM artist_album WHERE artist_id = ${artistID}";
+        $result = mysqli_query($conn, $query);
+        if ($result) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $idArray[$resultCount] = $row['album_id'];
+                $resultCount++;
+            }
+        } else {
+            return NULL;
+        }
+    } 
     
     // create a relationship between an artist and an song
     function insertArtistSong($conn, $artistID, $songID) {
@@ -303,6 +379,45 @@
         mysqli_query($conn, $query);
     }
 
+    // get all artists that contributed to a song
+    function getArtistIDsFromArtistSong($conn, $songID) {
+        // used to index $idArray
+        $resultCount = 0;
+        // stores returned IDs from the query
+        $idArray = array();
+        
+        $query = "SELECT artist_id FROM artist_song WHERE song_id = ${songID}";
+        $result = mysqli_query($conn, $query);
+        if ($result) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $idArray[$resultCount] = $row['artist_id'];
+                $resultCount++;
+            }
+        } else {
+            return NULL;
+        }
+    }
+
+    // get all songs the artist has contributed to
+    function getSongIDsFromArtistSong($conn, $artistID) {
+        // used to index $idArray
+        $resultCount = 0;
+        // stores returned IDs from the query
+        $idArray = array();
+        
+        $query = "SELECT song_id FROM artist_song WHERE artist_id = ${artistID}";
+        $result = mysqli_query($conn, $query);
+        if ($result) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $idArray[$resultCount] = $row['song_id'];
+                $resultCount++;
+            }
+        } else {
+            return NULL;
+        }
+    }
+
+
     // create a relationship between an album and a song
     function insertAlbumSong($conn, $albumID, $songID) {
         $query = "INSERT INTO album_song (album_id, song_id) "
@@ -310,6 +425,44 @@
         mysqli_query($conn, $query);
     }
 
+    // get all albums a given song appears on
+    function getAlbumIDsFromAlbumSong($conn, $songID) {
+        // used to index $idArray
+        $resultCount = 0;
+        // stores returned IDs from the query
+        $idArray = array();
+        
+        $query = "SELECT album_id FROM album_song WHERE song_id = ${songID}";
+        $result = mysqli_query($conn, $query);
+        if ($result) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $idArray[$resultCount] = $row['album_id'];
+                $resultCount++;
+            }
+        } else {
+            return NULL;
+        }
+    }
+
+    // get all songs that appear on an album
+    function getSongIDsFromAlbumSong($conn, $albumID) {
+        // used to index $idArray
+        $resultCount = 0;
+        // stores returned IDs from the query
+        $idArray = array();
+        
+        $query = "SELECT song_id FROM album_song WHERE album_id = ${albumID}";
+        $result = mysqli_query($conn, $query);
+        if ($result) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $idArray[$resultCount] = $row['song_id'];
+                $resultCount++;
+            }
+        } else {
+            return NULL;
+        }
+    }
+    
     // create a relationship between a solo artist and band
     function insertMembership($conn, $bandID, $soloID) {
         $query = "INSERT INTO band_membership (band_id, solo_id) VALUES ($bandID, $soloID)";
