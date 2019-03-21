@@ -7,8 +7,6 @@
         $artistID = $_GET['artist_id'];
         $artistName = getArtistName($conn, $artistID);
         $artistIsBand = getArtistIsBand($conn, $artistID);
-        
-        $test = getArtistAlbumSong($conn);
     
         echo "<div class ='container' id='results'>";
         
@@ -33,33 +31,43 @@
             echo implode(", ", $members);
             echo "</div>";
             
-            /* display albums the artist contributed to, and the songs on that album that they were part of */
-            $artistAlbumSongArray = array();
-            $artistAlbumSong = getArtistAlbumSongByArtist($conn, $artistID);
-            
-            
+            /* display albums the band contributed to, and the songs on that album that they were part of */
             
         } else {
             $bandIDs = getArtistBands($conn, $artistID);
             
             // get the names of the bands
             $bandNames = array();
-            for ($i = 0; $i < count($bandMemberIDs); $i++) {
+            for ($i = 0; $i < count($bandIDs); $i++) {
                 $bandNames[$i] = getArtistName($conn, $bandIDs[$i]);
             }
-            
             // create links for each band's artist page
             $bands = array();
             for ($i = 0; $i < count($bandIDs); $i++) {
                 $bands[$i] = "<a href='display_artist.php?artist_id=${bandIDs[$i]}'>{$bandNames[$i]}</a>";
             }
             
+            // get albums that the solo artist has put out (solo)
+            // TODO: also display albums that the artist has been on through other bands
+            $artistAlbumSong = getArtistAlbumSongByArtist($conn, $artistID);
+            // use this to index an array to hold the links to the albums/songs
+            $numAlbums = 0;
+            // array to hold the HTML formatted links and lists of the album song combinations 
+            $albumSongLinkArray = array();
+            foreach($artistAlbumSong as $albumID => $album) {
+                $albumName = getAlbumName($conn, $albumID);
+                for ($i = 0; $i < count($album); $i++) {
+                    
+                }
+                $numAlbums++;
+            }
+            
+            
+            // now display all collected info
             echo "<div id='bands'>";
             echo implode(", ", $bands);
             echo "</div>";
         }
-        
-        // create 
         
         echo "</div>";
         

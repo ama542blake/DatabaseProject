@@ -539,31 +539,65 @@
         } 
     }
 
-    //queries view)artist_album_song to get all combinations for an artist
+    // queries view)artist_album_song to get all combinations for an artist
+    // should return a multidimensional array of albums (dim 1) and their songs (dim 2)
+    // TODO: this array feels clunky, find a better way to do this
     function getArtistAlbumSongByArtist($conn, $artistID) {
-        $query = "SELECT * FROM view_artist_album_song WHERE artist_id = ${artistID} GROUP BY artist_id";
+        // used to index the songs (dim 2) in the multidimensional array
+        $numSongs = 0;
+        // used to determine if a new album is reached and therefore
+        // a new entry in the 1st (album) dimension of the array needs to be added
+        $previousAlbumID = 0;
+        // finally, the array to hold the album_song combinations
+        // first dimension indexed by $row['album_id']
+        // second dimension indexed by $numSongs
+        $albumSongIDArray = array();
+        
+        $query = "SELECT * FROM view_artist_album_song WHERE artist_id = ${artistID}";
         $result = mysqli_query($conn, $query);
-        // create and return a (hopefully) simple to iterate over array
         if ($result) {
-            return "<pre>" . var_dump($result) . "</pre>";
+            while ($row = mysqli_fetch_assoc($result)) {
+                $albumID = $row['album_id'];
+                if ($albumID == $previousAlbumID) {
+                    // don't create new album entry in 1st dimension, just add songs
+                    $albumSongIDArray[$albumID][$numSongs] = array(
+                                                                   'songID' => $row['song_id'],
+                                                                   'songName' => $row['song_name']
+                                                                  );
+                    $numSongs++;
+                } else {
+                    // create new album entry in 1st dimension, resetting the previoud id and song count
+                    // then add the first song
+                    $previousAlbumID = $albumID;
+                    $numSongs = 0;
+                    $albumSongIDArray[$albumID][$numSongs] = array(
+                                                                   'songID' => $row['song_id'],
+                                                                   'songName' => $row['song_name']
+                                                                  );
+                    $numSongs++;
+                }
+            }
+            return $albumSongIDArray;
         } else {
             return NULL;
         }
     }
 
-    function getArtistAlbumSong($conn) {
-        $query = "SELECT * FROM view_artist_album_song GROUP BY artist_id";
-        $result = mysqli_query($conn, $query);
-        // create and return a (hopefully) simple to iterate over array
-        $arr = array();
-        $i=0;
-        if ($result) {
-            while ($row = mysqli_fetch_assoc($result)){
-                $arr[$i] = "<pre>" . var_dump($row) . "</pre><br><br>";
-            }
-            return $arr;
-        } else {
-            return NULL;
-        }
-    }
+//    This is just a test function that will be removed when we are done figure this out
+//    function getArtistAlbumSong($conn) {
+//        $query = "SELECT * FROM view_artist_album_song GROUP BY album_id";
+//        $result = mysqli_query($conn, $query);
+//        // create and return a (hopefully) simple to iterate over array
+//        $arr = array();
+//        $i=0;
+//        if ($result) {
+//            while ($row = mysqli_fetch_assoc($result)){
+//                //$arr[$i] = "<pre>" . var_dump($row) . "</pre><br><br>";
+//                $arr[$i] = $row['artist_name'];
+//            }
+//            return $arr;
+//        } else {
+//            return NULL;
+//        }
+//    }
 ?>
