@@ -13,7 +13,6 @@
         
         // get the list of artists associated with the album
         $albumArtistIDs = getArtistIDsFromArtistAlbum($conn, $albumID);
-        $albumArtistNames = array();
         for ($i = 0; $i < count($albumArtistIDs); $i++) {
             $albumArtistNames[$i] = getArtistName($conn, $albumArtistIDs[$i]);
         }
@@ -38,16 +37,17 @@
         echo "<p>By: </p>";
         $artists = array();
         for ($i = 0; $i < count($albumArtistNames); $i++) {
-            $artists[$i] = "<a href='display_artist.php?artist_id='${albumArtistIDs[$i]}'>albumArtistNames[$i]</a>";
+            $artists[$i] = "<a href='display_artist.php?artist_id=${albumArtistIDs[$i]}'>${albumArtistNames[$i]}</a>";
         }
         // this displays the links to the artists in a comma seperated list
         echo implode(", ", $artists);
         echo "<br><br>";
         
         // display the songs
-        echo "<ul>";
+        echo "<p>Songs:</p><ul>";
         for ($i = 0; $i < count($albumArtistNames); $i++) {
-            echo "<li>Track ${i+1}: </p><a href='display_song.php?song_id='${albumSongIDs[$i]}'>albumSongNames[$i]</a></li>";
+            $j = $i + 1;
+            echo "<li>Track ${j}: <a href='display_song.php?song_id=${albumSongIDs[$i]}'>${albumSongNames[$i]}</a></li>";
         } 
         echo "</ul>";
         echo "<br><br>";

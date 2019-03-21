@@ -119,10 +119,10 @@
     
     // get the year of the album given the album ID
     function getAlbumYear($conn, $albumID) {
-        $query = "SELECT album_year FROM album WHERE album_id = ${albumID}";
+        $query = "SELECT album_released_year FROM album WHERE album_id = ${albumID}";
         $result = mysqli_query($conn, $query);
         if ($result) {
-            return mysqli_fetch_assoc($result)['album_year'];
+            return mysqli_fetch_assoc($result)['album_released_year'];
         } else {
             // error
             return NULL;
@@ -142,6 +142,7 @@
                 $idArray[$resultCount] = $row['song_id'];
                 $resultCount++;
             }
+            return $idArray;
         } else {
             // error
             return NULL;
@@ -151,10 +152,10 @@
     // get the ID of the artist that did the artwork for the album
     //TODO make this allow multiple artwork artists per album (will require changes to DB structure)
     function getAlbumArtworkArtistID($conn, $albumID) {
-        $query = "SELECT artwork_artist_id FROM album WHERE album_id = ${albumID}";
+        $query = "SELECT album_artwork_artist FROM album WHERE album_id = ${albumID}";
         $result = mysqli_query($conn, $query);
         if ($result) {
-            return mysqli_fetch_assoc($result)['artwork_artist_id'];
+            return mysqli_fetch_assoc($result)['album_artwork_artist'];
         }
     }
 

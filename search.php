@@ -216,7 +216,7 @@
             $albumYear = $album['albumYear'];
             
             echo "<div class='search-result' id='artist-results'>"
-                .    "<a href='display_album.php?album_id=$(albumID)'>${albumName}</a>";
+                .    "<a href='display_album.php?album_id=${albumID}'>${albumName}</a>";
             if ($albumYear) {echo " - (${albumYear})";}
             echo "</div>";
             }
