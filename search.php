@@ -203,7 +203,7 @@
             $artistID = $artist['artistID']; // need this to add to link to go that artist page
             
             echo "<div class='search-result' id='artist-results'>"
-                .    "<a href='#'>${artistName}</a>"
+                .    "<a href='display_artist.php?artist_id=${artistID}'>${artistName}</a>"
                 . " </div>";
         }
     }

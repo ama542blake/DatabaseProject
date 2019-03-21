@@ -37,7 +37,7 @@
         $query = "SELECT artist_is_band FROM artist WHERE artist_id = ${artistID}";
         $result = mysqli_query($conn, $query);
         if ($result) {
-            return mysqli_fetch_assoc($result)['artist_id_band'];
+            return mysqli_fetch_assoc($result)['artist_is_band'];
         } else {
             // error
             return -1;
@@ -497,5 +497,73 @@
         $query = "INSERT INTO band_membership (band_id, solo_id) VALUES ($bandID, $soloID)";
         mysqli_query($conn, $query);
         return mysqli_insert_id($conn);
+    }
+
+    // for artists that are solo, get bands they are in 
+    function getArtistBands($conn, $soloID) {
+        // use this to index $bandArray
+        $bandCount = 0;
+        $bandArray = array();
+        
+        //TODO add validation to ensure that soloID is actually a solo artist
+        $query = "SELECT band_id FROM band_membership WHERE solo_id = ${soloID}";
+        $result = mysqli_query($conn, $query);
+        if ($result) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $bandArray[$bandCount] = $row['band_id'];
+                $bandCount++;
+            }
+            return $bandArray;
+        } else {
+            return NULL;
+        } 
+    }
+
+    // for artists that are bands, get the band members 
+    function getBandMembers($conn, $bandID) {
+        // use this to index $memberArray
+        $memberCount = 0;
+        $memberArray = array();
+        
+        //TODO add validation to ensure that bandID is actually a band
+        $query = "SELECT solo_id FROM band_membership WHERE band_id = ${bandID}";
+        $result = mysqli_query($conn, $query);
+        if ($result) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $memberArray[$memberCount] = $row['solo_id'];
+                $memberCount++;
+            }
+            return $memberArray;
+        } else {
+            return NULL;
+        } 
+    }
+
+    //queries view)artist_album_song to get all combinations for an artist
+    function getArtistAlbumSongByArtist($conn, $artistID) {
+        $query = "SELECT * FROM view_artist_album_song WHERE artist_id = ${artistID} GROUP BY artist_id";
+        $result = mysqli_query($conn, $query);
+        // create and return a (hopefully) simple to iterate over array
+        if ($result) {
+            return "<pre>" . var_dump($result) . "</pre>";
+        } else {
+            return NULL;
+        }
+    }
+
+    function getArtistAlbumSong($conn) {
+        $query = "SELECT * FROM view_artist_album_song GROUP BY artist_id";
+        $result = mysqli_query($conn, $query);
+        // create and return a (hopefully) simple to iterate over array
+        $arr = array();
+        $i=0;
+        if ($result) {
+            while ($row = mysqli_fetch_assoc($result)){
+                $arr[$i] = "<pre>" . var_dump($row) . "</pre><br><br>";
+            }
+            return $arr;
+        } else {
+            return NULL;
+        }
     }
 ?>

@@ -3,7 +3,7 @@
     include_once("includes/connection.php");
     include_once("includes/common_query.php");
     
-    // make sure the essential variables are set
+    // make sure the variable is set
     if (isset($_GET['song_id'])) {
         $songID = $_GET['song_id'];
         $songName = getSongName($conn, $songID);
