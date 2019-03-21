@@ -236,7 +236,7 @@
             $artistID = $song['artistID'];
             
             echo "<div class='search-result' id='song-results'>"
-                .    "Song: <a href='display_song.php?song_id=${songID}&album_id=${albumID}&artist_id=${artistID}&producer_id=${producerID}&genre_id=${genreID}'>${songName}</a><br>";
+                .    "Song: <a href='display_song.php?song_id=${songID}'>${songName}</a><br>";
             echo "By: ${artistName}<br>";
             echo "On: ${albumName}<br>";
             if ($genreName) {echo "Genre: ${genreName}<br>";}

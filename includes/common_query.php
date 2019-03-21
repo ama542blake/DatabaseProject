@@ -252,6 +252,29 @@
         }
     }   
     
+    // get the ID of the genre(s) of a song
+    // TODO: allow multiple genres for a song (will require changing DB sturcture)
+    function getSongGenre($conn, $songID) {
+        $query = "SELECT song_genre FROM song WHERE song_id = ${songID}";
+        $result = mysqli_query($conn, $query);
+        if ($result) {
+            return mysqli_fetch_assoc($result)['song_genre'];
+        } else {
+            return NULL;
+        }
+    }
+
+    // get the ID of the producer(s) of a song
+    // TODO: allow multiple producers for a song (will require changing DB sturcture)
+    function getSongProducer($conn, $songID) {
+        $query = "SELECT song_producer FROM song WHERE song_id = ${songID}";
+        $result = mysqli_query($conn, $query);
+        if ($result) {
+            return mysqli_fetch_assoc($result)['song_producer'];
+        } else {
+            return NULL;
+        }
+    }
 
     // inserts a producer in to the database
     function insertProducer($conn, $name) {
@@ -368,6 +391,7 @@
                 $idArray[$resultCount] = $row['album_id'];
                 $resultCount++;
             }
+            return $idArray;
         } else {
             return NULL;
         }
@@ -394,6 +418,7 @@
                 $idArray[$resultCount] = $row['artist_id'];
                 $resultCount++;
             }
+            return $idArray;
         } else {
             return NULL;
         }
@@ -413,6 +438,7 @@
                 $idArray[$resultCount] = $row['song_id'];
                 $resultCount++;
             }
+            return $idArray;
         } else {
             return NULL;
         }
@@ -440,6 +466,7 @@
                 $idArray[$resultCount] = $row['album_id'];
                 $resultCount++;
             }
+            return $idArray;
         } else {
             return NULL;
         }
@@ -459,6 +486,7 @@
                 $idArray[$resultCount] = $row['song_id'];
                 $resultCount++;
             }
+            return $idArray;
         } else {
             return NULL;
         }
