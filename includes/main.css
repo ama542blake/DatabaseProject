@@ -1,28 +1,4 @@
-.card {
-    width: 65%;
-}
 
-nav {
-    margin-bottom: 70px;
-}
-
-#infolabel {
-    font-weight: bold;
-}
-
-.input-info {
-    width: 60%;
-}
-
-.container {
-    margin-top: 70px;
-}
-
-body {
-    background-color: #efa909;
-    color: black;
-    height: 100%;
-}
 #aboutWrapper{
     background-image: url("../images/black-business-computer-6320.jpg");
     background-size: cover;
@@ -36,6 +12,36 @@ body {
 }
 #artistImageDiv{
     background-image: url("../images/artist-guitar-guitarist-33597.jpg");
+}
+body {
+    background-color: #efa909;
+    color: black;
+    height: 100%;
+}
+.card {
+    width: 65%;
+}
+.container {
+    margin-top: 70px;
+}
+.displayBlock{
+    display: inline-block;
+}
+#infolabel {
+    font-weight: bold;
+}
+
+.input-info {
+    width: 60%;
+}
+.logInForm{
+    width: 50%;
+}
+.logInHeader{
+    width: 100%;
+}
+nav {
+    margin-bottom: 70px;
 }
 #songImageDiv{
     background-image: url("../images/antique-business-electronics-164901.jpg");
