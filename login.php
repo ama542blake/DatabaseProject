@@ -7,14 +7,15 @@
         $username = $_POST['username'];
         $password = $_POST['password'];
         
-        if ($userID = userExists($conn, $username)) (
+        if ($userID = userExists($conn, $username)) {
             if (userPasswordIsCorrect($conn, $userID, $password)) {
                 $_SESSION['username'] = $username;
             }
-        ) else {
+        } else {
             header("Location: login_signup.php");
         }
-    } else {
-        
+    }
+     else {
+        echo "please enter credentials";
     }
 ?>
