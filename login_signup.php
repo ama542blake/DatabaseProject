@@ -11,16 +11,16 @@
   <div class="p-3">
    <div>
     <label class='form-label'><h5>Username</h5>
-     <input class="ml-1 form-control m-2" id="loginUsername" type="text" name="username" required>
+     <input class="ml-1 form-control m-2" id="loginUsername" placeholder="Username" type="text" name="username" required>
     </label>
    </div>
    <div>
     <label class='form-label align-self-end'><h5>Password</h5>
-     <input class="ml-1 form-control m-2" id="loginPassword" type="password" name="password" required disabled>
+     <input class="ml-1 form-control m-2" id="loginPassword" placeholder="Password" type="password" name="password" required disabled>
     </label>
    </div>
    <div>
-    <input class="btn btn-outline-dark m-3" id="loginBtn" type="submit" value="Log In">
+    <input class="btn btn-outline-dark m-3" id="loginBtn" type="submit" value="Log In" disabled>
    </div>
   </div>
  </form>

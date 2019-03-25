@@ -1,8 +1,11 @@
 alert("validation_functions.js running");
 
 let username = document.getElementById('loginUsername');
+
 username.addEventListener('keyup', passwordDisabled);
 username.addEventListener('cut', passwordDisabled);
+username.addEventListener('keyup', loginBtnDisabled);
+username.addEventListener('cut', loginBtnDisabled);
 
 function passwordDisabled(){
 	var passwordInput = document.getElementById("loginPassword");
@@ -14,8 +17,11 @@ function passwordDisabled(){
 }
 
 let password = document.getElementById("loginPassword");
+
 password.addEventListener('keyup', loginBtnDisabled);
 password.addEventListener('cut', loginBtnDisabled);
+password.addEventListener('keyup', passwordDisabled);
+password.addEventListener('cut', passwordDisabled);
 
 function loginBtnDisabled(){
 	var passwordInput = document.getElementById("loginPassword");
