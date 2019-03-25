@@ -1,9 +1,10 @@
 <?php 
+    session_start();
     include_once('includes/header.php');
 ?>
 
 <div class="container p-0 text-center">
- <form class="displayBlock jumbotron logInForm pagination-centered p-0" action="login.php">
+ <form class="displayBlock jumbotron logInForm pagination-centered p-0" method="post" action="login.php">
   <div class="card logInHeader p-3">
    <h1>Log-In</h1>
   </div>
@@ -24,7 +25,7 @@
   </div>
  </form>
  
- <form class="displayBlock jumbotron logInForm pagination-centered p-0" action="signup.php">
+ <form class="displayBlock jumbotron logInForm pagination-centered p-0" method="post" action="signup.php">
   <div class="card logInHeader p-3">
    <h1>Sign-up</h1>
   </div>

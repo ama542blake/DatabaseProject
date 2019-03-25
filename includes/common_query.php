@@ -2,12 +2,25 @@
     // this module is for queries and functions that will be used in many places
 
     /* user queries */
+    // return the ID if the user exists, 0 if not
     function userExists($conn, $username) {
-        $query = "SELECT COUNT(*) FROM user WHERE user_username = '${username}'";
+        $query = "SELECT user_id FROM user WHERE user_username = '${username}'";
         $result = mysqli_query($conn, $query);
         if ($result) {
             $row = mysqli_fetch_assoc($result);
-            return var_dump($row);
+            return $row['user_id'];
+        } else {
+            return 0;
+        }
+    }
+    
+    function userPasswordIsCorrect($conn, $userID, $password) {
+        $query = "SELECT COUNT(*) AS count FROM user WHERE user_id = ${userID} AND user_password = '${password}'";
+        $result = mysqli_query($conn, $query);
+        if ($result) {
+            return $result['count'] == 1;
+        } else {
+            return TRUE;
         }
     }
 

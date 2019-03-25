@@ -1,4 +1,5 @@
 <?php 
+    session_start();
     include_once('includes/header.php');
 ?>
 <div id="songImageDiv" class="addImageHeader bold image-fluid text-white text-right p-5 rounded">
