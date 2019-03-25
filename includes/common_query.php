@@ -15,12 +15,12 @@
     }
     
     function userPasswordIsCorrect($conn, $userID, $password) {
-        $query = "SELECT COUNT(*) AS count FROM user WHERE user_id = ${userID} AND user_password = '${password}'";
+        $query = "SELECT COUNT(*) AS count FROM user WHERE user_id = ${userID} AND user_pword = '${password}'";
         $result = mysqli_query($conn, $query);
         if ($result) {
-            return $result['count'] == 1;
+            return mysqli_fetch_assoc($result)['count'];
         } else {
-            return TRUE;
+            return "no";
         }
     }
 
