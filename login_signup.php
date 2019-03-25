@@ -4,23 +4,23 @@
 ?>
 
 <div class="container p-0 text-center">
- <form class="displayBlock jumbotron logInForm pagination-centered p-0" method="post" action="login.php">
+ <form class="displayBlock jumbotron logInForm pagination-centered p-0" id="loginForm" method="post" action="login.php">
   <div class="card logInHeader p-3">
    <h1>Log-In</h1>
   </div>
   <div class="p-3">
    <div>
     <label class='form-label'><h5>Username</h5>
-     <input class="ml-1 form-control m-2" type="text" name="username" required>
+     <input class="ml-1 form-control m-2" id="loginUsername" type="text" name="username" required>
     </label>
    </div>
    <div>
     <label class='form-label align-self-end'><h5>Password</h5>
-     <input class="ml-1 form-control m-2" type="text" name="password" required>
+     <input class="ml-1 form-control m-2" id="loginPassword" type="password" name="password" required disabled>
     </label>
    </div>
    <div>
-    <input class="btn btn-outline-dark m-3" type="submit" value="Log In">
+    <input class="btn btn-outline-dark m-3" id="loginBtn" type="submit" value="Log In">
    </div>
   </div>
  </form>
