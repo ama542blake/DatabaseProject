@@ -24,7 +24,7 @@
         // find all artists that contributed
         $artistIDs = getArtistIDsFromArtistSong($conn, $songID);
         $artistNames = array();
-        for ($i = 0; $i < count($albumIDs); $i++) {
+        for ($i = 0; $i < count($artistIDs); $i++) {
             $artistNames[$i] = getArtistName($conn, $artistIDs[$i]);
         }
         // create HTML links for each of the artist
@@ -42,13 +42,15 @@
         $genreName = getGenreName($conn, $genreID);
         
         echo "<div class='container' id='results'>";
-        echo "<p>By: " . implode(", ", $artists) . "</p><br>";
-        echo "<p>Appears on: " . implode(", ", $albums) . "</p><br>"
-                . "<p id='producer-name'>Producer: <a href=''>${producerName}</a></p><br>"
-                . "<p id='artist-name'>Genre: <a href=''>${genreName}</a></p><br>"
+        // print out the artists that contributed to the song
+        echo "<p>By: <span id='artists'>" . implode(", ", $artists) . "</span></p><br>";
+        // print out the albums that the song appears on
+        echo "<p>Appears on: <span id='albums'>" . implode(", ", $albums) . "</span></p><br>"
+                . "<p id='producer-name'>Producer: <span id='producer'.<a href=''>${producerName}</a></span></p><br>"
+                . "<p id='artist-name'>Genre: <span id='genre'><a href=''>${genreName}</a></span></p><br>"
             . "</div>";
         
-        echo "<button type='button' id='edit-song-info'>Edit this page</button>'";
+        echo "<button type='button' id='edit-song-info'>Edit this page</button>";
     } else {
         
     }
