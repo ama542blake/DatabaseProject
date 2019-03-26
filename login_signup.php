@@ -32,21 +32,21 @@
   <div class="p-3">
    <div>
     <label class='form-label'><h5>Select a username:</h5>
-     <input class="ml-1 form-control" type="text" name="username" required>
+     <input class="ml-1 form-control" id="createUsername" type="text" name="username" required>
     </label>
    </div>
    <div>
     <label class='form-label'><h5>Select a password:</h5>
-     <input class="ml-1 form-control" type="text" name="password" required>
+     <input class="ml-1 form-control" id="createPassword" type="text" name="password" required disabled>
     </label>
    </div>
    <div>
     <label class='form-label'><h5>Enter your email address:</h5>
-     <input class="ml-1 form-control" type="email" name="email" required>
+     <input class="ml-1 form-control" id="createEmail" type="email" name="email" required disabled>
     </label>
    </div>
    <div>
-    <input class="btn btn-outline-dark" type="submit" value="Create account">
+    <input class="btn btn-outline-dark" id="createBtn" type="submit" value="Create account" disabled>
    </div>
   </div>
  </form>

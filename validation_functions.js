@@ -35,3 +35,56 @@ function loginBtnDisabled(){
 	
 }
 
+let createUsername = document.getElementById("createUsername");
+
+createUsername.addEventListener('keyup', createPasswordDisabled);
+createUsername.addEventListener('cut', createPasswordDisabled);
+
+function createPasswordDisabled(){
+ var usernameInput = document.getElementById("createUsername");
+ var passwordInput = document.getElementById("createPassword");
+ var emailInput = document.getElementById("createEmail");
+ var createBtn = document.getElementById("createBtn");
+ 
+ if(usernameInput.value.length<4){
+  passwordInput.disabled = true;
+  emailInput.disabled = true;
+  createBtn.disabled = true;
+ }else{
+  passwordInput.disabled = false;
+ }
+}
+
+let createPassword = document.getElementById("createPassword");
+
+createPassword.addEventListener('keyup', createEmailDisabled);
+createPassword.addEventListener('cut', createEmailDisabled);
+
+function createEmailDisabled(){
+ var passwordInput = document.getElementById("createPassword");
+ var emailInput = document.getElementById("createEmail");
+ var createBtn = document.getElementById("createBtn");
+ 
+ if(passwordInput.value.length<6){
+  emailInput.disabled = true;
+  createBtn.disabled = true;
+ }else{
+  emailInput.disabled = false;
+ }
+}
+
+let createEmail = document.getElementById("createEmail");
+
+createEmail.addEventListener('keyup', createBtnDisabled);
+createEmail.addEventListener('cut', createBtnDisabled);
+
+function createBtnDisabled(){
+ var emailInput = document.getElementById("createEmail");
+ var createBtn = document.getElementById("createBtn");
+ 
+ if((emailInput.value.includes("@"))&&(emailInput.value.length>5)){
+  createBtn.disabled = false;
+ }else{
+  createBtn.disabled = true;
+ }
+}
