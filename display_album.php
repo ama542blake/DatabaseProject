@@ -52,7 +52,9 @@
         } 
         echo "</ul>";
         echo "<br><br>";
-        echo "</div>";
+        echo "<p>Year Released: <span id='albumYear'></span></p><br>"
+                . "<p id='albumArtwork'>Artwork Artist: <span id='albumArtworkArtistName'.<a href=''>${albumArtworkArtistName}</a></span></p><br>"
+       .  "</div>";
         echo "<button type='button' id='editAlbumInfo'>Edit this page</button>";
     } else {
     }
