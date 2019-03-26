@@ -39,6 +39,7 @@ let createUsername = document.getElementById("createUsername");
 
 createUsername.addEventListener('keyup', createPasswordDisabled);
 createUsername.addEventListener('cut', createPasswordDisabled);
+createUsername.addEventListener('click', createPasswordDisabled);
 
 function createPasswordDisabled(){
  var usernameInput = document.getElementById("createUsername");
@@ -59,6 +60,7 @@ let createPassword = document.getElementById("createPassword");
 
 createPassword.addEventListener('keyup', createEmailDisabled);
 createPassword.addEventListener('cut', createEmailDisabled);
+createPassword.addEventListener('click', createEmailDisabled);
 
 function createEmailDisabled(){
  var passwordInput = document.getElementById("createPassword");
@@ -77,6 +79,7 @@ let createEmail = document.getElementById("createEmail");
 
 createEmail.addEventListener('keyup', createBtnDisabled);
 createEmail.addEventListener('cut', createBtnDisabled);
+createEmail.addEventListener('click', createBtnDisabled);
 
 function createBtnDisabled(){
  var emailInput = document.getElementById("createEmail");
