@@ -17,5 +17,9 @@
     } else if (strpos($pageName, "display_song.php") !== FALSE) {
         echo "<script src='edit_song.js'></script>";
     }
+    else if (strpos($pageName, "display_album.php") !== FALSE) {
+        echo "<script src='edit_album.js'></script>";
+    }
+    
 ?>
 </html>
