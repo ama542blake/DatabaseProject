@@ -2,12 +2,6 @@
     session_start();
     include_once('includes/header.php'); 
     include_once('includes/connection.php');
-var_dump($_SESSION);
-//if (isset($_SESSION['username'])) {
-//    echo $_SESSION['username'];
-//} else {
-//    echo "not set";
-//}
 ?>
 
 <div class="jumbotron bg-warning mt-5">
