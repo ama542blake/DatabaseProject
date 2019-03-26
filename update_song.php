@@ -33,10 +33,9 @@
             $genre = NULL;
         }
         
+        updateSong($conn, $songID, $artists, $isBand, $bandMembership, $albums, $producer, $genre);
         $redirID= $_POST['redir_id'];
         header("Location: display_song.php" . $redirID);
-        
-        updateSong($conn, $songID, $artists, $isBand, $bandMembership, $albums, $producer, $genre);
         
     } else {
         echo "You must set values for artists and albums. Producer and genre fields are optional. Try again.";

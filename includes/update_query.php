@@ -1,19 +1,12 @@
-<?php
+<?php 
+    include_once("common_query.php");
+    
     /* This module used to send UPDATE queries to the DB*/
-    /*
-        Alright, this is going to be really complicated: 
-        (1) We need to break all relationships in artist_song and album_song
-        when a song is updated, the recreate these relationships with the newly entered values
-            (a) this means we will need the IDs of the artist, album, and song
-        (2) if the artist(s), album(s), prducer(s), genre(s) are not already in the database,
-        they need to be added
-            (2a) this will require a list of these values
-        (3) as of now, this only supports single valued artists, albums, producers, and genres, so
-        this will need to be updated to accommodate multiple later, which is on the TODO list
-    */
+    // TODO: as of now, this only supports single valued artists, albums, producers, and genres, so
+        //this will need to be updated to accommodate multiple later
 
     /* update queries */
-    function updateSong($conn, $songID, $artistName, $isband, $bandMembership, $albumName, $producer, $genre) {
+    function updateSong($conn, $songID, $artistName, $isband, $bandMembership, $albumName, $producerName, $genreName) {
         // check for the ID of the artist; insert if not in DB
         $artistID = getArtistID($conn, $artistName);
         if (!($artistID)) {
@@ -28,31 +21,48 @@
                     insertMembership($conn, $bandID, $artistID);
                 }
             }
-        } 
+        }
+        
         // check for the ID of the album insert if not in DB
         $albumID = getAlbumID($conn, $albumName);
         if (!($albumID)) {
             $albumID = insertAlbum($conn, $albumName);
         } 
         
-        // break all relationships
-        deleteArtistSong($conn, $songID);
-        deleteAlbumSong($conn, $albumID, $songID);
-        
-        // check to make sure entries for the user entered data exist, if not, insert them
-        if ($getArtistID($conn, $artistName)) { // artist in DB
-            
+        // check for the ID of the producer; insert if not in DB
+        if ($producerName) {
+            $producerID = getProducerID($conn, $producerName);
+            if (!($producerID)) {
+                $producerID = insertProducer($conn, $producerName);
+            } 
         } else {
-            insertArtist();
+            $producerID = NULL;
         }
         
-        $query = updateSongStringBuilder($conn, $songID);
+        // check for the ID of the genre; insert if not in DB
+        if ($genreName) {
+            $genreID = getGenreID($conn, $genreName);
+            if (!($genreID)) {
+                $genreID = insertGenre($conn, $genreName);
+            } 
+        } else {
+            $genreID = NULL;
+        }
+        
+        // break all relationships
+        /* TODO: this is really inefficient because even if album/artist don't change, relationships are still destroyed and 
+            recreated, so need to improve this */
+        deleteArtistSong($conn, $songID);
+        deleteAlbumSong($conn, $songID);
+        
+        // update song
+        $songQuery = "UPDATE song SET song_producer = ${producerID}, song_genre = ${genreID}"
+               . " WHERE song_id = ${songID}";
         mysqli_query($conn, $query);
-    }
-
-    function updateSongStringBuilder($conn, $songID, $producerID, $genreID) {
-        $query = "UPDATE song SET song_artist = $"
-               . "WHERE song_id = ${songID}";
+        
+        // update relationships
+        insertArtistSong($conn, $artistID, $songID);
+        insertAlbumSong($conn, $albumID, $songID);
     }
     
     function deleteArtistSong($conn, $songID) {
@@ -64,16 +74,4 @@
         $query = "DELETE FROM album_song WHERE song_id = ${songID}";
         mysqli_query($conn, $query);
     }
-
-    //function to use as reference
-//    function insertSongStringBuilder($songName, $producerID, $genreID) {
-//        $query = "INSERT INTO song (song_name";
-//        if ($producerID) {$query .= ", song_producer";}
-//        if ($genreID) {$query .= ", song_genre";}
-//        $query .= ") VALUES ('${songName}'";
-//        if ($producerID) {$query .= ", ${producerID}";}
-//        if ($genreID) {$query .= ", ${genreID}";}
-//        $query .= ")";
-//        return $query;
-//    }
 ?>
