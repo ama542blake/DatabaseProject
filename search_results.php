@@ -28,8 +28,7 @@
         }
     }
 
-    function search_artist($query) {
-        global $conn;
+    function search_artist($conn, $query) {
         //TODO: get error when using % in LIKE clause, so... fix that
         $query = "SELECT artist_id, artist_name FROM artist WHERE artist_name LIKE '${query}'";
         $result = mysqli_query($conn, $query);
@@ -41,8 +40,7 @@
         }
     }
 
-    function search_album($query) {
-        global $conn;
+    function search_album($conn, $query) {
         //TODO: get error when using % in LIKE clause, so... fix that
         $query = "SELECT album_id, album_name FROM album WHERE album_name LIKE '${query}'";
         $result = mysqli_query($conn, $query);
@@ -54,7 +52,7 @@
         }
     }
 
-    function search_song($query) {
+    function search_song($conn, $query) {
         global $conn;
         //TODO: get error when using % in LIKE clause, so... fix that
         $query = "SELECT song_id, song_name FROM song WHERE song_name LIKE '${query}'";

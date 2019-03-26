@@ -47,7 +47,10 @@
                 . "<p id='producer-name'>Producer: <a href=''>${producerName}</a></p><br>"
                 . "<p id='artist-name'>Genre: <a href=''>${genreName}</a></p><br>"
             . "</div>";
+        
+        echo "<button type='button' id='edit-song-info'>Edit this page</button>'";
     } else {
+        
     }
     
     include_once("includes/footer.php");
