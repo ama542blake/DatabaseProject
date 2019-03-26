@@ -3,7 +3,7 @@ window.onload = function () {
     $('#solo_radio').click(function () {
         if (!$('#band-membership-input').length) {
             // needs to not be in body, but adding toform does't work.   
-            $("#submit-artist").before(getBandMembership());   
+            $("#submit-artist").before(getBandMembershipHTML());   
         }
          
         
@@ -14,7 +14,7 @@ window.onload = function () {
     });
 }
 
-function getBandMembership() {
+function getBandMembershipHTML() {
     return '<label id="band-membership-input" class="mb-3">Band Membership (optional):' +
                 '<input type="text" class="form-control input-info" name="band_membership">' +
             '</label>';

@@ -13,7 +13,28 @@
     */
 
     /* update queries */
-    function updateSong($conn, $songID, $artistName, $albumName, $producer, $genre) {
+    function updateSong($conn, $songID, $artistName, $isband, $bandMembership, $albumName, $producer, $genre) {
+        // check for the ID of the artist; insert if not in DB
+        $artistID = getArtistID($conn, $artistName);
+        if (!($artistID)) {
+            $artistID = insertArtist($conn, $artistName, $isband);
+             // need to create the relationship between the artist and their band if solo
+            if (!($isband)) { // is solo
+                if ($bandMembership) {
+                    $bandID = getArtistID($conn, $bandMembership);
+                    if (!($bandID)) {
+                        $bandID = insertArtist($conn, $bandMembership, 1);
+                    }
+                    insertMembership($conn, $bandID, $artistID);
+                }
+            }
+        } 
+        // check for the ID of the album insert if not in DB
+        $albumID = getAlbumID($conn, $albumName);
+        if (!($albumID)) {
+            $albumID = insertAlbum($conn, $albumName);
+        } 
+        
         // break all relationships
         deleteArtistSong($conn, $songID);
         deleteAlbumSong($conn, $albumID, $songID);
@@ -22,7 +43,7 @@
         if ($getArtistID($conn, $artistName)) { // artist in DB
             
         } else {
-            insertArtist()
+            insertArtist();
         }
         
         $query = updateSongStringBuilder($conn, $songID);

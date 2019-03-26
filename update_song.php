@@ -1,23 +1,32 @@
 <?php
-    include_once("includes/update_query.php")
-
+    include_once("includes/update_query.php");
+    
+//TODO make this accommodate multiple values for each field
+        
     if ((isset($_POST['redir_id'])) && (isset($_POST['artists']) && (isset($_POST['albums'])))) {
-        $artistsRaw = $_POST['artists'];
-        //TODO: will need to create an array of values for when multiple artists can be added
-        //$artists = array();
+        $songID = $_POST['song_id'];
+        // gather artist info
+        $artists = $_POST['artists'];
+        if (isset($_POST['isband'])) {
+            $isband = 1;
+            $bandMembership = NULL;
+        } else {
+            $isband = 0;
+            if (isset($_GET['band_membership'])) {
+                $bandMembership = $_GET['band_membership'];
+            } else {
+                $bandMembership = NULL;
+            }
+        }
         
-        $albumsRaw = $_POST['albums'];
-        //TODO: will need to create an array of values for when multiple albums can be added
-        //$albums = array();
+        $albums = $_POST['albums'];
         
-        // TODO allow multiple producers
         if (isset($_GET['producer'])) {
             $producer = $_GET['producer'];
         } else {
             $producer = NULL;
         }
         
-        // TODO allow multiple genres
         if (isset($_GET['genre'])) {
             $genre = $_GET['genre'];
         } else {
@@ -26,6 +35,9 @@
         
         $redirID= $_POST['redir_id'];
         header("Location: display_song.php" . $redirID);
+        
+        updateSong($conn, $songID, $artists, $isBand, $bandMembership, $albums, $producer, $genre);
+        
     } else {
         echo "You must set values for artists and albums. Producer and genre fields are optional. Try again.";
     }
