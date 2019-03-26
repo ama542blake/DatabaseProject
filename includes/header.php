@@ -1,7 +1,3 @@
-<?php
-    session_start();
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,6 +34,7 @@
                         <a class='dropdown-item' id='addSongLink' href='add_song.php'>Add song</a>
                     </div>
                 </li>";
+                echo "<li class='nav-item'><a class='nav-link' href='logout.php'>Log Out</a></li>";
                 } else { // user isn't logged in
                     echo "<li class='nav-item'><a class='nav-link' href='login_signup.php'>Login/Signup</a></li>";
                 }
