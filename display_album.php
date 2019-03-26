@@ -29,10 +29,10 @@
         // set up the printing of the information
         echo "<div class='container' id='results'>";
         echo "<h2>${albumName}</h2>";
-        echo "<p>Year released: ${albumYear}<br>";
+        echo "<p>Year Released: <span id='albumYear'>${albumYear}</span></p><br>";
         // TODO eventually make a link that takes to a page that display all albums
         // the artowrk artist has done art for (will require creation of diplay_artwork_artist.php, or something like it)
-        echo "<p>Artwork: ${albumArtworkArtistName}<br>";
+        echo "<p id='albumArtwork'>Artwork Artist: <span id='albumArtworkArtistName'.<a href=''>${albumArtworkArtistName}</a></span></p><br>";
         
         // display the artists        
         echo "<p>By: </p>";
@@ -52,9 +52,7 @@
         } 
         echo "</ul>";
         echo "<br><br>";
-        echo "<p>Year Released: <span id='albumYear'></span></p><br>"
-                . "<p id='albumArtwork'>Artwork Artist: <span id='albumArtworkArtistName'.<a href=''>${albumArtworkArtistName}</a></span></p><br>"
-       .  "</div>";
+        echo "</div>";
         echo "<button type='button' id='editAlbumInfo'>Edit this page</button>";
     } else {
     }
