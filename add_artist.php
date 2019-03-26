@@ -12,7 +12,7 @@
             <input class="form-control input-info" type="text" name="artist_name" required>
         </label>
         <label class="mb-3"><h4>Is this a solo artist or band?</h4>
-            <input  id="solo_radio" class="form-check-inline ml-2 mr-1" type="radio" name="isband" value="0" required>Solo
+            <input id="solo_radio" class="form-check-inline ml-2 mr-1" type="radio" name="isband" value="0" required>Solo
             <input id="band_radio" class="form-check-inline ml-2 mr-1" type="radio" name="isband" value="1" required checked>Band
         </label>
         <input type="submit" id="submit-artist" class="btn btn-outline-dark input-info">

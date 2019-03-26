@@ -11,12 +11,39 @@
         (3) as of now, this only supports single valued artists, albums, producers, and genres, so
         this will need to be updated to accommodate multiple later, which is on the TODO list
     */
-    function updateSong($conn, $artists, $albums, $producer, $genre) {
+
+    /* update queries */
+    function updateSong($conn, $songID, $artistName, $albumName, $producer, $genre) {
+        // break all relationships
+        deleteArtistSong($conn, $songID);
+        deleteAlbumSong($conn, $albumID, $songID);
         
+        // check to make sure entries for the user entered data exist, if not, insert them
+        if ($getArtistID($conn, $artistName)) { // artist in DB
+            
+        } else {
+            insertArtist()
+        }
+        
+        $query = updateSongStringBuilder($conn, $songID);
+        mysqli_query($conn, $query);
     }
 
-    function updateSongStringBuilder($artists, $albums, $producer, $genre) {}
+    function updateSongStringBuilder($conn, $songID, $producerID, $genreID) {
+        $query = "UPDATE song SET song_artist = $"
+               . "WHERE song_id = ${songID}";
+    }
     
+    function deleteArtistSong($conn, $songID) {
+        $query = "DELETE FROM artist_song WHERE song_id = ${songID}";
+        mysqli_query($conn, $query);
+    }
+
+    function deleteAlbumSong($conn, $songID) {
+        $query = "DELETE FROM album_song WHERE song_id = ${songID}";
+        mysqli_query($conn, $query);
+    }
+
     //function to use as reference
 //    function insertSongStringBuilder($songName, $producerID, $genreID) {
 //        $query = "INSERT INTO song (song_name";
