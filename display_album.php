@@ -53,7 +53,7 @@
         echo "</ul>";
         echo "<br><br>";
         echo "</div>";
-        echo "<button type='button' id='editAlbumInfo'>Edit this page</button>";
+        echo "<button class='btn btn-primary' type='button' id='editAlbumInfo'>Edit this page</button>";
     } else {
     }
     

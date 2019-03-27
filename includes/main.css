@@ -18,14 +18,23 @@ body {
     color: black;
     height: 100%;
 }
-.card {
-    width: 65%;
-}
 .container {
     margin-top: 70px;
 }
 .displayBlock{
     display: inline-block;
+}
+#displaySongContainer{
+    padding: 0;
+    width: 40%;
+}
+#displaySongDetails{
+    padding: 1em;
+
+}
+#displaySongTitle{
+    padding: .8em;
+    width: 100%;
 }
 #infolabel {
     font-weight: bold;
@@ -42,6 +51,9 @@ body {
 }
 nav {
     margin-bottom: 70px;
+}
+#results{
+    padding: 0;
 }
 #searchResults{
     padding: 0;

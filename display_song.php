@@ -3,12 +3,13 @@
     include_once("includes/header.php");
     include_once("includes/connection.php");
     include_once("includes/common_query.php");
-    
+?>
+<div class="container-fluid jumbotron p-0 text-center" id="displaySongContainer">
+<?php    
     // make sure the variable is set
     if (isset($_GET['song_id'])) {
         $songID = $_GET['song_id'];
         $songName = getSongName($conn, $songID);
-        
         // find all albums that the song appears on
         $albumIDs = getAlbumIDsFromAlbumSong($conn, $songID);
         $albumNames = array();
@@ -41,21 +42,26 @@
         $genreID = getSongGenre($conn, $songID);
         $genreName = getGenreName($conn, $genreID);
         
-        echo "<div class='container' id='results'>";
+        echo "<div class='container container-fluid p-0' id='results'>";
+        echo "<div class='card container-fluid' id='displaySongTitle'>";
         echo "<h2>${songName}</h2>";
+        echo "</div>";
+        echo "<div id='displaySongDetails'>";
         // print out the artists that contributed to the song
-        echo "<p>By: <span id='artists'>" . implode(", ", $artists) . "</span></p><br>";
+        echo "<p><b>By:</b> <span id='artists'>" . implode(", ", $artists) . "</span></p>";
         
         // print out the albums that the song appears on
-        echo "<p>Appears on: <span id='albums'>" . implode(", ", $albums) . "</span></p><br>"
-                . "<p id='producer-name'>Producer: <span id='producer'><a href='#' disabled>${producerName}</a></span></p><br>"
-                . "<p id='artist-name'>Genre: <span id='genre'><a href=''>${genreName}</a></span></p><br>"
-            . "</div>";
+        echo "<p><b>Appears on: </b> <span id='albums'>" . implode(", ", $albums) . "</span></p>"
+                . "<p id='producer-name'><b>Producer: </b> <span id='producer'><a href='#' disabled>${producerName}</a></span></p>"
+                . "<p id='artist-name'><b>Genre: </b><span id='genre'><a href=''>${genreName}</a></span></p>";
         
-        echo "<button type='button' id='edit-song-info'>Edit this page</button>";
+        echo "<button class='btn btn-block btn-primary' type='button' id='edit-song-info'>Edit</button>";
+        echo "</div>";
+        echo "</div>";
     } else {
         
     }
     
     include_once("includes/footer.php");
 ?>
+</div>
