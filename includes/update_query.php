@@ -18,7 +18,7 @@
         mysqli_query($conn, $query);
     }
     function updateAlbum ($conn, $albumID, $albumArtworkArtist, $albumReleasedYear){
-        $query = "UPDATE album SET album_artwork_artist = ${albumArtworkArtist}",  album_released_year = ${albumReleasedYear} WHERE album_id = ${albumID};
+        $query = "UPDATE album SET album_artwork_artist = ${albumArtworkArtist},  album_released_year = ${albumReleasedYear} WHERE album_id = ${albumID}";
         mysqli_query($conn, $query);
     }
 
