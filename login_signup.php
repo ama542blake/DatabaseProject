@@ -52,10 +52,6 @@
  </form>
 </div>
 
-<form action="logout.php" method="GET"><input type="submit" name="logout" value="2"></form>
-
-
-
 <hr id="vr">
 
 <?php

@@ -1,5 +1,3 @@
-alert("validation_functions.js running");
-
 let username = document.getElementById('loginUsername');
 
 username.addEventListener('keyup', passwordDisabled);
