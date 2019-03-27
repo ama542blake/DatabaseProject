@@ -24,8 +24,8 @@ $("#edit-album-info").click(function() {
     var idRegExp = /[0-9]+/;
     var albumID = albumParam.match(idRegExp).join("");
     
-    $("#album-update-form").append(`<input type='hidden' id='update-button' name='redir_id' value='${albumParam}'>`);
-    $("#album-update-form").append("<input type='submit' id='update-button' value='Update Album Info'>");
+    $("#album-update-form").append(`<input type='hidden' name='redir_id' value='${albumParam}'>`);
+    $("#update-info").before("<input type='submit' id='update-button' value='Update Album Info'>");
     $("#album-update-form").append(`<input type='hidden' name='album_id' value='${albumID}'>`);
     
     // trim whitespace from beginning and end of inputs before submitting

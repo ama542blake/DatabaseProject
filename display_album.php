@@ -42,7 +42,7 @@
         $updateTime = $updateInfo['album_update_time'];
         
         // set up the printing of the information
-        echo "<div class='container container-fluid p-0 results'>";
+        echo "<div class='container container-fluid p-0' id='results'>";
         echo "<div class='card container-fluid displayTitle'>";
         echo "<h2>${albumName}</h2>";
         echo "</div>";
@@ -71,11 +71,11 @@
         } 
         echo "</ul>";
         if (isset($_SESSION['username'])){
-                    echo "<button class='btn btn-block btn-primary' type='button' type='button' id='editAlbumInfo'>Edit this page</button>";
+                echo "<button class='btn btn-block btn-primary' type='button' type='button' id='edit-album-info'>Edit this page</button>";
         } else {
             echo "<p>If you would like to edit or add to the information you see here, you must <a href='login_signup.php'>log in or sign up</a> before editing the page.";
         }
-        echo "<p>Last edited by ${updateUserName} at ${updateTime}</p>";
+        echo "<p id='update-info'>Last edited by ${updateUserName} at ${updateTime}</p>";
         echo "</div>";
         echo "</div>";
     } else {
