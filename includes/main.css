@@ -24,15 +24,15 @@ body {
 .displayBlock{
     display: inline-block;
 }
-#displaySongContainer{
+.displayContainer{
     padding: 0;
     width: 40%;
 }
-#displaySongDetails{
+.displayDetails{
     padding: 1em;
 
 }
-#displaySongTitle{
+.displayTitle{
     padding: .8em;
     width: 100%;
 }
@@ -52,7 +52,7 @@ body {
 nav {
     margin-bottom: 70px;
 }
-#results{
+.results{
     padding: 0;
 }
 #searchResults{
