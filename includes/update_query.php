@@ -12,7 +12,14 @@
         $query = "UPDATE song SET song_producer = ${producerID}, song_genre = ${genreID} WHERE song_id = ${songID}";
         mysqli_query($conn, $query);
     }
+
+    function updateArtist($conn, $artistID, $artistIsBand) {
+        $query = "UPDATE artist SET artist_is_band = ${artistIsBand} WHERE artist_id = ${artistID}";
+        mysqli_query($conn, $query);
+    }
+
     
+    /* deletion quries */
     function deleteArtistSong($conn, $songID) {
         $query = "DELETE FROM artist_song WHERE song_id = ${songID}";
         mysqli_query($conn, $query);
