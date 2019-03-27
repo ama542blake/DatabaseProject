@@ -32,7 +32,7 @@
         
         // set up the printing of the information
         echo "<div class='container' id='results'>";
-        echo "<h2>${albumName}</h2><input type='hidden' value='${albumID}' name='album_id'>";
+        echo "<h2>${albumName}</h2>";
         echo "<p>Year Released: <span id='albumYear'>${albumYear}</span></p><br>";
         // TODO eventually make a link that takes to a page that display all albums
         // the artwork artist has done art for (will require creation of diplay_artwork_artist.php, or something like it)

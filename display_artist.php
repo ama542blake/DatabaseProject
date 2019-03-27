@@ -53,8 +53,8 @@
             }
             // now print the bands
             echo "<div id='bands'>";
-            echo "Bands: " . implode(", ", $bands);
-            echo "</div>";
+            echo "Bands: <span id='bands>'" . implode(", ", $bands);
+            echo "</span></div>";
             
             /* Display albums the solo artist has contributed to */
             // TODO: also display albums that the artist has been on through other bands
