@@ -3,7 +3,7 @@
 
     /* user queries */
     // return the ID if the user exists, 0 if not
-    function userExists($conn, $username) {
+    function getUserID($conn, $username) {
         $query = "SELECT user_id FROM user WHERE user_username = '${username}'";
         $result = mysqli_query($conn, $query);
         if ($result) {
@@ -11,6 +11,18 @@
             return $row['user_id'];
         } else {
             return 0;
+        }
+    }
+
+    // return the name of the user given the user's ID
+    function getUserName($conn, $userID) {
+        $query = "SELECT user_username FROM user WHERE user_id = '${userID}'";
+        $result = mysqli_query($conn, $query);
+        if ($result) {
+            $row = mysqli_fetch_assoc($result);
+            return $row['user_name'];
+        } else {
+            return "";
         }
     }
     

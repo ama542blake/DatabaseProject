@@ -6,6 +6,7 @@
         //this will need to be updated to accommodate multiple later
 
     /* update queries */
+
     function updateArtist($conn, $artistID, $artistIsBand) {
         $query = "UPDATE artist SET artist_is_band = ${artistIsBand} WHERE artist_id = ${artistID}";
         mysqli_query($conn, $query);
@@ -21,6 +22,30 @@
         $query = "UPDATE song SET song_producer = ${producerID}, song_genre = ${genreID} WHERE song_id = ${songID}";
         mysqli_query($conn, $query);
     }
+
+        function getUpdateInformation($conn, $id, $entityType) {
+            switch ($entityType) {
+                case "artist":
+                    $query = "SELECT artist_update_user, artist_update_time FROM artist WHERE artist_id = ${id}";
+                    break;
+                case "album":
+                    $query = "SELECT album_update_user, album_update_time FROM album WHERE album_id = ${id}";
+                    break;
+                case "song":
+                    $query = "SELECT song_update_user, song_update_time FROM song WHERE song_id = ${id}";
+                    break;
+                default:
+                    return;
+            }
+            
+            $result = mysqli_query($conn, $query);
+            if ($result) {
+                        return mysqli_fetch_assoc($result);
+                    } else {
+                        return NULL;
+                    }
+        }
+    
 
     /* deletion quries */
 

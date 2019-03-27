@@ -3,6 +3,7 @@
     include_once("includes/header.php");
     include_once("includes/connection.php");
     include_once("includes/common_query.php");
+    include_once("includes/update_query.php");
 ?>
 <div class="container-fluid jumbotron p-0 text-center displayContainer">
 <?php
@@ -31,6 +32,14 @@
         for ($i = 0; $i < count($albumSongIDs); $i++) {
             $albumSongNames[$i] = getSongName($conn, $albumSongIDs[$i]);
         }
+        
+        // get information about the most recent update of information
+        $updateInfo = getUpdateInformation($conn, $albumID, "album");
+        $updateUserID = $updateInfo['album_update_user'];
+        if (!($updateUserName = getUserName($conn, $updateUserID))) {
+            $updateUserName = "{missing user}";
+        }
+        $updateTime = $updateInfo['album_update_time'];
         
         // set up the printing of the information
         echo "<div class='container container-fluid p-0 results'>";
@@ -61,7 +70,12 @@
             . "<input type='hidden' name='song_ids[]' value='${albumSongIDs[$i]}'>";
         } 
         echo "</ul>";
-        echo "<button class='btn btn-block btn-primary' type='button' type='button' id='editAlbumInfo'>Edit this page</button>";
+        if (isset($_SESSION['username'])){
+                    echo "<button class='btn btn-block btn-primary' type='button' type='button' id='editAlbumInfo'>Edit this page</button>";
+        } else {
+            echo "<p>If you would like to edit or add to the information you see here, you must <a href='login_signup.php'>log in or sign up</a> before editing the page.";
+        }
+        echo "<p>Last edited by ${updateUserName} at ${updateTime}</p>";
         echo "</div>";
         echo "</div>";
     } else {

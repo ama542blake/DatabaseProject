@@ -8,7 +8,7 @@
         $username = $_POST['username'];
         $password = $_POST['password'];
         
-        if ($userID = userExists($conn, $username)) {
+        if ($userID = getUserID($conn, $username)) {
             if (userPasswordIsCorrect($conn, $userID, $password)) {
                 $_SESSION['username'] = $username;
                 header( "refresh:2; url=index.php" );
@@ -22,7 +22,7 @@
         } else {
             echo "User doesn't exist";
             header("Location: login_signup.php");
-            if ($userID = userExists($conn, $username)) {
+            if ($userID = getUserID($conn, $username)) {
                 if (userPasswordIsCorrect($conn, $userID, $password)) {
                     $_SESSION['username'] = $username;
                     header( "refresh:2; url=index.php" );
