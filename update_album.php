@@ -5,7 +5,7 @@
     /* action for form in display_album.php */ 
 
 //TODO make this accommodate multiple values for each field
-    if ((isset($_POST['redir_id'])) && (isset($_POST['artists']) && (isset($_POST['albums'])))) {
+    if ((isset($_POST['redir_id'])) && (isset($_POST['artists']) && (isset($_POST['album_id'])))) {
         $albumID = $_POST['album_id'];
         
         // gather info about the artist
@@ -20,52 +20,47 @@
             $artistID = insertArtist($conn, $artistName, $isBand);
         }
         
-        // gather info about the album
-        $albumName = $_POST['albums'];
-        $albumID = getAlbumID($conn, $artistID, $albumName);
-        if (!($albumID)) {
-            $albumID = insertAlbum($conn, $artistID, $albumName, NULL, NULL);
+        // year info
+        if (isset($_POST['year'])) {
+            $albumYear = $_POST['year'];
+            if (!($albumYear)) { // album year left blank
+                $albumYear = NULL;
+            }
+        } else {
+            $albumYear  = NULL;
         }
+        
+        if (isset($_POST['song_ids'])) {
+            $albumSongIDs = $_POST['song_ids'];
+        } else {
+            $albumSongIDs = NULL;
+        }
+        
+        //album artwork artist
+        if (isset($_POST['artwork_artist'])) {
+            $artworkArtistName = $_POST['artwork_artist'];
+            if ($artworkArtistName){ // not empty string
+                $artworkArtistID = getArtworkArtistID($conn, $artworkArtistName);
+                if (!($artworkArtistID)) {
+                    $artworkArtistID = insertArtworkArtist($conn, $artworkArtistName);
+                }   
+            } else {
+                $artworkArtistID = NULL;
+            }
+        } else {
+            $artworkArtistID = NULL;
+        }
+        
+        updateAlbum($conn, $albumID, $artworkArtistID, $albumYear);
+        
+        // destroy and recreate artist_album and album_song relationships
+        deleteArtistAlbum($conn, $albumID);
+        insertArtistAlbum($conn, $artistID, $albumID);
     
-        // producer info
-        if (isset($_POST['producer'])) {
-            $producerName = $_POST['producer'];
-            if ($producerName) { // not empty string
-                $producerID = getProducerID($conn, $producerName);
-                if (!($producerID)) {
-                    $producerID = insertProducer($conn, $producerName);
-                }
-            } else $producerID = NULL;
-        } else {
-            $producerID = NULL;
-        }
-        
-        // genre info
-        if (isset($_POST['genre'])) {
-            $genreName = $_POST['genre'];
-            if ($genreName) { // not empty string
-                $genreID = getGenreID($conn, $genreName);
-                if (!($genreID)) {
-                    $genreID = insertGenre($conn, $genreName);
-                }
-            } else $genreID = NULL;
-        } else {
-            $genreID = NULL;
-        }
-        
-        updateSong($conn, $songID, $producerID, $genreID);
-        
-        // destroy artist_song and album_song relationships
-        deleteArtistSong($conn, $songID);
-        deleteAlbumSong($conn, $songID);
-        // recreate artist_song and album_song relationships
-        insertArtistSong($conn, $artistID, $songID);
-        insertAlbumSong($conn, $albumID, $songID);
-        
         $redirID = $_POST['redir_id'];
-        header("Location: display_song.php" . $redirID);
-        
+        //header("Location: display_album.php" . $redirID);
     } else {
-        echo "You must set values for artists and albums. Producer and genre fields are optional. Try again.";
+        echo "You have reached this page in error. Try again.";
+        var_dump($_POST);
     }
 ?>

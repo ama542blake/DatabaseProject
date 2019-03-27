@@ -57,7 +57,7 @@
         
         // destroy artist_song and album_song relationships
         deleteArtistSong($conn, $songID);
-        deleteAlbumSong($conn, $songID);
+        deleteAlbumSong($conn, $songID, "song");
         // recreate artist_song and album_song relationships
         insertArtistSong($conn, $artistID, $songID);
         insertAlbumSong($conn, $albumID, $songID);
