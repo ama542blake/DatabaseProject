@@ -4,7 +4,7 @@
     include_once("includes/connection.php");
     include_once("includes/common_query.php");
 ?>
-<div class="container-fluid jumbotron p-0 text-center" id="displaySongContainer">
+<div class="container-fluid jumbotron p-0 text-center displayContainer">
 <?php    
     // make sure the variable is set
     if (isset($_GET['song_id'])) {
@@ -42,11 +42,11 @@
         $genreID = getSongGenre($conn, $songID);
         $genreName = getGenreName($conn, $genreID);
         
-        echo "<div class='container container-fluid p-0' id='results'>";
-        echo "<div class='card container-fluid' id='displaySongTitle'>";
+        echo "<div class='container container-fluid p-0 results'>";
+        echo "<div class='card container-fluid displayTitle'>";
         echo "<h2>${songName}</h2>";
         echo "</div>";
-        echo "<div id='displaySongDetails'>";
+        echo "<div class='displayDetails'>";
         // print out the artists that contributed to the song
         echo "<p><b>By:</b> <span id='artists'>" . implode(", ", $artists) . "</span></p>";
         

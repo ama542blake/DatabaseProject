@@ -3,7 +3,9 @@
     include_once("includes/header.php");
     include_once("includes/connection.php");
     include_once("includes/common_query.php");
-    
+?>
+<div class="container-fluid jumbotron p-0 text-center displayContainer">
+<?php
     // make sure the essential variables are set
     if ((isset($_GET['album_id']))) {
         $albumID = $_GET['album_id'];
@@ -31,15 +33,18 @@
         }
         
         // set up the printing of the information
-        echo "<div class='container' id='results'>";
+        echo "<div class='container container-fluid p-0 results'>";
+        echo "<div class='card container-fluid displayTitle'>";
         echo "<h2>${albumName}</h2>";
-        echo "<p>Year Released: <span id='albumYear'>${albumYear}</span></p><br>";
+        echo "</div>";
+        echo "<div class='displayDetails'>";
+        echo "<p><b>Year Released: </b><span id='albumYear'>${albumYear}</span></p>";
         // TODO eventually make a link that takes to a page that display all albums
         // the artwork artist has done art for (will require creation of diplay_artwork_artist.php, or something like it)
-        echo "<p id='albumArtwork'>Artwork Artist: <span id='albumArtworkArtistName'.<a href=''>${albumArtworkArtistName}</a></span></p><br>";
+        echo "<p id='albumArtwork'><b>Artwork Artist: </b><span id='albumArtworkArtistName'.<a href=''>${albumArtworkArtistName}</a></span></p>";
         
         // display the artists        
-        echo "<p>By: </p><span id='album-artists'>";
+        echo "<p><b>By: </b></p><span id='album-artists'>";
         $artists = array();
         for ($i = 0; $i < count($albumArtistNames); $i++) {
             $artists[$i] = "<a href='display_artist.php?artist_id=${albumArtistIDs[$i]}'>${albumArtistNames[$i]}</a>";
@@ -49,18 +54,19 @@
         echo "</span><br><br>";
         
         // display the songs
-        echo "<p>Songs:</p><ul>";
+        echo "<p><b>Songs: </b></p><ul>";
         for ($i = 0; $i < count($albumArtistNames); $i++) {
             $j = $i + 1;
             echo "<li>Track ${j}: <a href='display_song.php?song_id=${albumSongIDs[$i]}'>${albumSongNames[$i]}</a></li>"
             . "<input type='hidden' name='song_ids[]' value='${albumSongIDs[$i]}'>";
         } 
         echo "</ul>";
-        echo "<br><br>";
+        echo "<button class='btn btn-block btn-primary' type='button' type='button' id='editAlbumInfo'>Edit this page</button>";
         echo "</div>";
-        echo "<button class='btn btn-primary' type='button' id='editAlbumInfo'>Edit this page</button>";
+        echo "</div>";
     } else {
     }
     
     include_once("includes/footer.php");
 ?>
+</div>
