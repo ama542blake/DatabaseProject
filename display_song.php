@@ -55,7 +55,11 @@
                 . "<p id='producer-name'><b>Producer: </b> <span id='producer'><a href='#' disabled>${producerName}</a></span></p>"
                 . "<p id='artist-name'><b>Genre: </b><span id='genre'><a href=''>${genreName}</a></span></p>";
         
-        echo "<button class='btn btn-block btn-primary' type='button' id='edit-song-info'>Edit</button>";
+        if (isset($_SESSION['username'])) {
+            echo "<button class='btn btn-primary' type='button' id='edit-song-info'>Edit this page</button>";
+        } else {
+            echo "<p>If you would like to edit or add to the information you see here, you must <a href='login_signup.php'>log in or sign up</a> before editing the page.";
+        }
         echo "</div>";
         echo "</div>";
     } else {
