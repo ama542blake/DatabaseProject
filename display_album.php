@@ -57,9 +57,14 @@
         } 
         echo "</ul>";
         echo "<br><br>";
+        if (isset($_SESSION['username'])) {
+            echo "<button class='btn btn-primary' type='button' id='edit-album-info'>Edit this page</button>";
+        } else {
+            echo "<p>If you would like to edit or add to the information you see here, you must <a href='login_signup.php'>log in or sign up</a> before editing the page.";
+        }
         echo "</div>";
-        echo "<button class='btn btn-primary' type='button' id='editAlbumInfo'>Edit this page</button>";
     } else {
+        
     }
     
     include_once("includes/footer.php");
