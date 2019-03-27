@@ -339,7 +339,7 @@
 
     // returns the id of the genre if exists; returns 0 if the genre isn't found
     function getGenreID($conn, $name) {
-        $query = "SELECT genre_id FROM producer WHERE genre_name LIKE '${name}'";
+        $query = "SELECT genre_id FROM genre WHERE genre_name LIKE '${name}'";
         $result = mysqli_query($conn, $query);
         if ($result) {
             $row = mysqli_fetch_assoc($result);

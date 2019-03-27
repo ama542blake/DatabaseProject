@@ -37,6 +37,8 @@
         $producerID = getSongProducer($conn, $songID);
         $producerName = getProducerName($conn, $producerID);
         
+        
+        
         // get the name of the genre
         $genreID = getSongGenre($conn, $songID);
         $genreName = getGenreName($conn, $genreID);
@@ -44,9 +46,10 @@
         echo "<div class='container' id='results'>";
         // print out the artists that contributed to the song
         echo "<p>By: <span id='artists'>" . implode(", ", $artists) . "</span></p><br>";
+        
         // print out the albums that the song appears on
         echo "<p>Appears on: <span id='albums'>" . implode(", ", $albums) . "</span></p><br>"
-                . "<p id='producer-name'>Producer: <span id='producer'.<a href=''>${producerName}</a></span></p><br>"
+                . "<p id='producer-name'>Producer: <span id='producer'><a href='#' disabled>${producerName}</a></span></p><br>"
                 . "<p id='artist-name'>Genre: <span id='genre'><a href=''>${genreName}</a></span></p><br>"
             . "</div>";
         
