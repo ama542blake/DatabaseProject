@@ -58,7 +58,7 @@
         insertArtistAlbum($conn, $artistID, $albumID);
     
         $redirID = $_POST['redir_id'];
-        //header("Location: display_album.php" . $redirID);
+        header("Location: display_album.php" . $redirID);
     } else {
         echo "You have reached this page in error. Try again.";
         var_dump($_POST);
