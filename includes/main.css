@@ -43,6 +43,17 @@ body {
 nav {
     margin-bottom: 70px;
 }
+#searchResults{
+    padding: 0;
+    width: 60%;
+}
+#searchResultsList{
+    padding: 1.5em 0 1.5em 0;
+}
+#searchResultsTitle{
+    padding: .6em;
+    width: 100%;
+}
 #songImageDiv{
     background-image: url("../images/antique-business-electronics-164901.jpg");
 }

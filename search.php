@@ -1,7 +1,13 @@
 <?php 
     include_once('includes/header.php'); 
     include_once('includes/connection.php');
-
+?>
+<div class="container-fluid jumbotron text-center" id="searchResults">
+ <div class="card" id="searchResultsTitle">
+  <h1>Results</h1>
+ </div>
+ <div id="searchResultsList"> 
+<?php
     if ((isset($_GET['searchquery'])) && (isset($_GET['searchtype']))) {
         // what the user has typed in for what they want to search for
         $searchQuery = $_GET['searchquery'];
@@ -236,12 +242,14 @@
             $artistID = $song['artistID'];
             
             echo "<div class='search-result' id='song-results'>"
-                .    "Song: <a href='display_song.php?song_id=${songID}'>${songName}</a><br>";
-            echo "By: ${artistName}<br>";
-            echo "On: ${albumName}<br>";
-            if ($genreName) {echo "Genre: ${genreName}<br>";}
-            if ($producerName) {echo "Producer: ${producerName}<br>";}
+                .    "<b>Song:</b> <a href='display_song.php?song_id=${songID}'>${songName}</a><br>";
+            echo "<b>By:</b> ${artistName}<br>";
+            echo "<b>On:</b> ${albumName}<br>";
+            if ($genreName) {echo "<b>Genre:</b> ${genreName}<br>";}
+            if ($producerName) {echo "<b>Producer:</b> ${producerName}<br>";}
             echo "</div>";
             }
         }
 ?>
+ </div>
+</div>
