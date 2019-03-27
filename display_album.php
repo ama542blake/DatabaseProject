@@ -32,7 +32,7 @@
         
         // set up the printing of the information
         echo "<div class='container' id='results'>";
-        echo "<h2>${albumName}</h2>";
+        echo "<h2>${albumName}</h2><input type='hidden' value='${albumID}' name='album_id'>";
         echo "<p>Year Released: <span id='albumYear'>${albumYear}</span></p><br>";
         // TODO eventually make a link that takes to a page that display all albums
         // the artwork artist has done art for (will require creation of diplay_artwork_artist.php, or something like it)
@@ -52,7 +52,8 @@
         echo "<p>Songs:</p><ul>";
         for ($i = 0; $i < count($albumArtistNames); $i++) {
             $j = $i + 1;
-            echo "<li>Track ${j}: <a href='display_song.php?song_id=${albumSongIDs[$i]}'>${albumSongNames[$i]}</a></li>";
+            echo "<li>Track ${j}: <a href='display_song.php?song_id=${albumSongIDs[$i]}'>${albumSongNames[$i]}</a></li>"
+            . "<input type='hidden' name='song_ids[]' value='${albumSongIDs[$i]}'>";
         } 
         echo "</ul>";
         echo "<br><br>";

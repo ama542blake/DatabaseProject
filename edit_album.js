@@ -12,14 +12,31 @@ $("#editAlbumInfo").click(function() {
     var artistsSpan = $("#album-artists");
     var artistsValue = artistsSpan.text();
 
-    
-    yearSpan.html(`<input type='text' name='year' value='${yearValue}' required>`);
-    artworkSpan.html(`<input type='text' name='artwork_artist' value='${artworkValue}' required>`);
-    artistsSpan.html(`<input type='text' name='artists' value='${artistsValue}' required>`)
+    yearSpan.html(`<input id='year-input' type='text' name='year' value='${yearValue}'>`);
+    artworkSpan.html(`<input id='artwork-artist-input' type='text' name='artwork_artist' value='${artworkValue}'>`);
+    artistsSpan.html(`<input id='artists-input' type='text' name='artists' value='${artistsValue}' required>`)
     
     $(this).remove();
+    
+    // retrieves the ?album_id=whatever for redirecting to the infomation page from update_album.php after updates have been made
+    var albumParam = location.search;
+    // next 2 lines extract jus the song ID from the ?song_id=whatever
+    var idRegExp = /[0-9]+/;
+    var albumID = albumParam.match(idRegExp).join("");
     
     var albumParam = location.search;
     $("#album-update-form").append(`<input type='hidden' id='update-button' name='redir_id' value='${albumParam}'>`);
     $("#album-update-form").append("<input type='submit' id='update-button' value='Update Album Info'>");
+    $("#album-update-form").append(`<input type='hidden' name='album_id' value='${albumID}'>`);
+    
+    // trim whitespace from beginning and end of inputs before submitting
+   $("#artists-input").focusout(function() {
+       $(this).val($(this).val().trim());
+   });
+   $("#year-input").focusout(function() {
+       $(this).val($(this).val().trim());
+   });
+   $("#artwork-artist-input").focusout(function() {
+       $(this).val($(this).val().trim());
+   });
 });
