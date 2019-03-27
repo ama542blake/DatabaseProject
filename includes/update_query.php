@@ -12,8 +12,6 @@
     }
     function updateAlbum ($conn, $albumID, $albumArtworkArtist, $albumReleasedYear){
         $query = "UPDATE album SET album_artwork_artist = ${albumArtworkArtist},  album_released_year = ${albumReleasedYear} WHERE album_id = ${albumID}";
-<<<<<<< HEAD
-=======
         mysqli_query($conn, $query);
     }
 
@@ -21,7 +19,6 @@
         if (!($producerID)) {$producerID = "NULL";}
         if (!($genreID)) {$genreID = "NULL";}
         $query = "UPDATE song SET song_producer = ${producerID}, song_genre = ${genreID} WHERE song_id = ${songID}";
->>>>>>> 71d923beb02bf0431dde97ba062c4e96dc39f8f8
         mysqli_query($conn, $query);
     }
 
