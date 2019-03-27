@@ -57,7 +57,7 @@
             /* Display albums the solo artist has contributed to */
             // TODO: also display albums that the artist has been on through other bands
             printAlbumsAndSongs($conn, $artistID);
-            
+
         echo "</div>";
         }  
     } else {
