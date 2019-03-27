@@ -1,9 +1,11 @@
-<?
+<?php
     session_start();
     include_once("includes/header.php");
     include_once("includes/connection.php");
     include_once("includes/common_query.php");
-    
+?>
+<div class="jumbotron">
+<?php
     if (isset($_GET['artist_id'])) {
         $artistID = $_GET['artist_id'];
         $artistName = getArtistName($conn, $artistID);
@@ -106,3 +108,4 @@
     
     include_once("includes/footer.php");
 ?>
+</div>
