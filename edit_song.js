@@ -14,12 +14,12 @@ $("#edit-song-info").click(function() {
     var genreSpan = $("#genre");
     var genreValue = genreSpan.text();
     
-    artistsSpan.html(`<input type='text' name='artists' value='${artistsValue}' required>`
+    artistsSpan.html(`<input type='text' id='artists-input' name='artists' value='${artistsValue}' required>`
     + "<br><label>Solo Artist<input type='radio' id='solo_radio' class='form-check-inline ml-2 mr-1' name='isband' value='0'></label>"
     + "<label>Band<input type='radio' id='band_radio' class='form-check-inline ml-2 mr-1' name='isband' value='1' checked></label>");
-    albumsSpan.html(`<input type='text' name='albums' value='${albumsValue}' required>`);
-    producerSpan.html(`<input type='text' name='producer' value='${producerValue}'>`);
-    genreSpan.html(`<input type='text' name='genre' value='${genreValue}'>`);
+    albumsSpan.html(`<input type='text' id='albums-input' name='albums' value='${albumsValue}' required>`);
+    producerSpan.html(`<input type='text' id='producer-input' name='producer' value='${producerValue}'>`);
+    genreSpan.html(`<input type='text' id='genre-input' name='genre' value='${genreValue}'>`);
 
     $(this).remove();
     
@@ -42,12 +42,27 @@ $("#edit-song-info").click(function() {
     });
     
     $('#band_radio').click(function () {   
-        $("#band-membership-input").remove();    
+        $("#band-membership-input").remove();   
     });
+    
+    // trim whitespace from beginning and end of inputs before submitting
+   $("#artists-input").focusout(function() {
+       $(this).val($(this).val().trim());
+   });
+   $("#albums-input").focusout(function() {
+       $(this).val($(this).val().trim());
+   });
+   $("#producer-input").focusout(function() {
+       $(this).val($(this).val().trim());
+   });
+   $("#genre-input").focusout(function() {
+       $(this).val($(this).val().trim());
+   });
+
     
     function getBandMembershipHTML() {
     return '<label id="band-membership-input" class="mb-3">Band Membership (optional):' +
                 '<input type="text" class="form-control input-info" name="band_membership">' +
             '</label>';
-}
+    }
 });
