@@ -60,6 +60,7 @@
         } else {
             echo "<p>If you would like to edit or add to the information you see here, you must <a href='login_signup.php'>log in or sign up</a> before editing the page.";
         }
+		echo "<p id='update-info'></p>";
         echo "</div>";
         echo "</div>";
     } else {

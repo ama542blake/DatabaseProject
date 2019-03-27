@@ -31,7 +31,7 @@ $("#edit-song-info").click(function() {
 
     $("#song-update-form").append(`<input type='hidden' name='redir_id' value='${songParam}'>`);
     $("#song-update-form").append(`<input type='hidden' name='song_id' value='${songID}'>`);
-    $("#song-update-form").append("<input type='submit' class='btn btn-block btn-primary' id='update-button' value='Update'>");
+    $("#update-info").append("<input type='submit' class='btn btn-block btn-primary' id='update-button' value='Update'>");
     
     // event listeners for the artist solo/band radio buttons
     $('#solo_radio').click(function () {
