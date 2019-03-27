@@ -9,11 +9,14 @@ $("#editAlbumInfo").click(function() {
     var yearValue = yearSpan.text();
     var artworkSpan = $("#albumArtworkArtistName");
     var artworkValue = artworkSpan.text();
+    var artistsSpan = $("#album-artists");
+    var artistsValue = artistsSpan.text();
 
     
     yearSpan.html(`<input type='text' name='year' value='${yearValue}' required>`);
-    artworkSpan.html(`<input type='text' name='artwork' value='${artworkValue}' required>`);
-
+    artworkSpan.html(`<input type='text' name='artwork_artist' value='${artworkValue}' required>`);
+    artistsSpan.html(`<input type='text' name='artists' value='${artistsValue}' required>`)
+    
     $(this).remove();
     
     var albumParam = location.search;
