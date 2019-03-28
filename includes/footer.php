@@ -16,9 +16,10 @@
         echo "<script src='validation_functions.js'></script>";
     } else if (strpos($pageName, "display_song.php") !== FALSE) {
         echo "<script src='edit_song.js'></script>";
-    }
-    else if (strpos($pageName, "display_album.php") !== FALSE) {
+    } else if (strpos($pageName, "display_album.php") !== FALSE) {
         echo "<script src='edit_album.js'></script>";
+    } else if (strpos($pageName, "display_artist.php") !== FALSE) {
+        echo "<script src='edit_artist.js'></script>";
     }
     
 ?>
