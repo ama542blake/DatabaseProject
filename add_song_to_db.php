@@ -4,14 +4,14 @@
 
     if (isset($_POST['song_name']) && isset($_POST['artist_name']) && isset($_POST['album_name'])) {
         // gather names and ID's of things
-        $songName = $_POST['song_name'];
-        $artistName = $_POST['artist_name'];
+        $songName = mysqli_real_escape_string($conn, $_POST['song_name']);
+        $artistName = mysqli_real_escape_string($conn, $_POST['artist_name']);
         $artistID = getArtistID($conn, $artistName);
-        $albumName = $_POST['album_name'];
+        $albumName = mysqli_real_escape_string($conn, $_POST['album_name']);
         $albumID = getAlbumID($conn, $artistID, $albumName);
         // determine the id of the producer
         if (isset($_POST['producer_name'])) {
-            $producerName = $_POST['producer_name'];
+            $producerName = mysqli_real_escape_string($conn, $_POST['producer_name']);
             $producerID = getProducerID($conn, $producerName);
             if (!$producerID) {
                 $producerID = insertProducer($conn, $producerName);
@@ -21,7 +21,7 @@
         }
         // determine the id of the genre
         if (isset($_POST['genre'])) {
-            $genreName = $_POST['genre'];
+            $genreName = mysqli_real_escape_string($conn, $_POST['genre']);
             $genreID = getGenreID($conn, $genreName);
             if (!$genreID) {
                 $genreID = insertGenre($conn, $genreName);

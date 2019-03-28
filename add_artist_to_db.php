@@ -3,7 +3,8 @@
     include_once('includes/common_query.php');
 
     if (isset($_POST['artist_name'])) {
-        $name = $_POST['artist_name'];
+        $name = mysqli_real_escape_string($conn, $_POST['artist_name']);
+        // don't need to escape - radio button
         $isband = $_POST['isband'];
         if (getArtistID($conn, $name)) {
             echo ("<p id='band-exists-alert'>That artist is already in the database</p>");
@@ -17,7 +18,7 @@
         // if solo artist is in a band
         if ((isset($_POST['band_membership']) && ($_POST['band_membership']))) {
             // name of band the solo member is in
-            $band = $_POST['band_membership'];
+            $band = mysqli_real_escape_string($conn, $_POST['band_membership']);
             $bandID = getArtistID($conn, $band);
             if ($bandID > 0) {
                 // artist already exists, make sure it is a band, not solo artist

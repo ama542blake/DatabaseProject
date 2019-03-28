@@ -5,10 +5,10 @@
     error_reporting(E_ALL);
 
     if ((isset($_POST['album_name'])) && (isset($_POST['album_artist']))) {
-        $albumName = $_POST['album_name'];
-        $artistName = $_POST['album_artist'];
-        $artworkArtistName = $_POST['album_artwork_artist'];
-        $releasedYear = $_POST['album_year_released'];
+        $albumName = mysqli_real_escape_string($conn, $_POST['album_name']);
+        $artistName = mysqli_real_escape_string($conn, $_POST['album_artist']);
+        $artworkArtistName = mysqli_real_escape_string($conn, $_POST['album_artwork_artist']);
+        $releasedYear = mysqli_real_escape_string($conn, $_POST['album_year_released']);
         
         if ($artworkArtistName) {
             $artworkArtistID = getArtworkArtistID($conn, $artworkArtistName);
