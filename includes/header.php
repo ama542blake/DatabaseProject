@@ -11,11 +11,12 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <!-- our own CSS -->
     <link rel="stylesheet" href="includes/main.css">
+	<link rel="icon" href="images/DB_logo_half.png">
 </head>
 
 <body>
     <nav class="navbar navbar-expand-sm fixed-top navbar-dark bg-dark">
-        <a class="navbar-brand" href="index.php"><i class="fas fa-headphones"></i></a>
+        <a class="navbar-brand" href="index.php"><img class="logo mb-1" src="images/DB_logo_full.png"></img></a>
         <div id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
@@ -34,9 +35,9 @@
                         <a class='dropdown-item' id='addSongLink' href='add_song.php'>Add song</a>
                     </div>
                 </li>";
-                echo "<li class='nav-item'><a class='nav-link' href='logout.php'>Log Out</a></li>";
+                echo "<li class=' ml-auto nav-item'><a class='nav-link' href='logout.php'>Log Out</a></li>";
                 } else { // user isn't logged in
-                    echo "<li class='nav-item'><a class='nav-link' href='login_signup.php'>Login/Signup</a></li>";
+                    echo "<li class=' ml-auto nav-item'><a class='nav-link' href='login_signup.php'>Login/Signup</a></li>";
                 }
                 ?>
                 <!-- buttons for displaying info -->
