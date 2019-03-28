@@ -41,12 +41,14 @@
 
 </div>
 <div id ="aboutWrapper" class="jumbotron">
- <div class="jumbotron">
-  <h2 class="text-left">About DataBass</h2>
+ <div class="aboutBox jumbotron">
+  <div>
+   <h2 class="text-left">About DataBass</h2>
    <p>DataBass is a service which lets its users add
     edit information regarding bands' songs,
     albums, and membership.
    </p>
+  </div>
  </div>
 </div>
 
