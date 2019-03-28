@@ -62,8 +62,12 @@
                 $artistNum++;
             }
             // finally, print the results to the screen
-            displayArtistSearchResult($artists);   
+             echo "<form id='artist_selection' action='show_artist.php' method='post'>";
+             echo "<input type='hidden' name='selected_id'>";
+            echo displayArtistSearchResult($artists);
+            echo "</form>";        
         } else {
+            
             echo "Your artist search yielded no results.";
         }
     }
@@ -204,6 +208,10 @@
     }
 
     function displayArtistSearchResult($artists) {
+        echo "<div class='card p-2 displayResultsTypeDiv text-center'>"; 
+         echo "<div class='card'>";
+          echo "<h2>Artists</h2>";
+        echo "</div>";
         foreach($artists as $artist) {
             $artistName = $artist['artistName'];
             $artistID = $artist['artistID']; // need this to add to link to go that artist page
@@ -212,10 +220,16 @@
                 .    "<a href='display_artist.php?artist_id=${artistID}'>${artistName}</a>"
                 . " </div>";
         }
+            echo "</div>";
     }
 
     // TODO: make these display the artist name(s), clean up the placement of  year, for now I just wanted to make this kind of work
     function displayAlbumSearchResult($albums) {
+        echo "<div class='card p-2 displayResultsTypeDiv text-center'>"; 
+        echo "<div class='card'>";
+        echo "<h2>Albums</h2>";
+       echo "</div>";
+         echo "<form id='album_selection' action='show_album.php' method='post'>";
         foreach($albums as $album) {
             $albumName = $album['albumName'];
             $albumID = $album['albumID']; // need to to add to link to go to that album's page
@@ -226,9 +240,16 @@
             if ($albumYear) {echo " - (${albumYear})";}
             echo "</div>";
             }
+           echo "</form>";
+          echo "</div>";
         }
 
     function displaySongSearchResult($songs) {
+       echo "<div class='card p-2 displayResultsTypeDiv text-center'>"; 
+        echo "<div class='card'>";
+        echo "<h2>Songs</h2>";
+       echo "</div>";        
+       echo "<form id='song_selection' action='show_song.php' method='post'>"; 
         foreach($songs as $song) {
             $songName = $song['songName'];
             $songID = $song['songID'];
@@ -240,7 +261,6 @@
             $albumID = $song['albumID'];
             $artistName = $song['artistName'];
             $artistID = $song['artistID'];
-            
             echo "<div class='search-result' id='song-results'>"
                 .    "<b>Song:</b> <a href='display_song.php?song_id=${songID}'>${songName}</a><br>";
             echo "<b>By:</b> ${artistName}<br>";
@@ -249,6 +269,8 @@
             if ($producerName) {echo "<b>Producer:</b> ${producerName}<br>";}
             echo "</div>";
             }
+           echo "</form>";
+            echo "</div>"; 
         }
 ?>
  </div>
