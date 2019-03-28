@@ -1,4 +1,4 @@
-$("#editArtistInfo").click(function() {
+$("#edit-artist-info").click(function() {
     // make the info page a form for updating
     var resultDiv = $("#results");
     resultDiv.addClass("form-group");

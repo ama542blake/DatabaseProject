@@ -35,6 +35,12 @@
             
             /* display albums the band contributed to, and the songs on that album that they were part of */
             printAlbumsAndSongs($conn, $artistID);
+            
+            if (isset($_SESSION['username'])) {
+                echo "<button class='btn btn-primary' type='button' id='edit-artist-info'>Edit this page</button>";
+            } else {
+                echo "<p>If you would like to edit or add to the information you see here, you must <a href='login_signup.php'>log in or sign up</a> before editing the page.";
+            }
         
             echo "</div>";
             
@@ -61,11 +67,11 @@
             printAlbumsAndSongs($conn, $artistID);
 
             if (isset($_SESSION['username'])) {
-            echo "<button class='btn btn-primary' type='button' id='edit-artist-info'>Edit this page</button>";
-        } else {
-            echo "<p>If you would like to edit or add to the information you see here, you must <a href='login_signup.php'>log in or sign up</a> before editing the page.";
-        }
-        echo "</div>";
+                echo "<button class='btn btn-primary' type='button' id='edit-artist-info'>Edit this page</button>";
+            } else {
+                echo "<p>If you would like to edit or add to the information you see here, you must <a href='login_signup.php'>log in or sign up</a> before editing the page.";
+            }
+            echo "</div>";
         }  
     } else {
         

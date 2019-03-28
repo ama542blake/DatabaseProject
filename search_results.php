@@ -44,7 +44,6 @@
              searchSong($conn, $search_query);
              echo "</form>";
             echo "</div>"; 
-            
         }
     }
     
