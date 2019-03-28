@@ -12,9 +12,9 @@ $("#edit-album-info").click(function() {
     var artistsSpan = $("#album-artists");
     var artistsValue = artistsSpan.text();
 
-    yearSpan.html(`<input id='year-input' type='text' name='year' value='${yearValue}'>`);
-    artworkSpan.html(`<input id='artwork-artist-input' type='text' name='artwork_artist' value='${artworkValue}'>`);
-    artistsSpan.html(`<input id='artists-input' type='text' name='artists' value='${artistsValue}' required>`)
+    yearSpan.html(`<input class='form-control' id='year-input' type='text' name='year' value='${yearValue}'>`);
+    artworkSpan.html(`<input class='form-control' id='artwork-artist-input' type='text' name='artwork_artist' value='${artworkValue}'>`);
+    artistsSpan.html(`<input class='form-control' id='artists-input' type='text' name='artists' value='${artistsValue}' required>`)
     
     $(this).remove();
     
@@ -25,7 +25,7 @@ $("#edit-album-info").click(function() {
     var albumID = albumParam.match(idRegExp).join("");
     
     $("#album-update-form").append(`<input type='hidden' name='redir_id' value='${albumParam}'>`);
-    $("#update-info").before("<input type='submit' id='update-button' value='Update Album Info'>");
+    $("#update-info").before("<input class='btn btn-primary' type='submit' id='update-button' value='Update Album Info'>");
     $("#album-update-form").append(`<input type='hidden' name='album_id' value='${albumID}'>`);
     
     // trim whitespace from beginning and end of inputs before submitting
