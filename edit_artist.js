@@ -1,11 +1,12 @@
 $("#edit-artist-info").click(function() {
     // make the info page a form for updating
-    var resultDiv = $("#results");
+    console.log($("#results"));
+    var bandResultDiv = $("#results");
+    if (bandResultDiv == null) {alert('NULL');}
     resultDiv.addClass("form-group");
     resultDiv.wrap("<form action='update_artist.php' method='post' id='artist-update-form'></form>");
     
     // get the HTML elements and text values for all of the information
-
     
     $(this).remove();
     

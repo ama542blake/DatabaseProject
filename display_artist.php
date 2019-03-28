@@ -10,12 +10,12 @@
         $artistID = $_GET['artist_id'];
         $artistName = getArtistName($conn, $artistID);
         $artistIsBand = getArtistIsBand($conn, $artistID);
-    
-        echo "<div class ='container' id='results'>";
-        echo "<h2>${artistName}</h2>";
         
         // display different info depending on if artist is a band or solo artist
         if ($artistIsBand) {
+            echo "<div class ='container' id='band-results'>";
+            echo "<h2>${artistName}</h2>";
+            
             $bandMemberIDs = getBandMembers($conn, $artistID);
             /* display band members */
             // get the names of the band members
@@ -41,10 +41,12 @@
             } else {
                 echo "<p>If you would like to edit or add to the information you see here, you must <a href='login_signup.php'>log in or sign up</a> before editing the page.";
             }
-        
             echo "</div>";
             
         } else {
+            echo "<div class ='container' id='solo-results'>";
+            echo "<h2>${artistName}</h2>";
+        
             $bandIDs = getArtistBands($conn, $artistID);
             /* display the bands */
             // get the names of the bands
