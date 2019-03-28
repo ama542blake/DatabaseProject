@@ -42,7 +42,7 @@
         $genreID = getSongGenre($conn, $songID);
         $genreName = getGenreName($conn, $genreID);
         
-        echo "<div class='container container-fluid p-0 results'>";
+        echo "<div class='container container-fluid p-0' id='results'>";
         echo "<div class='card container-fluid displayTitle'>";
         echo "<h2>${songName}</h2>";
         echo "</div>";
