@@ -208,7 +208,7 @@
     }
 
     function displayArtistSearchResult($artists) {
-        echo "<div class='card p-2 displayResultsTypeDiv text-center'>"; 
+        echo "<div class='card displayResultsTypeDiv pb-3 text-center'>"; 
          echo "<div class='card'>";
           echo "<h2>Artists</h2>";
         echo "</div>";
@@ -217,7 +217,7 @@
             $artistID = $artist['artistID']; // need this to add to link to go that artist page
             
             echo "<div class='search-result' id='artist-results'>"
-                .    "<a href='display_artist.php?artist_id=${artistID}'>${artistName}</a>"
+                .    "<a href='display_artist.php?artist_id=${artistID}'><b>${artistName}</b></a>"
                 . " </div>";
         }
             echo "</div>";
@@ -225,7 +225,7 @@
 
     // TODO: make these display the artist name(s), clean up the placement of  year, for now I just wanted to make this kind of work
     function displayAlbumSearchResult($albums) {
-        echo "<div class='card p-2 displayResultsTypeDiv text-center'>"; 
+        echo "<div class='card displayResultsTypeDiv my-4 pb-3 text-center'>"; 
         echo "<div class='card'>";
         echo "<h2>Albums</h2>";
        echo "</div>";
@@ -236,7 +236,7 @@
             $albumYear = $album['albumYear'];
             
             echo "<div class='search-result' id='artist-results'>"
-                .    "<a href='display_album.php?album_id=${albumID}'>${albumName}</a>";
+                .    "<a href='display_album.php?album_id=${albumID}'><b>${albumName}</b></a>";
             if ($albumYear) {echo " - (${albumYear})";}
             echo "</div>";
             }
@@ -245,7 +245,7 @@
         }
 
     function displaySongSearchResult($songs) {
-       echo "<div class='card p-2 displayResultsTypeDiv text-center'>"; 
+       echo "<div class='card displayResultsTypeDiv my-4 pb-3 text-center'>"; 
         echo "<div class='card'>";
         echo "<h2>Songs</h2>";
        echo "</div>";        
@@ -261,8 +261,8 @@
             $albumID = $song['albumID'];
             $artistName = $song['artistName'];
             $artistID = $song['artistID'];
-            echo "<div class='card p-3 search-result' id='song-results'>"
-                .    "<span><h5><b>Song:</b></h5> <a href='display_song.php?song_id=${songID}'>${songName}</a></span><br>";
+            echo "<div id='song-results'>"
+                .    "<span> <a href='display_song.php?song_id=${songID}'><b>${songName}</b></a></span><br>";
             echo "<b>By:</b> ${artistName}<br>";
             echo "<b>On:</b> ${albumName}<br>";
             if ($genreName) {echo "<b>Genre:</b> ${genreName}<br>";}
