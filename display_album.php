@@ -21,6 +21,8 @@
         
         // get the list of artists associated with the album
         $albumArtistIDs = getArtistIDsFromArtistAlbum($conn, $albumID);
+        $count = count($albumArtistIDs);
+        
         for ($i = 0; $i < count($albumArtistIDs); $i++) {
             $albumArtistNames[$i] = getArtistName($conn, $albumArtistIDs[$i]);
         }
@@ -28,9 +30,15 @@
         // find the songs on the album
         $albumSongIDs = array();
         $albumSongIDs = getAlbumSongIDs($conn, $albumID);
-        $albumSongNames = array();
-        for ($i = 0; $i < count($albumSongIDs); $i++) {
-            $albumSongNames[$i] = getSongName($conn, $albumSongIDs[$i]);
+        
+        // make sure there is at least one song on the album, don't populate name array if there are none;
+        if (isset($albumSongIDs[0])) {
+            $albumSongNames = array();
+            for ($i = 0; $i < count($albumSongIDs); $i++) {
+                $albumSongNames[$i] = getSongName($conn, $albumSongIDs[$i]);
+            }
+        } else {
+            $albumSongNames = array();
         }
         
         // get information about the most recent update of information
@@ -63,12 +71,16 @@
         echo "</span><br><br>";
         
         // display the songs
-        echo "<p><b>Songs: </b></p><ul>";
-        for ($i = 0; $i < count($albumArtistNames); $i++) {
-            $j = $i + 1;
-            echo "<li>Track ${j}: <a href='display_song.php?song_id=${albumSongIDs[$i]}'>${albumSongNames[$i]}</a></li>"
-            . "<input type='hidden' name='song_ids[]' value='${albumSongIDs[$i]}'>";
-        } 
+        if (count($albumSongNames)) {
+            echo "<p><b>Songs: </b></p><ul>";
+            for ($i = 0; $i < count($albumSongNames); $i++) {   
+                $j = $i + 1;
+                echo "<li>Track ${j}: <a href='display_song.php?song_id=${albumSongIDs[$i]}'>${albumSongNames[$i]}</a></li>"
+                . "<input type='hidden' name='song_ids[]' value='${albumSongIDs[$i]}'>";
+            }
+        } else {
+            echo "<p><b>Songs: </b></p><ul>";
+        }
         echo "</ul>";
         if (isset($_SESSION['username'])){
                 echo "<button class='btn btn-block btn-primary' type='button' type='button' id='edit-album-info'>Edit this page</button>";
