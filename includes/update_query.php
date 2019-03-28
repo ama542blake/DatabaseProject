@@ -11,15 +11,17 @@
         $query = "UPDATE artist SET artist_is_band = ${artistIsBand} WHERE artist_id = ${artistID}";
         mysqli_query($conn, $query);
     }
-    function updateAlbum ($conn, $albumID, $albumArtworkArtist, $albumReleasedYear){
-        $query = "UPDATE album SET album_artwork_artist = ${albumArtworkArtist},  album_released_year = ${albumReleasedYear} WHERE album_id = ${albumID}";
+    function updateAlbum ($conn, $albumID, $albumArtworkArtistID, $albumReleasedYear, $updateUserID) {
+        if (!($albumArtworkArtistID)) {$albumArtworkArtistID = "NULL";}
+        if (!($albumReleasedYear)) {$albumReleasedYear = "NULL";}
+        $query = "UPDATE album SET album_artwork_artist = ${albumArtworkArtistID},  album_released_year = ${albumReleasedYear}, album_update_user = ${updateUserID}, album_update_time = CURRENT_TIMESTAMP WHERE album_id = ${albumID}";
         mysqli_query($conn, $query);
     }
 
-    function updateSong($conn, $songID, $producerID, $genreID) {
+    function updateSong($conn, $songID, $producerID, $genreID, $updateUserID) {
         if (!($producerID)) {$producerID = "NULL";}
         if (!($genreID)) {$genreID = "NULL";}
-        $query = "UPDATE song SET song_producer = ${producerID}, song_genre = ${genreID} WHERE song_id = ${songID}";
+        $query = "UPDATE song SET song_producer = ${producerID}, song_genre = ${genreID}, song_update_user = ${updateUserID}, song_update_time = CURRENT_TIMESTAMP WHERE song_id = ${songID}";
         mysqli_query($conn, $query);
     }
 

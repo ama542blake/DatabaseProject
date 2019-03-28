@@ -11,8 +11,10 @@
         if (!(getUserID($conn, $username))) {  
             $query = "INSERT INTO user (user_username, user_pword, user_email, user_is_admin) VALUES ('${username}', '${password}', '${email}', 0)";
             mysqli_query($conn, $query);
+            $userID = mysqli_insert_id($conn);
             echo "Welcome, ${username}.";
             $_SESSION['username'] = $username;
+            $_SESSION['user_id'] = $userID;
         } else {
             header("Location: login_signup.php");
             exit;

@@ -1,11 +1,12 @@
 <?php
     include_once("includes/connection.php");
     include_once("includes/update_query.php");
+    session_start();
 
     /* action for form in display_album.php */ 
 
 //TODO make this accommodate multiple values for each field
-    if ((isset($_POST['redir_id'])) && (isset($_POST['artists']) && (isset($_POST['album_id'])))) {
+    if ((isset($_POST['redir_id'])) && (isset($_POST['artists'])) && (isset($_POST['album_id'])) && (isset($_SESSION['user_id']))) {
         $albumID = $_POST['album_id'];
         
         // gather info about the artist
@@ -51,8 +52,9 @@
             $artworkArtistID = NULL;
         }
         
-        updateAlbum($conn, $albumID, $artworkArtistID, $albumYear);
-        
+        $userID = $_SESSION['user_id'];
+       
+        updateAlbum($conn, $albumID, $artworkArtistID, $albumYear, $userID);
         // destroy and recreate artist_album and album_song relationships
         deleteArtistAlbum($conn, $albumID);
         insertArtistAlbum($conn, $artistID, $albumID);

@@ -37,7 +37,7 @@
         $updateInfo = getUpdateInformation($conn, $albumID, "album");
         $updateUserID = $updateInfo['album_update_user'];
         if (!($updateUserName = getUserName($conn, $updateUserID))) {
-            $updateUserName = "{missing user}";
+            $updateUserName = "";
         }
         $updateTime = $updateInfo['album_update_time'];
         
@@ -75,8 +75,8 @@
         } else {
             echo "<p>If you would like to edit or add to the information you see here, you must <a href='login_signup.php'>log in or sign up</a> before editing the page.";
         }
-        echo "<p id='update-info'>Last edited by ${updateUserName} at ${updateTime}</p>";
         echo "</div>";
+        echo "<p id='update-info'>Last edited by ${updateUserName} at ${updateTime}</p>";
         echo "</div>";
     } else {
     }

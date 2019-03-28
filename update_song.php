@@ -2,10 +2,13 @@
     include_once("includes/connection.php");
     include_once("includes/update_query.php");
 
+    session_start();
+
     /* action for form in display_song.php */ 
 
 //TODO make this accommodate multiple values for each field
-    if ((isset($_POST['redir_id'])) && (isset($_POST['artists']) && (isset($_POST['albums'])))) {
+var_dump($_SESSION);
+    if ((isset($_POST['redir_id'])) && (isset($_POST['artists'])) && (isset($_POST['albums'])) && (isset($_SESSION['user_id']))) {
         $songID = $_POST['song_id'];
         
         // gather info about the artist
@@ -53,8 +56,11 @@
             $genreID = NULL;
         }
         
-        updateSong($conn, $songID, $producerID, $genreID);
+        // user info
+        $userID = $_SESSION['user_id'];
         
+        /* database stuff */
+        updateSong($conn, $songID, $producerID, $genreID, $userID);
         // destroy artist_song and album_song relationships
         deleteArtistSong($conn, $songID);
         deleteAlbumSong($conn, $songID, "song");

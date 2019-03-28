@@ -20,7 +20,7 @@
         $result = mysqli_query($conn, $query);
         if ($result) {
             $row = mysqli_fetch_assoc($result);
-            return $row['user_name'];
+            return $row['user_username'];
         } else {
             return "";
         }

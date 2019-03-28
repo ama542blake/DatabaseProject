@@ -11,6 +11,7 @@
         if ($userID = getUserID($conn, $username)) {
             if (userPasswordIsCorrect($conn, $userID, $password)) {
                 $_SESSION['username'] = $username;
+                $_SESSION['user_id'] = $userID;
                 header( "refresh:2; url=index.php" );
                 echo "Welcome {$username}. Redirecting...";
                 exit;
@@ -22,18 +23,6 @@
         } else {
             echo "User doesn't exist";
             header("Location: login_signup.php");
-            if ($userID = getUserID($conn, $username)) {
-                if (userPasswordIsCorrect($conn, $userID, $password)) {
-                    $_SESSION['username'] = $username;
-                    header( "refresh:2; url=index.php" );
-                    echo "Welcome {$username}. Redirecting...";
-                    exit;
-                }
-            } else {
-                header( "refresh:2; url=login_signup.php" );
-                echo "Incorrect credentials. Redirecting...";
-                exit;
-            }
         }
     } else {
         echo "Please enter credentials";

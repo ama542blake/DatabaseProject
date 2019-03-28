@@ -3,6 +3,7 @@
     include_once("includes/header.php");
     include_once("includes/connection.php");
     include_once("includes/common_query.php");
+    include_once("includes/update_query.php");
 ?>
 <div class="container-fluid jumbotron p-0 text-center displayContainer">
 <?php    
@@ -42,6 +43,14 @@
         $genreID = getSongGenre($conn, $songID);
         $genreName = getGenreName($conn, $genreID);
         
+        // get information about the most recent update of information
+        $updateInfo = getUpdateInformation($conn, $songID, "song");
+        $updateUserID = $updateInfo['song_update_user'];
+        if (!($updateUserName = getUserName($conn, $updateUserID))) {
+            $updateUserName = "";
+        }
+        $updateTime = $updateInfo['song_update_time'];
+        
         echo "<div class='container container-fluid p-0' id='results'>";
         echo "<div class='card container-fluid displayTitle'>";
         echo "<h2>${songName}</h2>";
@@ -61,6 +70,8 @@
             echo "<p>If you would like to edit or add to the information you see here, you must <a href='login_signup.php'>log in or sign up</a> before editing the page.";
         }
 		echo "<p id='update-info'></p>";
+        echo "</div>";
+        echo "<p id='update-info'>Last edited by ${updateUserName} at ${updateTime}</p>";
         echo "</div>";
         echo "</div>";
     } else {
