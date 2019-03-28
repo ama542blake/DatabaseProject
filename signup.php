@@ -12,7 +12,8 @@
             $query = "INSERT INTO user (user_username, user_pword, user_email, user_is_admin) VALUES ('${username}', '${password}', '${email}', 0)";
             mysqli_query($conn, $query);
             $userID = mysqli_insert_id($conn);
-            echo "Welcome, ${username}.";
+			header( "refresh:2; url=login_signup.php" );
+            echo "<div class='alert alert-success' role='alert'>Welcome, ${username}. Please log in using your new account.</div>";
             $_SESSION['username'] = $username;
             $_SESSION['user_id'] = $userID;
         } else {

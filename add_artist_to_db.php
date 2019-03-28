@@ -1,4 +1,5 @@
 <?php
+    include_once('includes/header.php');
     include_once('includes/connection.php');
     include_once('includes/common_query.php');
 
@@ -7,11 +8,12 @@
         // don't need to escape - radio button
         $isband = $_POST['isband'];
         if (getArtistID($conn, $name)) {
-            echo ("<p id='band-exists-alert'>That artist is already in the database</p>");
+            header( "refresh:2; url=add_artist.php" );
+			echo ("<div class='alert alert-danger' role='alert'><p id='band-exists-alert'>That artist is already in the database</p></div>");
         } else {
             $newArtistID = insertArtist($conn, $name, $isband);
 			header( "refresh:2; url=add_artist.php" );
-			echo "${name} successfully added. Redirecting...";
+			echo "<div class='alert alert-success' role='alert'>${name} successfully added. Redirecting...</div>";
 			exit;
         }
         
@@ -36,4 +38,7 @@
             }
         }
     }
+?>
+<?php
+    include_once('includes/footer.php');
 ?>

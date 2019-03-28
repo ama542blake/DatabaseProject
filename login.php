@@ -13,19 +13,19 @@
                 $_SESSION['username'] = $username;
                 $_SESSION['user_id'] = $userID;
                 header( "refresh:2; url=index.php" );
-                echo "Welcome {$username}. Redirecting...";
+                echo "<div class='alert alert-success' role='alert'>Welcome {$username}. Redirecting...</div>";
                 exit;
             } else {
                 header( "refresh:2; url=login_signup.php" );
-                echo "Incorrect credentials. Redirecting...";
+                echo "<div class='alert alert-danger' role='alert'>Incorrect credentials. Redirecting...</div>";
                 exit;
             }
         } else {
-            echo "User doesn't exist";
+            echo "<div class='alert alert-danger' role='alert'>User doesn't exist</div>";
             header("Location: login_signup.php");
         }
     } else {
-        echo "Please enter credentials";
+        echo "<div class='alert alert-danger' role='alert'>Please enter credentials</div>";
         header( "refresh:2; url=login_signup.php" );
     }
 ?>

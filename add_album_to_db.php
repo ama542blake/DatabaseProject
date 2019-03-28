@@ -1,4 +1,5 @@
 <?php
+    include_once('includes/header.php');
     include_once('includes/connection.php');
     include_once('includes/common_query.php');
 
@@ -25,12 +26,12 @@
         if ($artistID) {
             if (getAlbumID($conn, $artistID, $albumName, $artworkArtistID)) {
 				header( "refresh:2; url=add_album.php" );
-                echo "${albumName} by ${artistName} is already in the database.";
+                echo "<div class='alert alert-danger' role='alert'>${albumName} by ${artistName} is already in the database.</div>";
 				exit;
             } else {
 				insertAlbum($conn, $artistID, $albumName, $artworkArtistID, $releasedYear);
 				header( "refresh:2; url=add_album.php" );
-				echo "${albumName} by ${artistName} successfully added. Redirecting...";
+				echo "<div class='alert alert-success' role='alert'>${albumName} by ${artistName} successfully added. Redirecting...</div>";
                 exit;
             }
         } else {
@@ -40,9 +41,12 @@
             $newArtistID = insertArtist($conn, $artistName, 1);
             insertAlbum($conn, $newArtistID, $albumName, $artworkArtistID, $releasedYear);
 			header( "refresh:2; url=add_album.php" );
-			echo "New Artist: ${artistName} and album: ${albumName} successfully added. Redirecting...";
+			echo "<div class='alert alert-success' role='alert'>New Artist: ${artistName} and album: ${albumName} successfully added. Redirecting...</div>";
 			exit;
         }
     }   
 
+?>
+<?php
+    include_once('includes/footer.php');
 ?>
