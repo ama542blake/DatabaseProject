@@ -22,9 +22,30 @@
             search_album($search_query);
             echo "</form>";
         } else if ($searchtype === 'song') {
-            echo "<form id='album_selection' action='show_song.php' method='post'>";
+            echo "<form id='song_selection' action='show_song.php' method='post'>";
             search_song($search_query);
             echo "</form>";
+        } else {
+            echo "<div>";
+             echo "<h2>Artists</h2>";
+             echo "<form id='artist_selection' action='show_artist.php' method='post'>";
+             echo "<input type='hidden' name='selected_id'>";
+             echo "dgdgdsfg";
+             search_artist($search_query);
+             echo "</form>";
+            echo "</div>";
+            echo "<div>";
+             echo "<h2>Albums</h2>";
+             echo "<form id='album_selection' action='show_album.php' method='post'>";
+             search_album($search_query);
+             echo "</form>";
+            echo "</div>";
+            echo "<div>";            
+             echo "<form id='song_selection' action='show_song.php' method='post'>";
+             search_song($search_query);
+             echo "</form>";
+            echo "</div>"; 
+            
         }
     }
 
