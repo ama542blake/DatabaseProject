@@ -261,8 +261,8 @@
             $albumID = $song['albumID'];
             $artistName = $song['artistName'];
             $artistID = $song['artistID'];
-            echo "<div class='search-result' id='song-results'>"
-                .    "<b>Song:</b> <a href='display_song.php?song_id=${songID}'>${songName}</a><br>";
+            echo "<div class='card p-3 search-result' id='song-results'>"
+                .    "<span><h5><b>Song:</b></h5> <a href='display_song.php?song_id=${songID}'>${songName}</a></span><br>";
             echo "<b>By:</b> ${artistName}<br>";
             echo "<b>On:</b> ${albumName}<br>";
             if ($genreName) {echo "<b>Genre:</b> ${genreName}<br>";}
