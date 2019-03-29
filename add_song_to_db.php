@@ -21,18 +21,18 @@
             $trackNumber = 'NULL';
         }
         
-        // determine the id of the producer
-        if (isset($_POST['producer_name'])) {
+        // determine the id of the producer; need to check if it's set and nonempty
+        if (isset($_POST['producer_name']) && ($_POST['producer_name'])) {
             $producerName = mysqli_real_escape_string($conn, $_POST['producer_name']);
             $producerID = getProducerID($conn, $producerName);
-            if (!$producerID) {
+            if (!($producerID)) {
                 $producerID = insertProducer($conn, $producerName);
             }
         } else {
             $producerID = NULL;
         }
-        // determine the id of the genre
-        if (isset($_POST['genre'])) {
+        // determine the id of the genre; need to check if its set and nonempty
+        if (isset($_POST['genre']) && ($_POST['producer_name'])) {
             $genreName = mysqli_real_escape_string($conn, $_POST['genre']);
             $genreID = getGenreID($conn, $genreName);
             if (!$genreID) {
