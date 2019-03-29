@@ -6,6 +6,18 @@ $("#edit-artist-info").click(function() {
         editSolo($("#solo-results"));
     } else alert("Something has gone wrong");
     
+    $(this).remove();
+    
+    // retrieves the ?artist_id=whatever for redirecting to the infomation page from updatr_artidt.php after updates have been made
+    var artistParam = location.search;
+    // next 2 lines extract just the artist ID from the ?artist_id=whatever
+    var idRegExp = /[0-9]+/;
+    var artistID = artistParam.match(idRegExp).join("");
+
+    $("#artist-update-form").append(`<input type='hidden' name='redir_id' value='${artistParam}'>`);
+    $("#artist-update-form").append(`<input type='hidden' name='artist_id' value='${artistID}'>`); 
+    $("#artist-update-form").append("<input type='submit' id='update-button' value='Update Artist Info'>");
+    
     function editBand(resultDiv) {
         // make the info page a form for updating
         resultDiv.addClass("form-group");
@@ -74,21 +86,5 @@ $("#edit-artist-info").click(function() {
         $("#bands-input").focusout(function() {
             $(this).val($(this).val().trim());
         });
-    }
-    
-    $(this).remove();
-    
-    // retrieves the ?artist_id=whatever for redirecting to the infomation page from updatr_artidt.php after updates have been made
-    var artistParam = location.search;
-    // next 2 lines extract just the artist ID from the ?artist_id=whatever
-    var idRegExp = /[0-9]+/;
-    var artistID = artistParam.match(idRegExp).join("");
-    
-    $("#artist-update-form").append(`<input type='hidden' id='update-button' name='redir_id' value='${artistParam}'>`);
-    $("#album-update-form").append(`<input type='hidden' name='artist_id' value='${artistID}'>`); 
-    $("#artist-update-form").append("<input type='submit' id='update-button' value='Update Artist Info'>");
-    
-    function parseOldMemberID(link) {
-        //var regex = \\
     }
 });
