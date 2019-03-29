@@ -14,7 +14,7 @@
 	<link rel="icon" href="images/DB_logo_half.png">
 </head>
 
-    <?php
+<?php
         session_start();
         include_once('includes/header.php');
     include_once('includes/connection.php');
