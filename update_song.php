@@ -1,7 +1,6 @@
 <?php
     include_once("includes/connection.php");
     include_once("includes/update_query.php");
-
     session_start();
 
     /* action for form in display_song.php */ 

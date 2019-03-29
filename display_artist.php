@@ -26,12 +26,12 @@
             // create links for each band member's artist page
             $members = array();
             for ($i = 0; $i < count($bandMemberIDs); $i++) {
-                $members[$i] = "<a href='display_artist.php?artist_id=${bandMemberIDs[$i]}'>{$bandMemberNames[$i]}</a>";
+                $members[$i] = "<a href='display_artist.php?artist_id=${bandMemberIDs[$i]}' class='solo-links' id='${bandMemberIDs[$i]}'>{$bandMemberNames[$i]}</a>";
             }
             // now print the links
             echo "<div id='band-members'>";
-            echo "Band members: " . implode(", ", $members);
-            echo "</div>";
+            echo "Band members: <span id='member-span'>" . implode(", ", $members);
+            echo "</span></div>";
             
             /* display albums the band contributed to, and the songs on that album that they were part of */
             printAlbumsAndSongs($conn, $artistID);
@@ -57,12 +57,12 @@
             // create links for each band's page
             $bands = array();
             for ($i = 0; $i < count($bandIDs); $i++) {
-                $bands[$i] = "<a href='display_artist.php?artist_id=${bandIDs[$i]}'>{$bandNames[$i]}</a>";
+                $bands[$i] = "<a href='display_artist.php?artist_id=${bandIDs[$i]}' class='band-links' id='${bandIDs[$i]}'>{$bandNames[$i]}</a>";
             }
 
             // now print the bands
             echo "<div id='bands'>";
-            echo "Bands: <span id='bands'>" . implode(", ", $bands);
+            echo "Bands: <span id='band-span'>" . implode(", ", $bands);
             echo "</span></div>";
             
             /* Display albums the solo artist has contributed to */

@@ -25,6 +25,10 @@
         mysqli_query($conn, $query);
     }
 
+    function deleteBandMembership($conn, $bandID, $memberID) {
+        $query = "DELETE FROM band_membership WHERE band_id = ${bandID}, solo_id = ${memberID}";
+    }
+
         function getUpdateInformation($conn, $id, $entityType) {
             switch ($entityType) {
                 case "artist":
