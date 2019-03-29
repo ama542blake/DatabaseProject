@@ -150,17 +150,21 @@
         }
     }
 
+    // returns the ID and track number of all songs on an album
     function getAlbumSongIDs($conn, $albumID) {
         // used to index $idArray
         $resultCount = 0;
         // will be used to return all ID's from the query
         $idArray = array();
         
-        $query = "SELECT song_id FROM album_song WHERE album_id = ${albumID}";
+        $query = "SELECT song_id, song_track_number FROM album_song WHERE album_id = ${albumID} ORDER BY song_track_number";
         $result = mysqli_query($conn, $query);
         if ($result) {
             while ($row = mysqli_fetch_assoc($result)) {
-                $idArray[$resultCount] = $row['song_id'];
+                $idArray[$resultCount] = array(
+                                            'song_id' => $row['song_id'],
+                                            'track_number' => $row['song_track_number']
+                                        );
                 $resultCount++;
             }
             return $idArray;

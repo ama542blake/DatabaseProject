@@ -42,13 +42,11 @@
         }
         
         // find the songs on the album
-        $albumSongIDs = array();
         $albumSongIDs = getAlbumSongIDs($conn, $albumID);
         $albumSongNames = array();
         for ($i = 0; $i < count($albumSongIDs); $i++) {
-            $albumSongNames[$i] = getSongName($conn, $albumSongIDs[$i]);
+            $albumSongNames[$i] = getSongName($conn, $albumSongIDs[$i]['song_id']);
         }
-        
         // get information about the most recent update of information
         $updateInfo = getUpdateInformation($conn, $albumID, "album");
         $updateUserID = $updateInfo['album_update_user'];
@@ -80,10 +78,11 @@
         
         // display the songs
         echo "<p><b>Songs: </b></p><ul>";
-        for ($i = 0; $i < count($albumArtistNames); $i++) {
-            $j = $i + 1;
-            echo "<li>Track ${j}: <a href='display_song.php?song_id=${albumSongIDs[$i]}'>${albumSongNames[$i]}</a></li>"
-            . "<input type='hidden' name='song_ids[]' value='${albumSongIDs[$i]}'>";
+        for ($i = 0; $i < count($albumSongNames); $i++) {
+            $id = $albumSongIDs[$i]['song_id'];
+            $trackNum = $albumSongIDs[$i]['track_number'];
+            echo "<li>Track ${trackNum}: <a href='display_song.php?song_id=${id}'>${albumSongNames[$i]}</a></li>"
+            . "<input type='hidden' name='song_ids[]' value='${id}'>";
         } 
         echo "</ul>";
         if (isset($_SESSION['username'])){
