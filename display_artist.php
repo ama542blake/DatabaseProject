@@ -111,7 +111,8 @@
                 while ($row = mysqli_fetch_assoc($albumArtistSong)) {
                     $albumID = $row['album_id'];
                     $songID = $row['song_id'];
-                     $songName = $row['song_name'];
+                    $songName = $row['song_name'];
+                    $trackNumber = $row['song_track_number'];
                     if ($albumID == $previousAlbumID) { // just store song link
                         $songLinkArray[$albumID][$songCount] = "<a href='display_song.php?song_id=${songID}' class='album-links' id='${albumID}'>${songName} </a>";
                         $songCount++;

@@ -564,7 +564,7 @@
     // and simply returns the mysqli_result object, where the client that calls this
     // function may use it to retrieve whatever information is required in its own way
     function getArtistAlbumSongByArtist($conn, $artistID) {
-        $query = "SELECT * FROM view_artist_album_song WHERE artist_id = ${artistID} ORDER BY album_id";
+        $query = "SELECT * FROM view_artist_album_song WHERE artist_id = ${artistID} ORDER BY album_id, song_track_number";
         $result = mysqli_query($conn, $query);
         if ($result) {
             return $result;
