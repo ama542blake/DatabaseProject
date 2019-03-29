@@ -10,31 +10,36 @@ $("#edit-artist-info").click(function() {
         // make the info page a form for updating
         resultDiv.addClass("form-group");
         resultDiv.wrap("<form action='update_band.php' method='post' id='artist-update-form'></form>");
+        var updateForm = $("#artist-update-form");
     
         // get the HTML elements and text values for all of the information
         var memberSpan = $("#member-span");
         var memberValues = memberSpan.text();
         // get the artistID of each member from each member link
-        var soloLinks = $(".member-links");
+        var oldMemberLinks = $(".member-links");
         var oldMemberIDs = new Array();
-        bandLinks.each(function(index) {
-            oldMemberIDs[index] = this[index].attr("id");
+        $.each(oldMemberLinks, function(index) {
+            oldMemberIDs[index] = this.getAttribute("id");
         });
-        bandIDs.forEach(function(id) {
+        
+        oldMemberIDs.forEach(function(id) {
             updateForm.append(`<input type='hidden' value='${id}' name='old_member_ids[]'>`);
         });
+        
         // change the members span to an input
         memberSpan.html(`<input type='text' id='members-input' name='members' value='${memberValues}' required><br><p>Seperate member names with commas.</p>`);
         
-        // get the albumID for each album
-        var albumLinks = $(".album-links");
-        var albumIDs = new Array();
-        albumLinks.each(function(index) {
-            albumIDs[index] = this[index].attr("id");
-        });
-        albumIDs.forEach(function(id) {
-            updateForm.append(`<input type='hidden' value='${id}' name='album_ids[]'>`);
-        });
+        /* don't think this is needed right now, could potentially be useful
+        later on though... not sure yet */
+//        // get the albumID for each album
+//        var albumLinks = $(".album-links");
+//        var albumIDs = new Array();
+//        albumLinks.each(function(index) {
+//            albumIDs[index] = this[index].attr("id");
+//        });
+//        albumIDs.forEach(function(id) {
+//            updateForm.append(`<input type='hidden' value='${id}' name='album_ids[]'>`);
+//        });
         
         // trim whitespace from beginning and end of inputs before submitting
         $("#members-input").focusout(function() {
@@ -51,11 +56,15 @@ $("#edit-artist-info").click(function() {
         var bandSpan = $("#band-span");
         var bandValues = bandSpan.text();
         // get the artistID of each band from each band link
-        var bandLinks = $(".solo-links");
+        var bandLinks = $(".member-links");
         var bandIDs = new Array();
-        bandLinks.each(function(index) {
-            bandIDs[index] = this[index].attr("id");
+        bandLinks.each(function(index, value) {
+            //bandIDs[index] = this[index].attr("id");
+            var val = value.attr("id");
+            bandIDs[index] = val;
+            console.log(bandIDs[index]);
         });
+        
         bandIDs.forEach(function(id) {
             updateForm.append(`<input type='hidden' value='${id}' name='old_band_ids[]'>`);
         });
@@ -78,9 +87,8 @@ $("#edit-artist-info").click(function() {
     $("#artist-update-form").append(`<input type='hidden' id='update-button' name='redir_id' value='${artistParam}'>`);
     $("#album-update-form").append(`<input type='hidden' name='artist_id' value='${artistID}'>`); 
     $("#artist-update-form").append("<input type='submit' id='update-button' value='Update Artist Info'>");
-   
-    function countCommas(inputString) {
-        var inputList = inputString.split(",");
-        return inputList.length;
+    
+    function parseOldMemberID(link) {
+        //var regex = \\
     }
 });
