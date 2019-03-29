@@ -55,14 +55,14 @@
         // finally, check if song is in database, if not, create it
         if (getSongID($conn, $songName, $albumID)) {
             // song is in database
-			//header( "refresh:2; url=add_song.php" ); //displays message before redirecting
+			header( "refresh:2; url=add_song.php" ); //displays message before redirecting
             echo "${songName} by ${artistName} on the album ${albumName} is already in the database. Redirecting...";
-			//exit; //redirects back to song page
+			exit; //redirects back to song page
         } else {
             echo insertSong($conn, $songName, $albumID, $artistID, $producerID, $genreID, $trackNumber, $userID);
-			//header( "refresh:2; url=add_song.php" );
+			header( "refresh:2; url=add_song.php" );
 			echo " ${songName} by ${artistName} successfully added. Redirecting...";
-			//exit;
+			exit;
 			
         }
     }
