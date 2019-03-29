@@ -3,7 +3,7 @@
     include_once('includes/connection.php');
     include_once('includes/common_query.php');
 
-    if (isset($_POST['artist_name'])) {
+    if (isset($_POST['artist_name']) && isset($_SESSION['user_id'])) {
         $name = mysqli_real_escape_string($conn, $_POST['artist_name']);
         // don't need to escape - radio button
         $isband = $_POST['isband'];

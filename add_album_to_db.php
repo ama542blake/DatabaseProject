@@ -5,7 +5,7 @@
 
     error_reporting(E_ALL);
 
-    if ((isset($_POST['album_name'])) && (isset($_POST['album_artist']))) {
+    if ((isset($_POST['album_name'])) && (isset($_POST['album_artist'])) && (isset($_SESSION['user_id']))) {
         $albumName = mysqli_real_escape_string($conn, $_POST['album_name']);
         $artistName = mysqli_real_escape_string($conn, $_POST['album_artist']);
         $artworkArtistName = mysqli_real_escape_string($conn, $_POST['album_artwork_artist']);

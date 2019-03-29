@@ -26,6 +26,9 @@
         <label><h3>Song name:</h3>
             <input class="form-control input-info" type="text" name="song_name" required>
         </label>
+        <label><h3>Album track number:</h3>
+            <input class="form-control input-info" type="text" name="song_track_number">
+        </label>
         <label><h4>Album:</h4>
             <input class="form-control input-info" type="text" name="album_name" required>
         </label>
