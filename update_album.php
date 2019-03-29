@@ -31,6 +31,7 @@
             $albumYear  = NULL;
         }
         
+        // get IDs of all songs on the album
         if (isset($_POST['song_ids'])) {
             $albumSongIDs = $_POST['song_ids'];
         } else {
@@ -63,6 +64,5 @@
         header("Location: display_album.php" . $redirID);
     } else {
         echo "You have reached this page in error. Try again.";
-        var_dump($_POST);
     }
 ?>

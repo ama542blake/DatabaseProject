@@ -3,7 +3,7 @@
     include_once("includes/update_query.php");
     session_start();
 
-    if ((isset($_POST['old_band_ids'])) && (isset($_POST['bands'])) && (isset($_POST['artist_id'])) && (isset($_POST['redir_id']))) {
+    if ((isset($_POST['old_band_ids'])) && (isset($_POST['bands'])) && (isset($_POST['artist_id'])) && (isset($_POST['redir_id'])) && (isset($_SESSION['user_id']))) {
         // destroy the old memberships to prepare for the new ones
         $artistID = $_POST['artist_id'];
         $oldBandIDs= $_POST['old_band_ids'];
@@ -23,6 +23,12 @@
             }
             insertMembership($conn, $bandID, $artistID);
         }
+        
+        $updateUserID = $_SESSION['user_id'];
+        updateArtist($conn, $artistID, $updateUserID);
+        
+        $redirID = $_POST['redir_id'];
+        header("Location: display_artist.php" . $redirID);
     } else {
         
     }

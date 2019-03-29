@@ -3,6 +3,7 @@
     include_once("includes/header.php");
     include_once("includes/connection.php");
     include_once("includes/common_query.php");
+    include_once("includes/update_query.php");
 ?>
 <div class="jumbotron">
 <?php
@@ -32,17 +33,6 @@
             echo "<div id='band-members'>";
             echo "Band members: <span id='member-span'>" . implode(", ", $members);
             echo "</span></div>";
-            
-            /* display albums the band contributed to, and the songs on that album that they were part of */
-            printAlbumsAndSongs($conn, $artistID);
-            
-            if (isset($_SESSION['username'])) {
-                echo "<button class='btn btn-primary' type='button' id='edit-artist-info'>Edit this page</button>";
-            } else {
-                echo "<p>If you would like to edit or add to the information you see here, you must <a href='login_signup.php'>log in or sign up</a> before editing the page.";
-            }
-            echo "</div>";
-            //________________________________
         } else {
             echo "<div class ='container' id='solo-results'>";
             echo "<h2>${artistName}</h2>";
@@ -64,18 +54,28 @@
             echo "<div id='bands'>";
             echo "Bands: <span id='band-span'>" . implode(", ", $bands);
             echo "</span></div>";
-            
-            /* Display albums the solo artist has contributed to */
-            // TODO: also display albums that the artist has been on through other bands
-            printAlbumsAndSongs($conn, $artistID);
+        }
+        
+        /* Display albums the solo artist has contributed to */
+        // TODO: also display albums that the artist has been on through other bands
+        printAlbumsAndSongs($conn, $artistID);
 
-            if (isset($_SESSION['username'])) {
-                echo "<button class='btn btn-primary' type='button' id='edit-artist-info'>Edit this page</button>";
-            } else {
-                echo "<p>If you would like to edit or add to the information you see here, you must <a href='login_signup.php'>log in or sign up</a> before editing the page.";
-            }
-            echo "</div>";
-        }  
+        if (isset($_SESSION['username'])) {
+            echo "<button class='btn btn-primary' type='button' id='edit-artist-info'>Edit this page</button>";
+        } else {
+            echo "<p>If you would like to edit or add to the information you see here, you must <a href='login_signup.php'>log in or sign up</a> before editing the page.";
+        }
+        
+        // get information about the most recent update of information
+        $updateInfo = getUpdateInformation($conn, $artistID, "artist");
+        $updateUserID = $updateInfo['artist_update_user'];
+        if (!($updateUserName = getUserName($conn, $updateUserID))) {
+            $updateUserName = "";
+        }
+        $updateTime = $updateInfo['artist_update_time'];
+        echo "</div>";
+        echo "<p id='update-info'>Last edited by ${updateUserName} at ${updateTime}</p>";
+        echo "</div>";
     } else {
         
     }

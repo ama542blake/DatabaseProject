@@ -7,8 +7,8 @@
 
     /* update queries */
 
-    function updateArtist($conn, $artistID, $artistIsBand) {
-        $query = "UPDATE artist SET artist_is_band = ${artistIsBand} WHERE artist_id = ${artistID}";
+    function updateArtist($conn, $artistID, $updateUserID) {
+        $query = "UPDATE artist SET artist_update_user = ${updateUserID}, artist_update_time = CURRENT_TIMESTAMP WHERE artist_id = ${artistID}";
         mysqli_query($conn, $query);
     }
     function updateAlbum ($conn, $albumID, $albumArtworkArtistID, $albumReleasedYear, $updateUserID) {
