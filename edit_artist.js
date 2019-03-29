@@ -15,17 +15,26 @@ $("#edit-artist-info").click(function() {
         var memberSpan = $("#member-span");
         var memberValues = memberSpan.text();
         // get the artistID of each member from each member link
-        var bandLinks = $(".band-links");
-        var bandIDs = new Array();
+        var soloLinks = $(".member-links");
+        var oldMemberIDs = new Array();
         bandLinks.each(function(index) {
-            bandIDs[index] = this[index].attr("id");
+            oldMemberIDs[index] = this[index].attr("id");
         });
         bandIDs.forEach(function(id) {
-            updateForm.append(`<input type='hidden' value='${id}' name='old_band_ids[]'>`);
+            updateForm.append(`<input type='hidden' value='${id}' name='old_member_ids[]'>`);
         });
-        
-        
+        // change the members span to an input
         memberSpan.html(`<input type='text' id='members-input' name='members' value='${memberValues}' required><br><p>Seperate member names with commas.</p>`);
+        
+        // get the albumID for each album
+        var albumLinks = $(".album-links");
+        var albumIDs = new Array();
+        albumLinks.each(function(index) {
+            albumIDs[index] = this[index].attr("id");
+        });
+        albumIDs.forEach(function(id) {
+            updateForm.append(`<input type='hidden' value='${id}' name='album_ids[]'>`);
+        });
         
         // trim whitespace from beginning and end of inputs before submitting
         $("#members-input").focusout(function() {

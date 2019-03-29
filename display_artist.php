@@ -26,7 +26,7 @@
             // create links for each band member's artist page
             $members = array();
             for ($i = 0; $i < count($bandMemberIDs); $i++) {
-                $members[$i] = "<a href='display_artist.php?artist_id=${bandMemberIDs[$i]}' class='solo-links' id='${bandMemberIDs[$i]}'>{$bandMemberNames[$i]}</a>";
+                $members[$i] = "<a href='display_artist.php?artist_id=${bandMemberIDs[$i]}' class='member-links' id='${bandMemberIDs[$i]}'>{$bandMemberNames[$i]}</a>";
             }
             // now print the links
             echo "<div id='band-members'>";
@@ -42,7 +42,7 @@
                 echo "<p>If you would like to edit or add to the information you see here, you must <a href='login_signup.php'>log in or sign up</a> before editing the page.";
             }
             echo "</div>";
-            
+            //________________________________
         } else {
             echo "<div class ='container' id='solo-results'>";
             echo "<h2>${artistName}</h2>";
@@ -97,13 +97,13 @@
                     $songID = $row['song_id'];
                     $songName = $row['song_name'];
                     if ($albumID == $previousAlbumID) { // just store song link
-                        $songLinkArray[$albumID][$songCount] = "<a href='display_song.php?song_id=${songID}'>${songName}</a>";
+                        $songLinkArray[$albumID][$songCount] = "<a href='display_song.php?song_id=${songID}' class='album-links' id='${albumID}'>${songName} </a>";
                         $songCount++;
                     } else { // store album link and first song
                         $songCount = 0;
                         $albumName = $row['album_name'];
                         $albumLinkArray[$albumID] = "<a href='display_album.php?album_id=${albumID}'>$albumName</a>";
-                        $songLinkArray[$albumID][$songCount] = "<a href='display_song.php?song_id=${songID}'>${songName}</a>";
+                        $songLinkArray[$albumID][$songCount] = "<a href='display_song.php?song_id=${songID}' class='album-links' id='${albumID}'>${songName}</a>";
                         $songCount++;
                     }
                 }
