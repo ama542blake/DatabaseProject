@@ -35,35 +35,71 @@
             // can't redirect until we check if artist is in a band
         }
         
-        // if solo artist is in a band
-        if ((isset($_POST['band_membership']) && ($_POST['band_membership']))) {
-            // name of band the solo member is in
-            $band = mysqli_real_escape_string($conn, $_POST['band_membership']);
-            if ($bandID = getArtistID($conn, $band)) {
-                // artist already exists, make sure it is a band, not solo artist
-                // TODO: this check should occur before the user submits the form, but I will deal with that later
-                if (getArtistIsBand($conn, $bandID)) {
-                    insertMembership($conn, $bandID, $newArtistID);
+        // if solo artist is in 1 or more  bands
+        if (isset($_POST['band_membership'])) {
+            // names of band the solo artist is is in
+            $rawBandString = mysqli_real_escape_string($conn, $_POST['band_membership']);
+            // decompose from list to individual artists
+            $rawBandList = explode(",", $rawBandString);
+            // TODO: convert to foreach for better readability
+            // insert artists and/or create relationships between the member and their bands
+            for ($i = 0; $i < count($rawBandList); $i++) {
+                $bandName = trim($rawBandList[$i]);
+                if ($bandID = getArtistID($conn, $bandName)) {
+                    // artist already exists, make sure it is a band, not solo artist
+                    // TODO: this check should occur before the user submits the form, but I will deal with that later
+                    if (getArtistIsBand($conn, $bandID)) {
+                        insertMembership($conn, $bandID, $newArtistID);
+                    } else {
+                        mysqli_rollback($conn);
+                        header( "refresh:2; url=add_artist.php" );
+                        echo "<div class='alert alert-success' role='alert'>Error, ${bandName} is not a band.</div>";
+			            exit;
+                    }
                 } else {
-                    mysqli_rollback($conn);
-                    header( "refresh:2; url=add_artist.php" );
-                    echo "<div class='alert alert-success' role='alert'>Error, the artist that you have indicated as the band the artist is a member of is not a band.</div>";
-			        exit;
+                    // band doesn't exist, so create an artist entry for the band the solo artist is in, then create membership record
+                    $bandID = insertArtist($conn, $bandName, 1, $userID);
+                    insertMembership($conn, $bandID, $newArtistID);
                 }
-            } else {
-                // band doesn't exist, so create an artist_entry for the band they are in, then create membership record
-                $bandID = insertArtist($conn, $band, 1, $userID);
-                insertMembership($conn, $bandID, $newArtistID);
             }
         }
+        
+        // if solo artist is in 1 or more  bands
+        if (isset($_POST['band_members'])) {
+            // names of band the solo artist is is in
+            $rawMemberString = mysqli_real_escape_string($conn, $_POST['band_members']);
+            // decompose from list to individual bands
+            $rawMemberList = explode(",", $rawMemberString);
+            // TODO: convert to foreach for better readability
+            // insert artists and/or create relationships between the band and their members
+            for ($i = 0; $i < count($rawMemberList); $i++) {
+                $memberName = trim($rawMemberList[$i]);
+                if ($memberID = getArtistID($conn, $memberName)) {
+                    // band member already exists, make sure it is a solo artist, not a band 
+                    // TODO: this check should occur before the user submits the form, but I will deal with that later
+                    if (!(getArtistIsBand($conn, $memberID))) {
+                        insertMembership($conn, $newArtistID, $memberID);
+                    } else {
+                        mysqli_rollback($conn);
+                        header( "refresh:2; url=add_artist.php" );
+                        echo "<div class='alert alert-success' role='alert'>Error, ${memberName} not a solo artist.</div>";
+			            exit;
+                    }
+                } else {
+                    // member doesn't exist, so create an artist entry for the member of the band, then create a membership record
+                    $memberID = insertArtist($conn, $memberName, 0, $userID);
+                    insertMembership($conn, $newArtistID, $memberID);
+                }
+            }
+        }
+    
         mysqli_commit($conn);
         header("location: display_artist.php?artist_id=${newArtistID}");
-			echo "<div class='alert alert-success' role='alert'>${name} successfully added. Redirecting...</div>";
-			exit;
+        echo "<div class='alert alert-success' role='alert'>${name} successfully added. Redirecting...</div>";
+        exit;
     } else {
         echo "You have reached this page in error";
     }
-?>
-<?php
+
     include_once('includes/footer.php');
 ?>

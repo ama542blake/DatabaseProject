@@ -10,17 +10,19 @@
         if (isset($_POST['old_band_ids'])) {
             $oldBandIDs= $_POST['old_band_ids'];
             foreach($oldBandIDs as $oldBandID) {
-                echo deleteBandMembership($conn, $artistID, $oldBandID);
+                deleteBandMembership($conn, $artistID, $oldBandID);
             }
         }
         
         // get the string values for the updated list of bands
         $rawBandString = mysqli_real_escape_string($conn, $_POST['bands']);
-        $rawBandList = explode(", ", $rawBandString);
+        // decompose from list to individual bands
+        $rawBandList = explode(",", $rawBandString);
         
         // for each band added, create the membership relationship
+        // TODO: convert to foreach for better readability
         for ($i = 0; $i < count($rawBandList); $i++) {
-            $bandName = trim($rawBandList[$i]);
+            $bandName = trim($bandList[$i]);
             if (!($bandID = getArtistID($conn, $bandName))) {
                 $bandID = insertArtist($conn, $bandName, 1);
             }
