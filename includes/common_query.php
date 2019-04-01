@@ -180,7 +180,7 @@
             return $idArray;
         } else {
             // error
-            return NULL;
+            return array(); // results of function must implement countable, so return empty array
         }
     }
     
