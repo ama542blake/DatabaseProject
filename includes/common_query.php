@@ -271,7 +271,17 @@
             // error
             return NULL;
         }
-    }   
+    }
+
+    function getSongTrackNumber($conn, $albumID, $songID) {
+        $query = "SELECT song_track_number FROM album_song WHERE song_id = ${songID}";
+        $result = mysqli_query($conn, $query);
+        if ($result) {
+            return mysqli_fetch_assoc($result)['song_track_number'];
+        } else {
+            return 0;
+        }
+    }
     
     // get the ID of the genre(s) of a song
     // TODO: allow multiple genres for a song (will require changing DB sturcture)

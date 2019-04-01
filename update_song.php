@@ -21,11 +21,17 @@
             $artistID = insertArtist($conn, $artistName, $isBand);
         }
         
-        // gather info about the album
+        // gather info about the album and track number of the song
         $albumName = $_POST['albums'];
         $albumID = getAlbumID($conn, $artistID, $albumName);
         if (!($albumID)) {
-            $albumID = insertAlbum($conn, $artistID, $albumName, NULL, NULL);
+            $albumID = insertAlbum($conn, $artistID, $albumName, NULL, NULL, $userID);
+            $trackNumber = 'NULL';
+        } else {
+            $trackNumber = getSongTrackNumber($conn, $albumID, $songID);
+            if (!($trackNumber)) {
+                $trackNumber = "NULL";
+            }
         }
     
         // producer info
@@ -64,7 +70,7 @@
         deleteAlbumSong($conn, $songID, "song");
         // recreate artist_song and album_song relationships
         insertArtistSong($conn, $artistID, $songID);
-        insertAlbumSong($conn, $albumID, $songID);
+        insertAlbumSong($conn, $albumID, $songID, $trackNumber);
         
         $redirID = $_POST['redir_id'];
         header("Location: display_song.php" . $redirID);
