@@ -31,6 +31,6 @@ function getBandMembershipHTML() {
 
 function getBandMembersHTML() {
     return '<label id="band-members-input" class="mb-3">Band Members (optional):' +
-                '<input type="text" class="form-control input-info" name="band_members"><br>' +
-                '<p>Seperate band names with a comma.</p></label>';
+            '<input type="text" class="form-control input-info" name="band_members"><br>' +
+            '<p>Seperate band names with a comma.</p></label>';
 }
