@@ -21,7 +21,7 @@
     include_once("includes/common_query.php");
     include_once("includes/update_query.php");
 ?>
-<div class="container-fluid jumbotron p-0 text-center displayContainer">
+<div class="container-fluid displayContainer jumbotron p-0 pb-2 text-center">
 <?php
     // make sure the essential variables are set
     if ((isset($_GET['album_id']))) {
