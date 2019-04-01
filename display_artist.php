@@ -115,25 +115,32 @@
                 while ($row = mysqli_fetch_assoc($albumArtistSong)) {
                     $albumID = $row['album_id'];
                     $songID = $row['song_id'];
-                     $songName = $row['song_name'];
+                    $songName = $row['song_name'];
+                    $trackNumber = $row['song_track_number'];
                     if ($albumID == $previousAlbumID) { // just store song link
-                        $songLinkArray[$albumID][$songCount] = "<a href='display_song.php?song_id=${songID}' class='album-links' id='${albumID}'>${songName} </a>";
+                        $songLinkArray[$albumID][$songCount] = array(
+                                                                     'link' => "<a href='display_song.php?song_id=${songID}' class='album-links' id='${albumID}'>${songName}</a>",
+                                                                     'trackNumber' => $trackNumber
+                                                                    );
                         $songCount++;
                     } else { // store album link and first song
                         $songCount = 0;
                         $albumName = $row['album_name'];
                         $albumLinkArray[$albumID] = "<a href='display_album.php?album_id=${albumID}'>$albumName</a>";
-                        $songLinkArray[$albumID][$songCount] = "<a href='display_song.php?song_id=${songID}' class='album-links' id='${albumID}'>${songName}</a>";
+                        $songLinkArray[$albumID][$songCount] = array(
+                                                                     'link' => "<a href='display_song.php?song_id=${songID}' class='album-links' id='${albumID}'>${songName}</a>",
+                                                                     'trackNumber' => $trackNumber
+                                                                    );
                         $songCount++;
                     }
                 }
             }
             // finally print the links for the albums
             foreach ($albumLinkArray as $albumID => $albumName) {
-                echo "<h4>${albumName}</h4><ol>";
+                echo "<h4>${albumName}</h4><ul>";
                 // print the songs
-                foreach ($songLinkArray[$albumID] as $songName) {
-                    echo "<li>${songName}</li>";
+                foreach ($songLinkArray[$albumID] as $song) {
+                    echo "<li>Track ${song['trackNumber']}: ${song['link']}</li>";
                 }
                 echo "</ol>";
             }

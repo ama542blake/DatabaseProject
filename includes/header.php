@@ -24,17 +24,6 @@
                     echo "<li class=' ml-auto nav-item'><a class='nav-link' href='login_signup.php'>Login/Signup</a></li>";
                 }
                 ?>
-                <!-- buttons for displaying info -->
-                <li class='nav-item dropdown'>
-                    <a class='nav-link dropdown-toggle' id='navbarDropdown' href='#' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
-                        Recently Added
-                    </a>
-                    <div class='dropdown-menu' id='addDropdown' aria-labelledby='navbarDropdown'>
-                        <a class='dropdown-item' href='recent_artists.php'>Artists</a>
-                        <a class='dropdown-item' href='recent_albums.php'>Albums</a>
-                        <a class='dropdown-item' href='recent_songs.php'>Songs</a>
-                    </div>
-                </li>
             </ul>
         </div>
     </nav>
