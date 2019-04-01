@@ -21,7 +21,7 @@
     include_once("includes/common_query.php");
     include_once("includes/update_query.php");
 ?>
-<div class="jumbotron">
+<div class="container-fluid displayContainer jumbotron p-0 pb-2 text-center">
 <?php
     if (isset($_GET['artist_id'])) {
         $artistID = $_GET['artist_id'];
@@ -30,8 +30,10 @@
         
         // display different info depending on if artist is a band or solo artist
         if ($artistIsBand) {
-            echo "<div class ='container' id='band-results'>";
+            echo "<div class ='container container-fluid p-0' id='band-results'>";
+            echo "<div class='card container-fluid displayTitle'>";
             echo "<h2>${artistName}</h2>";
+            echo "</div>";
             
             $bandMemberIDs = getBandMembers($conn, $artistID);
             /* display band members */
@@ -46,8 +48,9 @@
                 $members[$i] = "<a href='display_artist.php?artist_id=${bandMemberIDs[$i]}' class='member-links' id='${bandMemberIDs[$i]}'>{$bandMemberNames[$i]}</a>";
             }
             // now print the links
+            echo "<div class='displayDetails'";
             echo "<div id='band-members'>";
-            echo "Band members: <span id='member-span'>" . implode(", ", $members);
+            echo "<b>Band members:</b> <span id='member-span'>" . implode(", ", $members);
             echo "</span></div>";
         } else {
             echo "<div class ='container' id='solo-results'>";
@@ -95,6 +98,7 @@
     } else {
         
     }
+    echo "</div>";
 
     function printAlbumsAndSongs($conn, $artistID) {
         echo "<div id='artist-albums'>";

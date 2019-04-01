@@ -7,6 +7,13 @@ JOIN `album` ON `artist_album`.`album_id` = `album`.`album_id`
 JOIN `song` ON `album_song`.`song_id` = `song`.`song_id`
 ORDER BY `album_song`.`song_track_number` */
 
+/*  another one for phpMyAdmin, but can also be easily converted to plain MySQL
+CREATE VIEW view_artist_album AS
+SELECT `artist_album`.`artist_id`, `artist`.`artist_name`, `artist_album`.`album_id`, `album`.`album_name` FROM `artist_album`
+JOIN `artist` ON `artist_album`.`artist_id` = `artist`.`artist_id`
+JOIN `album` ON `artist_album`.`album_id` = `album`.`album_id`
+*/
+
 CREATE DATABASE music_site;
 USE music_site;
 

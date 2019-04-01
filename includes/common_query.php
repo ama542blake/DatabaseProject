@@ -32,7 +32,17 @@
         if ($result) {
             return mysqli_fetch_assoc($result)['count'];
         } else {
-            return "no";
+            return -1;
+        }
+    }
+
+    function userEmailAlreadyUsed($conn, $userEmail) {
+        $query = "SELECT COUNT(*) AS count FROM user WHERE user_email = '${userEmail}'";
+        $result = mysqli_query($conn, $query);
+        if ($result) {
+            return mysqli_fetch_assoc($result)['count'];
+        } else {
+            return -1;
         }
     }
 
@@ -117,7 +127,7 @@
 
     // returns the id of the album if exists; returns 0 if the album isn't found
     function getAlbumID($conn, $artistID, $albumName) {
-        $query = "SELECT album_id FROM view_artist_album_song WHERE album_name = '${albumName}' AND artist_id = ${artistID}";
+        $query = "SELECT album_id FROM view_artist_album WHERE album_name = '${albumName}' AND artist_id = ${artistID}";
         $result = mysqli_query($conn, $query);
         if ($result) {
             return mysqli_fetch_assoc($result)['album_id'];
@@ -170,7 +180,7 @@
             return $idArray;
         } else {
             // error
-            return NULL;
+            return array(); // results of function must implement countable, so return empty array
         }
     }
     
@@ -271,7 +281,17 @@
             // error
             return NULL;
         }
-    }   
+    }
+
+    function getSongTrackNumber($conn, $albumID, $songID) {
+        $query = "SELECT song_track_number FROM album_song WHERE song_id = ${songID}";
+        $result = mysqli_query($conn, $query);
+        if ($result) {
+            return mysqli_fetch_assoc($result)['song_track_number'];
+        } else {
+            return 0;
+        }
+    }
     
     // get the ID of the genre(s) of a song
     // TODO: allow multiple genres for a song (will require changing DB sturcture)

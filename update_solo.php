@@ -3,12 +3,15 @@
     include_once("includes/update_query.php");
     session_start();
 
-    if ((isset($_POST['old_band_ids'])) && (isset($_POST['bands'])) && (isset($_POST['artist_id'])) && (isset($_POST['redir_id'])) && (isset($_SESSION['user_id']))) {
-        // destroy the old memberships to prepare for the new ones
+    if ((isset($_POST['bands'])) && (isset($_POST['artist_id'])) && (isset($_POST['redir_id'])) && (isset($_SESSION['user_id']))) {
         $artistID = $_POST['artist_id'];
-        $oldBandIDs= $_POST['old_band_ids'];
-        foreach($oldBandIDs as $oldBandID) {
-            echo deleteBandMembership($conn, $artistID, $oldBandID);
+        
+        // destroy the old memberships to prepare for the new ones
+        if (isset($_POST['old_band_ids'])) {
+            $oldBandIDs= $_POST['old_band_ids'];
+            foreach($oldBandIDs as $oldBandID) {
+                echo deleteBandMembership($conn, $artistID, $oldBandID);
+            }
         }
         
         // get the string values for the updated list of bands
