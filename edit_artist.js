@@ -14,9 +14,9 @@ $("#edit-artist-info").click(function() {
     var idRegExp = /[0-9]+/;
     var artistID = artistParam.match(idRegExp).join("");
 
-    $("#artist-update-form").append(`<input type='hidden' name='redir_id' value='${artistParam}'>`);
-    $("#artist-update-form").append(`<input type='hidden' name='artist_id' value='${artistID}'>`); 
-    $("#artist-update-form").append("<input type='submit' id='update-button' value='Update Artist Info'>");
+    $("#artist-update-form").append(`<input class='form-control' type='hidden' name='redir_id' value='${artistParam}'>`);
+    $("#artist-update-form").append(`<input class='form-control' type='hidden' name='artist_id' value='${artistID}'>`); 
+    $("#artist-update-form").append("<input class='btn btn-block btn-primary' type='submit' id='update-button' value='Update Artist Info'>");
     
     function editBand(resultDiv) {
         // make the info page a form for updating
@@ -35,11 +35,11 @@ $("#edit-artist-info").click(function() {
         });
         
         oldMemberIDs.forEach(function(id) {
-            updateForm.append(`<input type='hidden' value='${id}' name='old_member_ids[]'>`);
+            updateForm.append(`<input class='form-control' type='hidden' value='${id}' name='old_member_ids[]'>`);
         });
         
         // change the members span to an input
-        memberSpan.html(`<input type='text' id='members-input' name='members' value='${memberValues}' required><br><p>Seperate member names with commas.</p>`);
+        memberSpan.html(`<input class='form-control' type='text' id='members-input' name='members' value='${memberValues}' required><br><p>Seperate member names with commas.</p>`);
         
         /* don't think this is needed right now, could potentially be useful
         later on though... not sure yet */
