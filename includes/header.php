@@ -27,5 +27,4 @@
             </ul>
         </div>
     </nav>
-    
     <div class="container">

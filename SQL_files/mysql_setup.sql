@@ -1,19 +1,3 @@
-/* this VIEW syntax is not for MySQL but phpMyAdmin
-CREATE VIEW view_artist_album_song AS
-SELECT `artist_album`.`artist_id`, `artist`.`artist_name`, `artist_album`.`album_id`, `album`.`album_name`, `album_song`.`song_id`, `song`.`song_name`, `album_song`.`song_track_number` FROM `artist_album`
-JOIN `album_song` ON `artist_album`.`album_id` = `album_song`.`album_id`
-JOIN `artist` ON `artist_album`.`artist_id` = `artist`.`artist_id`
-JOIN `album` ON `artist_album`.`album_id` = `album`.`album_id`
-JOIN `song` ON `album_song`.`song_id` = `song`.`song_id`
-ORDER BY `album_song`.`song_track_number` */
-
-/*  another one for phpMyAdmin, but can also be easily converted to plain MySQL
-CREATE VIEW view_artist_album AS
-SELECT `artist_album`.`artist_id`, `artist`.`artist_name`, `artist_album`.`album_id`, `album`.`album_name` FROM `artist_album`
-JOIN `artist` ON `artist_album`.`artist_id` = `artist`.`artist_id`
-JOIN `album` ON `artist_album`.`album_id` = `album`.`album_id`
-*/
-
 CREATE DATABASE music_site;
 USE music_site;
 
@@ -108,3 +92,34 @@ CREATE TABLE band_membership (
 	FOREIGN KEY(band_id) REFERENCES artist(artist_id) ON DELETE CASCADE,
 	FOREIGN KEY(solo_id) REFERENCES artist(artist_id) ON DELETE CASCADE
 );
+
+/* this VIEW syntax is not for MySQL but phpMyAdmin
+CREATE VIEW view_artist_album_song AS
+SELECT `artist_album`.`artist_id`, `artist`.`artist_name`, `artist_album`.`album_id`, `album`.`album_name`, `album_song`.`song_id`, `song`.`song_name`, `album_song`.`song_track_number` FROM `artist_album`
+JOIN `album_song` ON `artist_album`.`album_id` = `album_song`.`album_id`
+JOIN `artist` ON `artist_album`.`artist_id` = `artist`.`artist_id`
+JOIN `album` ON `artist_album`.`album_id` = `album`.`album_id`
+JOIN `song` ON `album_song`.`song_id` = `song`.`song_id`
+ORDER BY `album_song`.`song_track_number` */
+
+/* Syntax for MySQL */
+CREATE VIEW view_artist_album_song AS
+SELECT artist_album.artist_id, artist.artist_name, artist_album.album_id, album.album_name, album_song.song_id, song.song_name, album_song.song_track_number FROM artist_album
+JOIN album_song ON artist_album.album_id = album_song.album_id
+JOIN artist ON artist_album.artist_id = artist.artist_id
+JOIN album ON artist_album.album_id = album.album_id
+JOIN song ON album_song.song_id = song.song_id
+ORDER BY album_song.song_track_number;
+
+/*  another one for phpMyAdmin, but can also be easily converted to plain MySQL
+CREATE VIEW view_artist_album AS
+SELECT `artist_album`.`artist_id`, `artist`.`artist_name`, `artist_album`.`album_id`, `album`.`album_name` FROM `artist_album`
+JOIN `artist` ON `artist_album`.`artist_id` = `artist`.`artist_id`
+JOIN `album` ON `artist_album`.`album_id` = `album`.`album_id`
+*/
+
+/* Syntax for MySQL */
+CREATE VIEW view_artist_album AS
+SELECT artist_album.artist_id, artist.artist_name, artist_album.album_id, album.album_name FROM artist_album
+JOIN artis ON artist_album.artist_id = artist.artist_id
+JOIN album ON artist_album.album_id = album.album_id;

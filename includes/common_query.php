@@ -580,7 +580,7 @@
         } 
     }
 
-    // queries view)artist_album_song to get all combinations for an artist
+    // queries view_artist_album_song to get all combinations for an artist
     // and simply returns the mysqli_result object, where the client that calls this
     // function may use it to retrieve whatever information is required in its own way
     function getArtistAlbumSongByArtist($conn, $artistID) {
