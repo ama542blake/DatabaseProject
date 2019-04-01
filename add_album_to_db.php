@@ -42,20 +42,16 @@
                 echo "<div class='alert alert-danger' role='alert'>${albumName} by ${artistName} is already in the database.</div>";
 				exit;
             } else {
-				insertAlbum($conn, $artistID, $albumName, $artworkArtistID, $releasedYear, $userID);
-				header( "refresh:2; url=add_album.php" );
-				echo "<div class='alert alert-success' role='alert'>${albumName} by ${artistName} successfully added. Redirecting...</div>";
-                exit;
+				$albumID = insertAlbum($conn, $artistID, $albumName, $artworkArtistID, $releasedYear, $userID);
+				header("location: display_album.php?album_id=${albumID}");
             }
         } else {        
             // album is not in database if the artist is not in the database
             // (can't have an album if there was no artist to create it)
             // TODO find a way to allow user to choose whether the artist is a band or solo, for now assume yes
             $newArtistID = insertArtist($conn, $artistName, 1, $userID);
-            insertAlbum($conn, $newArtistID, $albumName, $artworkArtistID, $releasedYear, $userID);
-			header( "refresh:2; url=add_album.php" );
-			echo "<div class='alert alert-success' role='alert'>New Artist: ${artistName} and album: ${albumName} successfully added. Redirecting...</div>";
-			exit;
+            $albumID = insertAlbum($conn, $newArtistID, $albumName, $artworkArtistID, $releasedYear, $userID);
+			header("location: display_album.php?album_id=${albumID}");
         }
     }   
 

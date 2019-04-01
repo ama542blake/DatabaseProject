@@ -12,9 +12,7 @@
             if (userPasswordIsCorrect($conn, $userID, $password)) {
                 $_SESSION['username'] = $username;
                 $_SESSION['user_id'] = $userID;
-                header( "refresh:2; url=index.php" );
-                echo "<div class='alert alert-success' role='alert'>Welcome {$username}. Redirecting...</div>";
-                exit;
+                header( "Location: index.php" );
             } else {
                 header( "refresh:2; url=login_signup.php" );
                 echo "<div class='alert alert-danger' role='alert'>Incorrect credentials. Redirecting...</div>";

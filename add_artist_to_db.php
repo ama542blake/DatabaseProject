@@ -57,7 +57,7 @@
             }
         }
         mysqli_commit($conn);
-        header( "refresh:2; url=add_artist.php" );
+        header("location: display_artist.php?artist_id=${newArtistID}");
 			echo "<div class='alert alert-success' role='alert'>${name} successfully added. Redirecting...</div>";
 			exit;
     } else {

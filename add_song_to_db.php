@@ -74,9 +74,6 @@
         } else {
             $songID = insertSong($conn, $songName, $albumID, $artistID, $producerID, $genreID, $trackNumber, $userID);
 			header( "location: display_song.php?song_id=${songID}");
-			echo " ${songName} by ${artistName} successfully added. Redirecting...";
-			exit;
-			
         }
     }
 
