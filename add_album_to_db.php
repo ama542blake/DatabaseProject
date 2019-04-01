@@ -37,7 +37,7 @@
         // TODO need to make add artwork artist search and insert
         $artistID = getArtistID($conn, $artistName);
         if ($artistID) {
-            if (getAlbumID($conn, $artistID, $albumName, $artworkArtistID)) {
+            if (getAlbumID($conn, $artistID, $albumName)) {
 				header( "refresh:2; url=add_album.php" );
                 echo "<div class='alert alert-danger' role='alert'>${albumName} by ${artistName} is already in the database.</div>";
 				exit;

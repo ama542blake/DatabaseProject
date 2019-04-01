@@ -53,7 +53,6 @@
                     }
         }
     
-
     /* deletion quries */
 
     function deleteArtistAlbum($conn, $albumID) {

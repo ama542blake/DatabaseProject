@@ -127,7 +127,7 @@
 
     // returns the id of the album if exists; returns 0 if the album isn't found
     function getAlbumID($conn, $artistID, $albumName) {
-        $query = "SELECT album_id FROM view_artist_album_song WHERE album_name = '${albumName}' AND artist_id = ${artistID}";
+        $query = "SELECT album_id FROM view_artist_album WHERE album_name = '${albumName}' AND artist_id = ${artistID}";
         $result = mysqli_query($conn, $query);
         if ($result) {
             return mysqli_fetch_assoc($result)['album_id'];

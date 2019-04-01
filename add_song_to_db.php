@@ -55,16 +55,18 @@
             $genreID = "NULL";
         }
         
-        if (!($artistID)) { // artist and therefore album are not in database, so create artist then album
+        // artist and album related entries
+        if ($artistID) { // artist is in DB
+            if (!$albumID) { // album and therefore song are not in database, so create album
+                $albumID = insertAlbum($conn, $artistID, $albumName, NULL, NULL, $userID);
+            } // else album is in DB, so don't need to create
+        } else {  // artist and therefore album are not in database, so create artist then album
             // TODO: allow user to decide if the artist is a band, for now assume band
             $artistID = insertArtist($conn, $artistName, 1, $userID);
             // TODO: find a way to allow user to enter in album released year and artwork artist
             $albumID = insertAlbum($conn, $artistID, $albumName, NULL, NULL, $userID);
-        } else { // artist is in database
-            if (!$albumID) { // album and therefore song are not in database, so create album
-                $albumID = insertAlbum($conn, $artistID, $albumName, NULL, NULL, $userID);
-            }
         }
+        
         // finally, check if song is in database, if not, create it
         if (getSongID($conn, $songName, $albumID)) {
             // song is in database
