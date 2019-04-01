@@ -32,7 +32,17 @@
         if ($result) {
             return mysqli_fetch_assoc($result)['count'];
         } else {
-            return "no";
+            return -1;
+        }
+    }
+
+    function userEmailAlreadyUsed($conn, $userEmail) {
+        $query = "SELECT COUNT(*) AS count FROM user WHERE user_email = '${userEmail}'";
+        $result = mysqli_query($conn, $query);
+        if ($result) {
+            return mysqli_fetch_assoc($result)['count'];
+        } else {
+            return -1;
         }
     }
 

@@ -21,7 +21,12 @@
         $username = $_POST['username'];
         $password = $_POST['password'];
         $email = $_POST['email'];
-        if (!(getUserID($conn, $username))) {  
+        if (!(getUserID($conn, $username))) {
+            if (userEmailAlreadyUsed($conn, $email)) {
+                header("refresh:2; url=login_signup.php");
+                echo "<div class='alert alert-warning' role='alert'>An account with that email address alredy exists. Please log in.</div>";
+                exit;
+            }
             $query = "INSERT INTO user (user_username, user_pword, user_email, user_is_admin) VALUES ('${username}', '${password}', '${email}', 0)";
             mysqli_query($conn, $query);
             $userID = mysqli_insert_id($conn);
@@ -30,8 +35,6 @@
 			header("refresh:2; url=index.php");
             echo "<div class='alert alert-success' role='alert'>Welcome, ${username}. You are now logged in to your new account.</div>";
         } else {
-            header("Location: login_signup.php");
-            exit;
         }
         
     } else {

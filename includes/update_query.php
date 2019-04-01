@@ -26,8 +26,8 @@
     }
 
     function deleteBandMembership($conn, $bandID, $memberID) {
-        $query = "DELETE FROM band_membership WHERE band_id = ${bandID}, solo_id = ${memberID}";
-        return mysqli_errno($conn);
+        $query = "DELETE FROM band_membership WHERE band_id = ${bandID} AND solo_id = ${memberID}";
+        mysqli_query($conn, $query);
     }
 
         function getUpdateInformation($conn, $id, $entityType) {
