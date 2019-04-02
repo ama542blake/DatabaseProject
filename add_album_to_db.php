@@ -39,7 +39,7 @@
                 $newArtistNames[$i] = $artistNames[$i];
             }
         }
-        // if any of the artists the user has entered isn't in the database, force them to first add the artist
+        // if any of the artists the user has entered isn't in the database, force user to first add the artist
         if (count($newArtistNames)) {
                     echo "<div class='alert alert-danger' role='alert'>"
                         . implode(", ", $newArtistNames)
