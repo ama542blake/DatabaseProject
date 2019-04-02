@@ -27,8 +27,9 @@
         <label class="mb-3"><h3>Album Name:</h3>
             <input class="form-control input-info" type="text" name="album_name" required>
         </label>
-        <label class="mb-3"><h4>Artist:</h4>
+        <label class="mb-3"><h4>Artist(s):</h4>
             <input class="form-control input-info" type="text" name="album_artists" required>
+            <p>Seperate artist names with a comma.</p>
         </label>
         <label class="mb-3"><h4>Year released:</h4>
             <input class="form-control input-info" type="number" name="album_year_released" maxlength="4">

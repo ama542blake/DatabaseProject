@@ -40,7 +40,7 @@
                 $allArtistsNew = false;
             } else {
                 //TODO: find way to allow user to determine if each artist is band or solo, for now assume band
-                $artistIDs[$i] = insertArtist($conn, $artistName, 1, $userID);
+                $artistIDs[$i] = insertArtist($conn, $artistNames[$i], 1, $userID);
             }
         }
         
@@ -79,7 +79,7 @@
                 if (getAlbumID($conn, $artistIDs[0], $albumName)) {
                     mysqli_rollback($conn);
 				    header( "refresh:2; url=add_album.php" );
-                    echo "<div class='alert alert-danger' role='alert'>${albumName} by ${artistName} is already in the database.</div>";
+                    echo "<div class='alert alert-danger' role='alert'>${albumName} by ${artistNames[0]} is already in the database.</div>";
 				    exit;
                 } else {
 				    $albumID = insertAlbum($conn, $artistIDs[0], $albumName, $artworkArtistID, $releasedYear, $userID);
@@ -101,7 +101,8 @@
                    Though unlikely, it's possible that an artist could be on two albums of the same name
                    with different sets of artists */
                 foreach ($artistIDs as $artistID) {
-                    if ($albumID = ($conn, $artistID, $albumName)) {
+                    if ($albumID = getAlbumID($conn, $artistID, $albumName)) {
+                        $artistName = getArtistName($conn, $artistID);
                         echo "<div class='alert alert-danger' role='alert'>${albumName} by ${artistName} is already in the database. " 
                             . "If you are trying to add other artists as album contributors, please edit the " 
                             . "<a href='display_album.php?album_id=${albumID}'>album information page</a> for this album.</div>";
