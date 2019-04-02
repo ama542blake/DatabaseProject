@@ -110,6 +110,22 @@
             return $albumID;
         }
     }
+    
+    // like insertAlbum, but for albums with multiple contributing artists; user for mutliple artists creating an album,
+    // since a new album is only created once, not for each artist, and insertAlbum would insert a new one for each
+    function insertMultipleArtistAlbum($conn, $artistIDs, $albumName, $artworkArtistID, $releasedYear, $addUserID) {
+        $albumQuery = insertAlbumStringBuilder($albumName, $artworkArtistID, $releasedYear, $addUserID);
+        $albumResult = mysqli_query($conn, $albumQuery);
+        if ($albumResult) {
+            $albumID = mysqli_insert_id($conn);
+            foreach($artistIDs as $artistID) {
+                insertArtistAlbum($conn, $artistID, $albumID);
+            }
+            return $albumID;
+        } else {
+            return 0;
+        }
+    }
 
     // creates the query for inserting an album based on what variables are null/not null
     function insertAlbumStringBuilder($albumName, $artworkArtistID, $releasedYear, $addUserID) {
@@ -434,10 +450,22 @@
             }
             return $idArray;
         } else {
-            return NULL;
+            return array();
         }
-    } 
-    
+    }
+
+    // checks to see if there is a relationship between an artist and album, given the artist ID and album name;
+    // return the album ID if it does exist, 0 otherwise
+    function getArtistIsOnAlbum($conn, $artistID, $albumName) {
+        $query = "SELECT album_id FROM view_artist_album WHERE artist_id = ${artistID} AND album_name = '${albumName}'";
+        $result = mysqli_query($conn, $query);
+        if ($result) {
+            return mysqli_fetch_assoc($result)['album_id'];
+        } else {
+            return 0;
+        }
+    }
+
     // create a relationship between an artist and an song
     function insertArtistSong($conn, $artistID, $songID) {
         $query = "INSERT INTO artist_song (artist_id, song_id) "

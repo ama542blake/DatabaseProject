@@ -28,7 +28,7 @@
             <input class="form-control input-info" type="text" name="album_name" required>
         </label>
         <label class="mb-3"><h4>Artist:</h4>
-            <input class="form-control input-info" type="text" name="album_artist" required>
+            <input class="form-control input-info" type="text" name="album_artists" required>
         </label>
         <label class="mb-3"><h4>Year released:</h4>
             <input class="form-control input-info" type="number" name="album_year_released" maxlength="4">
