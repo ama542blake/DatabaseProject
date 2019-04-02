@@ -32,16 +32,21 @@
         // TODO: make all other inputs in other files that use comma seperate lists use array_map with trim
         $artistNames = array_map('trim', explode(",", $rawArtistString));
         $artistIDs = array();
-        // use this to determine whether album may already exist; if true, this means none of the artists are in the DB,
-        // and therefore, the album definitely isn't either
-        $allArtistsNew = true;
+        // holds the names of artists that aren't in the database
+        $newArtistNames = array();
         foreach ($artistNames as $i => $name) {
-            if ($artistIDs[$i] = getArtistID($conn, $name)) {
-                $allArtistsNew = false;
-            } else {
-                //TODO: find way to allow user to determine if each artist is band or solo, for now assume band
-                $artistIDs[$i] = insertArtist($conn, $artistNames[$i], 1, $userID);
+            if (!($artistIDs[$i] = getArtistID($conn, $name))) {
+                $newArtistNames[$i] = $artistNames[$i];
             }
+        }
+        // if any of the artists the user has entered isn't in the database, force them to first add the artist
+        if (count($newArtistNames)) {
+                    echo "<div class='alert alert-danger' role='alert'>"
+                        . implode(", ", $newArtistNames)
+                        . " must be added to the database before being associated with an album. "
+                        . "Add an artist <a href='add_artist.php'>here</a>."
+                        . "</div>";
+                    exit;
         }
         
         if ($artworkArtistName) {
@@ -54,62 +59,35 @@
         }
         
         // Now actually insert info
-        /* STRUCTURE FOR FOLLOWING IF BLOCK
-           1 artist: 
-           (a) IF new ($allArtistsNew), album needs to be created because it can't exist without the artist,
-           but artist has already been inserted
-           (b) ELSE (the artist exists), check if the album exists; create album if it doesn't exist 
-           (which automatically creates the relationship)
-         
-           2+ artists:
-           (c) IF all are new ($allArtistsNew) just create the album using insertMultipleArtistAlbum and add
-           the artist_album relationship for each (since this isn't automatically done by insertMultipleArtistAlbum like it
-           is by the normal insertAlbum)
-           (d) ELSE check if ANY one of the artists already is associated with the album the user is trying to 
-           create, and none are, create the album and the relationships (this isn't done by insertMultipleArtistAlbum)
-        */
         $numArtists = count($artistIDs);
-        if ($numArtists === 1) { // (a) or (b)
-            if ($allArtistsNew) { // (a)
-                $albumID = insertAlbum($conn, $artistIDs[0], $albumName, $artworkArtistID, $releasedYear, $userID);
+        if ($numArtists === 1) { // check if the album exists; create album if it doesn't exist 
+            if (getAlbumID($conn, $artistIDs[0], $albumName)) {
+                mysqli_rollback($conn);
+				header( "refresh:2; url=add_album.php" );
+                echo "<div class='alert alert-danger' role='alert'>${albumName} by ${artistNames[0]} is already in the database.</div>";
+				exit;
+            } else {
+				$albumID = insertAlbum($conn, $artistIDs[0], $albumName, $artworkArtistID, $releasedYear, $userID);
                 if ($albumID) {mysqli_commit($conn);} else {mysqli_rollback($conn);}
 				header("location: display_album.php?album_id=${albumID}");
                 exit;
-            } else { // (b)
-                if (getAlbumID($conn, $artistIDs[0], $albumName)) {
+            }
+        } else {
+            // if any of the artists already appear on an album with the name, assume that the album has already been
+            // created, and the user should edit that page
+            /* TODO: find a better way to check if an album with multiple contributing artists exists.
+               Though unlikely, it's possible that an artist could be on two albums of the same name
+               with different sets of artists */
+            foreach ($artistIDs as $artistID) {
+                if ($albumID = getAlbumID($conn, $artistID, $albumName)) { // check if ANY one of the artists already is associated with the album the user is trying tocreate, and none are, create the album
+                    $artistName = getArtistName($conn, $artistID);
+                    echo "<div class='alert alert-danger' role='alert'>${albumName} by ${artistName} is already in the database. " 
+                        . "If you are trying to add other artists as album contributors, please edit the " 
+                        . "<a href='display_album.php?album_id=${albumID}'>album information page</a> for this album.</div>";
                     mysqli_rollback($conn);
-				    header( "refresh:2; url=add_album.php" );
-                    echo "<div class='alert alert-danger' role='alert'>${albumName} by ${artistNames[0]} is already in the database.</div>";
 				    exit;
-                } else {
-				    $albumID = insertAlbum($conn, $artistIDs[0], $albumName, $artworkArtistID, $releasedYear, $userID);
-                    if ($albumID) {mysqli_commit($conn);} else {mysqli_rollback($conn);}
-				    header("location: display_album.php?album_id=${albumID}");
-                    exit;
                 }
             }
-        } else { // (c) or(d)
-            if ($allArtistsNew) { // (c)
-                $albumID = insertMultipleArtistAlbum($conn, $artistIDs, $albumName, $artworkArtistID, $releasedYear, $addUserID);
-                if ($albumID) {mysqli_commit($conn);} else {mysqli_rollback($conn);}
-				header("location: display_album.php?album_id=${albumID}");
-                exit;
-            } else { // (d)
-                // if any of the artists already appear on an album with the name, assume that the album has already been
-                // created, and the user should edit that page
-                /* TODO: find a better way to check if an album with multiple contributing artists exists.
-                   Though unlikely, it's possible that an artist could be on two albums of the same name
-                   with different sets of artists */
-                foreach ($artistIDs as $artistID) {
-                    if ($albumID = getAlbumID($conn, $artistID, $albumName)) {
-                        $artistName = getArtistName($conn, $artistID);
-                        echo "<div class='alert alert-danger' role='alert'>${albumName} by ${artistName} is already in the database. " 
-                            . "If you are trying to add other artists as album contributors, please edit the " 
-                            . "<a href='display_album.php?album_id=${albumID}'>album information page</a> for this album.</div>";
-                        mysqli_rollback($conn);
-				        exit;
-                    }
-                }
                 // if execution reaches this point, we know that the artist-album combo doesn't exists for any of the 
                 // artists the user entered
                 $albumID = insertMultipleArtistAlbum($conn, $artistIDs, $albumName, $artworkArtistID, $releasedYear, $addUserID);
