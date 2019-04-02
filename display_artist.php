@@ -78,13 +78,13 @@
         /* Display albums the solo artist has contributed to */
         // TODO: also display albums that the artist has been on through other bands
         printAlbumsAndSongs($conn, $artistID);
-
         if (isset($_SESSION['username'])) {
             echo "<button class='btn btn-primary' type='button' id='edit-artist-info'>Edit this page</button>";
         } else {
             echo "<p>If you would like to edit or add to the information you see here, you must <a href='login_signup.php'>log in or sign up</a> before editing the page.";
         }
-        
+        echo "<br>";
+		echo "<br>";
         // get information about the most recent update of information
         $updateInfo = getUpdateInformation($conn, $artistID, "artist");
         $updateUserID = $updateInfo['artist_update_user'];
