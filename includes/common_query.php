@@ -90,7 +90,7 @@
             return mysqli_fetch_assoc($result)['artist_name'];
         } else {
             // error
-            return NULL;
+            return array(); // needs to return an iterable object
         }
     }
 

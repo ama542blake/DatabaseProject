@@ -23,7 +23,9 @@
 
 //TODO make this accommodate multiple values for each field
     if ((isset($_POST['redir_id'])) && (isset($_POST['artists'])) && (isset($_POST['album_id'])) && (isset($_SESSION['user_id']))) {
-        $albumID = $_POST['album_id'];
+        $userID = $_SESSION['user_id'];
+        
+        $albumID = $_POST['album_id'];   
         
         // gather info about the artist
         $artistName = $_POST['artists'];
@@ -34,7 +36,7 @@
         }
         $artistID = getArtistID($conn, $artistName);
         if (!($artistID)) {
-            $artistID = insertArtist($conn, $artistName, $isBand);
+            $artistID = insertArtist($conn, $artistName, $isBand, $userID);
         }
         
         // year info
@@ -68,9 +70,7 @@
         } else {
             $artworkArtistID = NULL;
         }
-        
-        $userID = $_SESSION['user_id'];
-       
+           
         updateAlbum($conn, $albumID, $artworkArtistID, $albumYear, $userID);
         // destroy and recreate artist_album and album_song relationships
         deleteArtistAlbum($conn, $albumID);
