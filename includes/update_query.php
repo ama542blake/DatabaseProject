@@ -18,7 +18,7 @@
 
     function updateSong($conn, $songID, $genreName, $updateUserID) {
         if (!($genreName)) {$genreName = "NULL";}
-        $query = "UPDATE song SET song_genre = ${genreName}, song_update_user = ${updateUserID}, song_update_time = CURRENT_TIMESTAMP WHERE song_id = ${songID}";
+        $query = "UPDATE song SET song_genre = '${genreName}', song_update_user = ${updateUserID}, song_update_time = CURRENT_TIMESTAMP WHERE song_id = ${songID}";
         mysqli_query($conn, $query);
     }
 

@@ -34,6 +34,12 @@
             $trackNumber = 'NULL';
         }
         
+        if (isset($_POST['genre'])) {
+            $genreName = $_POST['genre'];
+        } else {
+            $genreName = "NULL";
+        }
+        
         // artist and album related entries
         if ($artistID) { // artist is in DB
             if (!$albumID) { // album and therefore song are not in database, so create album

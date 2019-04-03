@@ -281,7 +281,7 @@
         if ($genreName) {$query .= ", song_genre";}
         if ($addUserID) {$query .= ", song_update_user";}
         $query .= ") VALUES ('${songName}'";
-        if ($genreName) {$query .= ", ${genreName}";}
+        if ($genreName) {$query .= ", '${genreName}'";}
         if ($addUserID) {$query .= ", ${addUserID}";}
         $query .= ")";
         return $query;
