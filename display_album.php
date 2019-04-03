@@ -75,14 +75,14 @@
             . "<a href='display_artwork_artist.php?artwork_artist_id=${albumArtworkArtistID}'>${albumArtworkArtistName}</a></span></p>";
         
         // display the artists        
-        echo "<p><b>By: </b></p><span id='album-artists'>";
+        echo "<p><b>By: </b><span id='album-artists'>";
         $artists = array();
         for ($i = 0; $i < count($albumArtistNames); $i++) {
             $artists[$i] = "<a href='display_artist.php?artist_id=${albumArtistIDs[$i]}'>${albumArtistNames[$i]}</a>";
         }
         // this displays the links to the artists in a comma seperated list
         echo implode(", ", $artists);
-        echo "</span><br><br>";
+        echo "</span></p>";
         
         // display the songs
         echo "<p><b>Songs: </b></p><ul class='list-unstyled'>";
