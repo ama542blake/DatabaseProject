@@ -241,8 +241,7 @@
        echo "<div class='card displayResultsTypeDiv my-4 pb-3 text-center'>"; 
         echo "<div class='card'>";
         echo "<h2>Songs</h2>";
-       echo "</div>";        
-       echo "<form id='song_selection' action='show_song.php' method='post'>"; 
+       echo "</div>";
         foreach($songs as $song) {
             $songName = $song['songName'];
             $songID = $song['songID'];
@@ -258,7 +257,6 @@
             if ($genreName) {echo "<b>Genre:</b> ${genreName}<br>";}
             echo "</div>";
             }
-           echo "</form>";
             echo "</div>"; 
         }
      include_once('includes/footer.php');

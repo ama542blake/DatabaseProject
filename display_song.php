@@ -79,7 +79,7 @@
         // print out the albums that the song appears on
         // TODO: make this print multiple albums when 1 song can be put on 1 album
         echo "<p><b>Appears on: </b> <span id='albums'>" . implode(", ", $albums) . "</span> as track #<span id='trackNumber'>${trackNumber}<span></p>";
-        echo "<p id='artist-name'><b>Genre: </b><span id='genre'><a href=''>${genreName}</a></span></p>";        
+        echo "<p id='genre-name'><b>Genre: </b><span id='genre'><a href='display_genre.php?genre={$genreName}'>${genreName}</a></span></p>";        
         if (isset($_SESSION['username'])) {
             echo "<button class='btn btn-block btn-primary' type='button' id='edit-song-info'>Edit this page</button>";
         } else {
