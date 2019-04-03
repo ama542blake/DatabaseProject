@@ -51,13 +51,8 @@
             $artists[$i] = "<a href='display_artist.php?artist_id=${artistIDs[$i]}'>${artistNames[$i]}</a>";
         }
         
-        // get the name of the producer
-        $producerID = getSongProducer($conn, $songID);
-        $producerName = getProducerName($conn, $producerID);
-        
         // get the name of the genre
-        $genreID = getSongGenre($conn, $songID);
-        $genreName = getGenreName($conn, $genreID);
+        $genreName = getSongGenre($conn, $songID);
         
         // get information about the most recent update of information
         $updateInfo = getUpdateInformation($conn, $songID, "song");
@@ -77,7 +72,6 @@
         
         // print out the albums that the song appears on
         echo "<p><b>Appears on: </b> <span id='albums'>" . implode(", ", $albums) . "</span></p>"
-                . "<p id='producer-name'><b>Producer: </b> <span id='producer'><a href='#' disabled>${producerName}</a></span></p>"
                 . "<p id='artist-name'><b>Genre: </b><span id='genre'><a href=''>${genreName}</a></span></p>";
         
         if (isset($_SESSION['username'])) {

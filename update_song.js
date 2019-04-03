@@ -9,8 +9,6 @@ $("#edit-song-info").click(function() {
     var artistsValue = artistsSpan.text();
     var albumsSpan = $("#albums");
     var albumsValue = albumsSpan.text();
-    var producerSpan = $("#producer");
-    var producerValue = producerSpan.text();
     var genreSpan = $("#genre");
     var genreValue = genreSpan.text();
     
@@ -18,7 +16,6 @@ $("#edit-song-info").click(function() {
     + "<br><label>Solo Artist<input type='radio' id='solo_radio' class='form-check-inline ml-2 mr-1' name='isband' value='0'></label>"
     + "<label>Band<input type='radio' id='band_radio' class='form-check-inline ml-2 mr-1' name='isband' value='1' checked></label>");
     albumsSpan.html(`<input type='text' class='form-control' id='albums-input' name='albums' value='${albumsValue}' required>`);
-    producerSpan.html(`<input type='text' class='form-control' id='producer-input' name='producer' value='${producerValue}'>`);
     genreSpan.html(`<input type='text' class='form-control' id='genre-input' name='genre' value='${genreValue}'>`);
 
     $(this).remove();
@@ -50,9 +47,6 @@ $("#edit-song-info").click(function() {
        $(this).val($(this).val().trim());
    });
    $("#albums-input").focusout(function() {
-       $(this).val($(this).val().trim());
-   });
-   $("#producer-input").focusout(function() {
        $(this).val($(this).val().trim());
    });
    $("#genre-input").focusout(function() {

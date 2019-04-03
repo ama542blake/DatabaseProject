@@ -20,6 +20,7 @@
     session_start();
 
     /* action for form in display_album.php */ 
+    /* In some places, "NULL" is used rather than NULL to allow query values to be set to NULL*/
 
 //TODO make this accommodate multiple values for each field
     if ((isset($_POST['redir_id'])) && (isset($_POST['artists'])) && (isset($_POST['album_id'])) && (isset($_SESSION['user_id']))) {
@@ -39,16 +40,6 @@
             $artistID = insertArtist($conn, $artistName, $isBand, $userID);
         }
         
-        // year info
-        if (isset($_POST['year'])) {
-            $albumYear = $_POST['year'];
-            if (!($albumYear)) { // album year left blank
-                $albumYear = NULL;
-            }
-        } else {
-            $albumYear  = NULL;
-        }
-        
         // get IDs of all songs on the album
         if (isset($_POST['song_ids'])) {
             $albumSongIDs = $_POST['song_ids'];
@@ -58,20 +49,43 @@
         
         //album artwork artist
         if (isset($_POST['artwork_artist'])) {
-            $artworkArtistName = $_POST['artwork_artist'];
-            if ($artworkArtistName){ // not empty string
-                $artworkArtistID = getArtworkArtistID($conn, $artworkArtistName);
-                if (!($artworkArtistID)) {
+            if ($artworkArtistName = $_POST['artwork_artist']){ // not empty string
+                // insert artwork artist if doesn't exist in dv
+                if (!($artworkArtistID = getArtworkArtistID($conn, $artworkArtistName))) {
                     $artworkArtistID = insertArtworkArtist($conn, $artworkArtistName);
-                }   
+                }
             } else {
-                $artworkArtistID = NULL;
+                $artworkArtistID = "NULL";
             }
         } else {
-            $artworkArtistID = NULL;
+            $artworkArtistID = "NULL";
+        }
+        
+        // producer info
+        if (isset($_POST['producer'])) {
+            if ($producerName = $_POST['producer']) {
+                // insert producer if it doesn't exist in db
+                if (!($producerID = getProducerID($conn, $producerName))) {
+                    $producerID = insertProducer($conn, $producerName);
+                }
+            } else {
+                $producerID = "NULL";
+            }
+        } else {
+            $producerName = "NULL";
+        }
+        
+        // year info
+        if (isset($_POST['year'])) {
+            $albumYear = $_POST['year'];
+            if (!($albumYear)) { // album year left blank
+                $albumYear = "NULL";
+            }
+        } else {
+            $albumYear  = "NULL";
         }
            
-        updateAlbum($conn, $albumID, $artworkArtistID, $albumYear, $userID);
+        updateAlbum($conn, $albumID, $artworkArtistID, $producerID, $albumYear, $userID);
         // destroy and recreate artist_album and album_song relationships
         deleteArtistAlbum($conn, $albumID);
         insertArtistAlbum($conn, $artistID, $albumID);

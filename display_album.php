@@ -25,6 +25,7 @@
 <?php
     // make sure the essential variables are set
     if ((isset($_GET['album_id']))) {
+        // information pertaining to the album
         $albumID = $_GET['album_id'];
         $albumName = getAlbumName($conn, $albumID);
         $albumYear = getAlbumYear($conn, $albumID);
@@ -33,6 +34,12 @@
             $albumArtworkArtistName = getArtworkArtistName($conn, $albumArtworkArtistID);
         } else {
             $albumArtworkArtistName = NULL;
+        }
+        $albumProducerID = getAlbumProducerID($conn, $albumID);
+        if ($albumProducerID) {
+            $albumProducerName = getProducerName($conn, $albumProducerID);
+        } else {
+            $albumProducerName = NULL;
         }
         
         // get the list of artists associated with the album
@@ -62,8 +69,7 @@
         echo "</div>";
         echo "<div class='displayDetails'>";
         echo "<p><b>Year Released: </b><span id='albumYear'>${albumYear}</span></p>";
-        // TODO eventually make a link that takes to a page that display all albums
-        // the artwork artist has done art for (will require creation of diplay_artwork_artist.php, or something like it)
+        echo "<p><b>Producer: </b><span id='producerName'>${albumProducerName}</span></p>";
         echo "<p id='albumArtwork'><b>Artwork Artist: </b><span id='albumArtworkArtistName'.<a href=''>${albumArtworkArtistName}</a></span></p>";
         
         // display the artists        

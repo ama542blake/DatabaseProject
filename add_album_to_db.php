@@ -25,6 +25,18 @@
         
         $albumName = mysqli_real_escape_string($conn, $_POST['album_name']);
         $artworkArtistName = mysqli_real_escape_string($conn, $_POST['album_artwork_artist']);
+        
+        // determine the id of the producer; need to check if it's set and nonempty
+        if (isset($_POST['producer_name'])) {
+            $producerName = mysqli_real_escape_string($conn, $_POST['producer_name']);
+            $producerID = getProducerID($conn, $producerName);
+            if (!($producerID)) {
+                $producerID = insertProducer($conn, $producerName);
+            }
+        } else {
+            $producerID = "NULL";
+        }
+        
         $releasedYear = mysqli_real_escape_string($conn, $_POST['album_year_released']);
         
         // gather names and IDs of artist that created the album
@@ -67,7 +79,7 @@
                 echo "<div class='alert alert-danger' role='alert'>${albumName} by ${artistNames[0]} is already in the database.</div>";
 				exit;
             } else {
-				$albumID = insertAlbum($conn, $artistIDs[0], $albumName, $artworkArtistID, $releasedYear, $userID);
+				$albumID = insertAlbum($conn, $artistIDs[0], $albumName, $artworkArtistID, $producerID, $releasedYear, $userID);
                 if ($albumID) {mysqli_commit($conn);} else {mysqli_rollback($conn);}
 				header("location: display_album.php?album_id=${albumID}");
                 exit;
@@ -90,15 +102,14 @@
             }
                 // if execution reaches this point, we know that the artist-album combo doesn't exists for any of the 
                 // artists the user entered
-                $albumID = insertMultipleArtistAlbum($conn, $artistIDs, $albumName, $artworkArtistID, $releasedYear, $addUserID);
+                $albumID = insertMultipleArtistAlbum($conn, $artistIDs, $albumName, $artworkArtistID, $producerID, $releasedYear, $addUserID);
                 if ($albumID) {mysqli_commit($conn);} else {mysqli_rollback($conn);}
 				header("location: display_album.php?album_id=${albumID}");
                 exit;
             }
-        }
-        // execution should never reach this point, so if it does, something has gone wrong and the changes need to be undone
-        mysqli_commit($conn);
-    } else {
+            // execution should never reach this point, so if it does, something has gone wrong and the changes need to be undone
+            mysqli_commit($conn);
+        } else {
         
     }    
 

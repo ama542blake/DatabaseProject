@@ -152,16 +152,8 @@
                 }
                 // set $genreName
                 if ($row['song_genre']) {
-                    $genreID = $row['song_genre'];
-                    $genreQuery = "SELECT genre_name FROM genre WHERE genre_id = ${genreID}";
-                    $genreResult = mysqli_query($conn, $genreQuery);
-                    if ($genreResult) {
-                        $genreName = mysqli_fetch_assoc($genreResult)['genre_name'];
-                    } else {
-                        $genreName = NULL;
-                    }
+                    $genreName = $row['song_genre'];
                 } else {
-                    $genreID = NULL;
                     $genreName = NULL;
                 }
                 
@@ -208,7 +200,6 @@
                             'songID' => $songID,
                             'producerID' => $producerID,
                             'producerName' => $producerName,
-                            'genreID' => $genreID,
                             'genreName' => $genreName,
                             'albumName' => $albumName,
                             'albumID' => $albumID,
@@ -272,7 +263,6 @@
             $songID = $song['songID'];
             $producerID = $song['producerID'];
             $producerName = $song['producerName'];
-            $genreID = $song['genreID'];
             $genreName = $song['genreName'];
             $albumName = $song['albumName'];
             $albumID = $song['albumID'];
