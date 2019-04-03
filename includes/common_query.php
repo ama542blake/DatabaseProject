@@ -270,9 +270,30 @@
         $result = mysqli_query($conn, $query);
         if ($result) {
             $songID = mysqli_insert_id($conn);
+                        echo $songID; exit;
             insertArtistSong($conn, $artistID, $songID);
             insertAlbumSong($conn, $albumID, $songID, $trackNumber);
             return $songID;
+        } else {
+            return 0;
+        }
+    }
+
+    // like insertSong, but for songs with multiple contributing artists; used for mutliple artists
+    // creating a song since a new song is only created once, not for each artist, and insertAlbum
+    //  would insert a new one for each
+    function insertMultipleArtistSong($conn, $songName, $albumID, $artistIDs, $genreName, $trackNumber, $addUserID) {
+        $query = insertSongStringBuilder($albumName, $artworkArtistID, $producerID, $releasedYear, $addUserID);
+        $result = mysqli_query($conn, $query);
+        if ($result) {
+            $songID = mysqli_insert_id($conn);
+            foreach($artistIDs as $artistID) {
+                insertArtistSong($conn, $artistID, $songID);
+            }
+            insertAlbumSong($conn, $albumID, $songID);
+            return $songID;
+        } else {
+            return 0;
         }
     }
 

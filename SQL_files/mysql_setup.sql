@@ -72,8 +72,8 @@ CREATE TABLE artist_song (
 	artist_id SMALLINT UNSIGNED,
 	song_id SMALLINT UNSIGNED,
 	PRIMARY KEY(artist_id, song_id),
-	FOREIGN KEY(artist_id) REFERENCES artist(artist_id),
-	FOREIGN KEY(song_id) REFERENCES song(song_id)
+	FOREIGN KEY(artist_id) REFERENCES artist(artist_id) ON DELETE CASCADE,
+	FOREIGN KEY(song_id) REFERENCES song(song_id) ON DELETE CASCADE
 );
 
 CREATE TABLE band_membership (

@@ -46,7 +46,7 @@
             <input class="form-control input-info" type="text" name="album_name" required>
         </label>
         <label><h4>Artist:</h4>
-            <input class="form-control input-info" type="text" name="artist_name" required>
+            <input class="form-control input-info" type="text" name="artist_names" required>
         </label>
         <label><h4>Genre:</h4>
             <input class="form-control input-info" type="text" name="genre">
