@@ -96,11 +96,12 @@
         }
         
         if (count($artistIDs) == 1) { // only 1 artist
-            if (getSongID($conn, $songName, $albumID)) {
+            if ($songID = getSongID($conn, $songName, $albumID)) {
                 // song is in database
                 mysqli_rollback($conn);
-                header( "refresh:5; url=add_song.php" ); //displays message before redirecting
-                echo "${songName} on the album ${albumName} is already in the database. Redirecting...";
+                echo "${songName} on the album ${albumName} is already in the database. "
+                         . "If you are trying to add a contributing artist to the song, edit the "
+                         . "song info page <a href='display_song.php?song_id=${songID}'>here</a>.";
                 exit; //redirects back to song page
             } else {
                 $songID = insertSong($conn, $songName, $albumID, $artistID, $genreName, $trackNumber, $userID);
@@ -109,18 +110,19 @@
             }
         } else { // 2+ artists on the song
             foreach ($artistIDs as $artistID) {
-                if (getSongID($conn, $songName, $albumID)) {
+                if ($songID = getSongID($conn, $songName, $albumID)) {
                     // song is in database
-                    header( "refresh:5; url=add_song.php" ); //displays message before redirecting
-                    echo "${songName} on the album ${albumName} is already in the database. Redirecting...";
+                    echo "${songName} on the album ${albumName} is already in the database. "
+                         . "If you are trying to add a contributing artist to the song, edit the "
+                         . "song info page <a href='display_song.php?song_id=${songID}'>here</a>.";
                     exit; //redirects back to song page
                 }
             }
-            if ($songID = insertMultipleArtistSong($conn, $songName, $albumID, $artistIDs, $genreName, $trackNumber, $addUserID)) {
+            if ($songID = insertMultipleArtistSong($conn, $songName, $albumID, $artistIDs, $genreName, $trackNumber, $userID)) {
                 // all artist have been iterated through without error, so commit
                 mysqli_commit($conn);
                 header("Location: display_song.php?song_id=${songID}");
-            } else {
+            } else {            
                 mysqli_rollback($conn);
                 echo "<div class='alert alert-danger' role='alert'>"
                         . "An unknown error has occurred."

@@ -12,9 +12,7 @@ $("#edit-song-info").click(function() {
     var genreSpan = $("#genre");
     var genreValue = genreSpan.text();
     
-    artistsSpan.html(`<input type='text' class='form-control' id='artists-input' name='artists' value='${artistsValue}' required>`
-    + "<br><label>Solo Artist<input type='radio' id='solo_radio' class='form-check-inline ml-2 mr-1' name='isband' value='0'></label>"
-    + "<label>Band<input type='radio' id='band_radio' class='form-check-inline ml-2 mr-1' name='isband' value='1' checked></label>");
+    artistsSpan.html(`<input type='text' class='form-control' id='artists-input' name='artists' value='${artistsValue}' required>`);
     albumsSpan.html(`<input type='text' class='form-control' id='albums-input' name='albums' value='${albumsValue}' required>`);
     genreSpan.html(`<input type='text' class='form-control' id='genre-input' name='genre' value='${genreValue}'>`);
 
