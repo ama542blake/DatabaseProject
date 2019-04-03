@@ -84,7 +84,6 @@ CREATE TABLE band_membership (
 	FOREIGN KEY(solo_id) REFERENCES artist(artist_id) ON DELETE CASCADE
 );
 
-/* Syntax for MySQL */
 CREATE VIEW view_artist_album_song AS
 SELECT artist_album.artist_id, artist.artist_name, artist_album.album_id, album.album_name, album.album_producer, album_song.song_id, song.song_name, song.song_genre, album_song.song_track_number FROM artist_album
 JOIN album_song ON artist_album.album_id = album_song.album_id
@@ -93,7 +92,6 @@ JOIN album ON artist_album.album_id = album.album_id
 JOIN song ON album_song.song_id = song.song_id
 ORDER BY album_song.song_track_number;
 
-/* Syntax for MySQL */
 CREATE VIEW view_artist_album AS
 SELECT artist_album.artist_id, artist.artist_name, artist_album.album_id, album.album_name FROM artist_album
 JOIN artist ON artist_album.artist_id = artist.artist_id
@@ -102,5 +100,11 @@ JOIN album ON artist_album.album_id = album.album_id;
 CREATE VIEW view_producer_album_artist AS
 SELECT producer.producer_id, producer.producer_name, album.album_id, album.album_name, artist.artist_id, artist.artist_name FROM producer
 JOIN album ON producer.producer_id = album.album_producer
+JOIN artist_album ON album.album_id = artist_album.album_id
+JOIN artist ON artist_album.artist_id = artist.artist_id
+
+CREATE VIEW view_artworkartist_album_artist AS
+SELECT artwork_artist.artwork_artist_id, artwork_artist.artwork_artist_name, album.album_id, album.album_name, artist.artist_id, artist.artist_name FROM artwork_artist 
+JOIN album ON artwork_artist.artwork_artist_id = album.album_artwork_artist
 JOIN artist_album ON album.album_id = artist_album.album_id
 JOIN artist ON artist_album.artist_id = artist.artist_id

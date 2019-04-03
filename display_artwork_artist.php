@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Producer albums</title>
+    <title>Artowrk artist albums</title>
     <!-- Bootstrap 4.3.1-->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- FontAwesome -->
@@ -24,13 +24,13 @@
 <div class="container-fluid displayContainer jumbotron p-0 pb-2 text-center">
 
 <?php
-    if (isset($_GET['producer_id'])) {
-        $producerID = $_GET['producer_id'];
-        $producerName = getProducerName($conn, $producerID);
-        echo "<h2>${producerName}</h2>";
+    if (isset($_GET['artwork_artist_id'])) {
+        $artworkArtistID = $_GET['artwork_artist_id'];
+        $artworkArtistName = getArtworkArtistName($conn, $artworkArtistID);
+        echo "<h2>${artworkArtistName}</h2>";
         
         // this contains a 3D array, see common_query.php for notes on how this is formed
-        $albums = getAlbumAndArtistByProducer($conn, $producerID);
+        $albums = getAlbumAndArtistByArtworkArtist($conn, $artworkArtistID);
         foreach($albums as $albumID => $album) {
             // get artist name from 0th index of the array, since there will always be at least
             // one artist (0th index will exist)

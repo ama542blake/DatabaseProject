@@ -71,7 +71,8 @@
         echo "<p><b>Year Released: </b><span id='albumYear'>${albumYear}</span></p>";
         echo "<p><b>Producer: </b><span id='producerName'>"
             ."<a href='display_producer.php?producer_id=${albumProducerID}'>${albumProducerName}</a></span></p>";
-        echo "<p id='albumArtwork'><b>Artwork Artist: </b><span id='albumArtworkArtistName'.<a href=''>${albumArtworkArtistName}</a></span></p>";
+        echo "<p id='albumArtwork'><b>Artwork Artist: </b><span id='albumArtworkArtistName'>"
+            . "<a href='display_artwork_artist.php?artwork_artist_id=${albumArtworkArtistID}'>${albumArtworkArtistName}</a></span></p>";
         
         // display the artists        
         echo "<p><b>By: </b></p><span id='album-artists'>";

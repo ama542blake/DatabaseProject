@@ -260,6 +260,32 @@
         }
     }
 
+    function getAlbumAndArtistByArtworkArtist($conn, $artworkArtistID) {
+        $query = "SELECT * FROM view_artworkartist_album_artist WHERE artwork_artist_id = ${artworkArtistID}";
+        $result = mysqli_query($conn, $query);
+        if ($result) {
+            $resultArray = array();
+            $previousAlbumID = 0;
+            while ($row = mysqli_fetch_assoc($result)) {
+                $albumID = $row['album_id'];
+                // array is first indexed by album, then per album, each artist is retrieved
+                if ($albumID != $previousAlbumID) { //reset artist count when new album is reached
+                    $artistCount = 0;
+                    $previousAlbumID = $albumID;
+                }    
+                $resultArray[$albumID][$artistCount] = array(
+                                                                'albumName' => $row['album_name'],
+                                                                'artistID' => $row['artist_id'],
+                                                                'artistName' => $row['artist_name']
+                                                              );
+                $artistCount++;
+            }
+            return $resultArray;
+        } else {
+            return array();
+        }
+    }
+
     /* song queries */
 
     // insert a song in to the database
