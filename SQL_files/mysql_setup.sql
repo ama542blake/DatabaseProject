@@ -98,3 +98,9 @@ CREATE VIEW view_artist_album AS
 SELECT artist_album.artist_id, artist.artist_name, artist_album.album_id, album.album_name FROM artist_album
 JOIN artist ON artist_album.artist_id = artist.artist_id
 JOIN album ON artist_album.album_id = album.album_id;
+
+CREATE VIEW view_producer_album_artist AS
+SELECT producer.producer_id, producer.producer_name, album.album_id, album.album_name, artist.artist_id, artist.artist_name FROM producer
+JOIN album ON producer.producer_id = album.album_producer
+JOIN artist_album ON album.album_id = artist_album.album_id
+JOIN artist ON artist_album.artist_id = artist.artist_id

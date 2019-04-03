@@ -401,18 +401,32 @@
         }
     }
 
-    // inserts a genre in to the database
-    function insertGenre($conn, $name) {
-        $query = "INSERT INTO genre (genre_name) " 
-               . "VALUES ('${name}')";
+    function getAlbumAndArtistByProducer($conn, $producerID) {
+        $query = "SELECT * FROM view_producer_album_artist WHERE producer_id = ${producerID}";
         $result = mysqli_query($conn, $query);
         if ($result) {
-            return mysqli_insert_id($conn);
+            $resultArray = array();
+            $previousAlbumID = 0;
+            while ($row = mysqli_fetch_assoc($result)) {
+                $albumID = $row['album_id'];
+                // array is first indexed by album, then per album, each artist is retrieved
+                if ($albumID != $previousAlbumID) { //reset artist count when new album is reached
+                    $artistCount = 0;
+                    $previousAlbumID = $albumID;
+                }    
+                $resultArray[$albumID][$artistCount] = array(
+                                                                'albumName' => $row['album_name'],
+                                                                'artistID' => $row['artist_id'],
+                                                                'artistName' => $row['artist_name']
+                                                              );
+                $artistCount++;
+            }
+            return $resultArray;
         } else {
-            return 0;
+            return array();
         }
-     }
-
+    }
+    
     /* relationship queries */
 
     // create a relationship between an artist and an album
