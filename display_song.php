@@ -28,6 +28,7 @@
         $songID = $_GET['song_id'];
         $songName = getSongName($conn, $songID);
         // find all albums that the song appears on
+        // TODO: for now this is only one
         $albumIDs = getAlbumIDsFromAlbumSong($conn, $songID);
         $albumNames = array();
         for ($i = 0; $i < count($albumIDs); $i++) {
@@ -51,6 +52,11 @@
             $artists[$i] = "<a href='display_artist.php?artist_id=${artistIDs[$i]}'>${artistNames[$i]}</a>";
         }
         
+        // get the track number of the song as it appears on the album
+        // TODO: will need to update this when one song can be associated with one album
+        $albumID = $albumIDs[0];
+        $trackNumber = getSongTrackNumber($conn, $albumID, $songID);
+        
         // get the name of the genre
         $genreName = getSongGenre($conn, $songID);
         
@@ -71,9 +77,9 @@
         echo "<p><b>By:</b> <span id='artists'>" . implode(", ", $artists) . "</span></p>";
         
         // print out the albums that the song appears on
-        echo "<p><b>Appears on: </b> <span id='albums'>" . implode(", ", $albums) . "</span></p>"
-                . "<p id='artist-name'><b>Genre: </b><span id='genre'><a href=''>${genreName}</a></span></p>";
-        
+        // TODO: make this print multiple albums when 1 song can be put on 1 album
+        echo "<p><b>Appears on: </b> <span id='albums'>" . implode(", ", $albums) . "</span> as track #<span id='trackNumber'>${trackNumber}<span></p>";
+        echo "<p id='artist-name'><b>Genre: </b><span id='genre'><a href=''>${genreName}</a></span></p>";        
         if (isset($_SESSION['username'])) {
             echo "<button class='btn btn-block btn-primary' type='button' id='edit-song-info'>Edit this page</button>";
         } else {

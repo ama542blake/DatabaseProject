@@ -9,13 +9,16 @@ $("#edit-song-info").click(function() {
     var artistsValue = artistsSpan.text();
     var albumsSpan = $("#albums");
     var albumsValue = albumsSpan.text();
+    var trackNumberSpan = $("#trackNumber");
+    var trackNumberValue = trackNumberSpan.text();
     var genreSpan = $("#genre");
     var genreValue = genreSpan.text();
     
     artistsSpan.html(`<input type='text' class='form-control' id='artists-input' name='artists' value='${artistsValue}' required>`);
     albumsSpan.html(`<input type='text' class='form-control' id='albums-input' name='albums' value='${albumsValue}' required>`);
+    trackNumberSpan.html(`<input type='number' class='form-control' id='track-number-input' name='song_track_number' value='${trackNumberValue}' required>`);
     genreSpan.html(`<input type='text' class='form-control' id='genre-input' name='genre' value='${genreValue}'>`);
-
+    
     $(this).remove();
     
     // retrieves the ?song_id=whatever for redirecting to the infomation page from update_song.php after updates have been made

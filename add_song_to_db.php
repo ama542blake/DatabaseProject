@@ -28,7 +28,7 @@
         $songName = mysqli_real_escape_string($conn, $_POST['song_name']);
        
         // gather names and IDs of artist that created the song
-        // TODO: this code is use in 2 places, put it in some file accessible to both places
+        // TODO: this code is used in 3 places, put it in some file accessible to both places
         $rawArtistString = mysqli_real_escape_string($conn, $_POST['artist_names']);
         // TODO: make all other inputs in other files that use comma seperate lists use array_map with trim
         $artistNames = array_map('trim', explode(",", $rawArtistString));
