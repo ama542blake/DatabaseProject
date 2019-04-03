@@ -101,7 +101,7 @@
     echo "</div>";
 
     function printAlbumsAndSongs($conn, $artistID) {
-        echo "<div id='artist-albums'>";
+        echo "<div class='text-center' id='artist-albums'>";
             // get mysqli_result object for view_artist_album_song
             $albumArtistSong = getArtistAlbumSongByArtist($conn, $artistID);
             $albumLinkArray = array();
@@ -138,12 +138,14 @@
             }
             // finally print the links for the albums
             foreach ($albumLinkArray as $albumID => $albumName) {
-                echo "<h4>${albumName}</h4><ul>";
+                echo "<div class='albumListDiv card container-fluid my-2 p-2'>";
+				echo "<h4>${albumName}</h4><ul class='list-unstyled'>";
                 // print the songs
                 foreach ($songLinkArray[$albumID] as $song) {
                     echo "<li>Track ${song['trackNumber']}: ${song['link']}</li>";
                 }
-                echo "</ol>";
+                echo "</ul>";
+				echo "</div>";
             }
             echo "</div>";
     }

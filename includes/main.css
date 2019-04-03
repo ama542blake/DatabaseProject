@@ -14,6 +14,10 @@
 #albumImageDiv{
     background-image: url("../images/audio-close-up-electronics-1389429.jpg");
 }
+.albumListDiv{
+	background-color: #f6f7f9;
+	width: 80%;
+}
 #artistImageDiv{
     background-image: url("../images/artist-guitar-guitarist-33597.jpg");
 }

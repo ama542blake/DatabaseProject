@@ -77,7 +77,7 @@
         echo "</span><br><br>";
         
         // display the songs
-        echo "<p><b>Songs: </b></p><ul>";
+        echo "<p><b>Songs: </b></p><ul class='list-unstyled'>";
         for ($i = 0; $i < count($albumSongNames); $i++) {
             $id = $albumSongIDs[$i]['song_id'];
             $trackNum = $albumSongIDs[$i]['track_number'];
