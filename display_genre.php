@@ -70,8 +70,8 @@
             $artistID = $song['artistID'];
             echo "<div id='song-results'>"
                 .    "<span> <a href='display_song.php?song_id=${songID}'><b>${songName}</b></a></span><br>";
-            echo "<b>By:</b> ${artistName}<br>";
-            echo "<b>On:</b> ${albumName}<br>";
+            echo "<b>By:</b> <a href='display_artist.php?artist_id=${artistID}'>${artistName}</a><br>";
+            echo "<b>On:</b> <a href='display_album.php?album_id=${albumID}'>${albumName}</a><br>";
             echo "</div>";
             }
             echo "</div>"; 
