@@ -1,3 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Song updating</title>
+    <!-- Bootstrap 4.3.1-->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <!-- our own CSS -->
+    <link rel="stylesheet" href="includes/main.css">
+	<link rel="icon" href="images/DB_logo_half.png">
+</head>
+
 <?php
     include_once("includes/connection.php");
     include_once("includes/update_query.php");
@@ -24,7 +40,6 @@
         // holds the names of artists that aren't in the database
         $newArtistNames = array();
         foreach ($artistNames as $i => $name) {
-            echo $name;
             if (!($artistIDs[$i] = getArtistID($conn, $name))) {
                 $newArtistNames[$i] = $artistNames[$i];
             }
@@ -62,10 +77,9 @@
             if (($thisAlbumID != $albumID) || (!$thisAlbumID)) {
                 mysqli_rollback($conn);
                 echo "<div class='alert alert-danger' role='alert'>"
-                        . implode(", ", $artistNames)
-                        . " must be associated with an album. If more than one artist has contributed, "
-                        . "then then must all be associated with the album that this song is on. "
-                        . "The album the song is on must also already be in the database. "
+                        . "<p>An error has occurred. Please make sure that "
+                        . "the album you are trying to add a song to is in our database, "
+                        . "as well as all artists that contributed to the song. "
                         . "You can add an artist <a href='add_artist.php'>here</a>, "
                         . "create the album that the song is on <a href='add_album.php'>here</a>, "
                         . "or edit the album this song is on to include all of the artists <a href='display_album.php?album_id=${albumID}'>here</a>, "
@@ -88,15 +102,13 @@
             // must be string for proper insertion querying in addAlbumSong
             $trackNumber = 'NULL';
         }
-        
         /* database stuff */
         updateSong($conn, $songID, $genreName, $userID);
         // destroy artist_song and album_song relationships
         deleteArtistSong($conn, $songID);
         deleteAlbumSong($conn, $songID, "song");
         // recreate artist_song and album_song relationships
-        echo "xx " . var_dump($artistIDs) . " xx"; exit;
-        foreach ($artistIDs as $artstID) {
+        foreach ($artistIDs as $artistID) {
             insertArtistSong($conn, $artistID, $songID);
         }
         insertAlbumSong($conn, $albumID, $songID, $trackNumber);

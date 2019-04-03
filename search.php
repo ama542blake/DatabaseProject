@@ -136,20 +136,7 @@
             while ($row = mysqli_fetch_assoc($result)) {
                 $songID = $row['song_id'];
                 $songName = $row['song_name'];
-                //set $producerName
-                if ($row['song_producer']) {
-                    $producerID = $row['song_producer'];
-                    $producerQuery = "SELECT producer_name FROM producer WHERE producer_id = ${producerID}";
-                    $producerResult = mysqli_query($conn, $producerQuery);
-                    if ($producerResult) {
-                        $producerName = mysqli_fetch_assoc($producerResult)['producer_name'];
-                    } else {
-                        $producerName = NULL;
-                    }
-                } else {
-                    $producerID = NULL;
-                    $producerName = NULL;
-                }
+                
                 // set $genreName
                 if ($row['song_genre']) {
                     $genreName = $row['song_genre'];
@@ -198,8 +185,6 @@
                     array(
                             'songName' => $songName,
                             'songID' => $songID,
-                            'producerID' => $producerID,
-                            'producerName' => $producerName,
                             'genreName' => $genreName,
                             'albumName' => $albumName,
                             'albumID' => $albumID,
@@ -261,8 +246,6 @@
         foreach($songs as $song) {
             $songName = $song['songName'];
             $songID = $song['songID'];
-            $producerID = $song['producerID'];
-            $producerName = $song['producerName'];
             $genreName = $song['genreName'];
             $albumName = $song['albumName'];
             $albumID = $song['albumID'];
@@ -273,7 +256,6 @@
             echo "<b>By:</b> ${artistName}<br>";
             echo "<b>On:</b> ${albumName}<br>";
             if ($genreName) {echo "<b>Genre:</b> ${genreName}<br>";}
-            if ($producerName) {echo "<b>Producer:</b> ${producerName}<br>";}
             echo "</div>";
             }
            echo "</form>";
