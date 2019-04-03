@@ -101,8 +101,8 @@
     // note that the artist id is passed in to call insertArtistAlbum so the relationship can be created
     // automatically when an album is inserted
     // TODO change value for artwork_artist from 0 to $artwork_artist_id once that is figured out
-    function insertAlbum($conn, $artistID, $albumName, $artworkArtistID, $releasedYear, $addUserID) {
-        $query = insertAlbumStringBuilder($albumName, $artworkArtistID, $releasedYear, $addUserID);
+    function insertAlbum($conn, $artistID, $albumName, $artworkArtistID, $producerID, $releasedYear, $addUserID) {
+        $query = insertAlbumStringBuilder($albumName, $artworkArtistID, $producerID, $releasedYear, $addUserID);
         $result = mysqli_query($conn, $query);
         if ($result) {
             $albumID = mysqli_insert_id($conn);
@@ -113,8 +113,8 @@
     
     // like insertAlbum, but for albums with multiple contributing artists; user for mutliple artists creating an album,
     // since a new album is only created once, not for each artist, and insertAlbum would insert a new one for each
-    function insertMultipleArtistAlbum($conn, $artistIDs, $albumName, $artworkArtistID, $releasedYear, $addUserID) {
-        $albumQuery = insertAlbumStringBuilder($albumName, $artworkArtistID, $releasedYear, $addUserID);
+    function insertMultipleArtistAlbum($conn, $artistIDs, $albumName, $artworkArtistID, $producerID, $releasedYear, $addUserID) {
+        $albumQuery = insertAlbumStringBuilder($albumName, $artworkArtistID, $producerID, $releasedYear, $addUserID);
         $albumResult = mysqli_query($conn, $albumQuery);
         if ($albumResult) {
             $albumID = mysqli_insert_id($conn);
@@ -128,13 +128,15 @@
     }
 
     // creates the query for inserting an album based on what variables are null/not null
-    function insertAlbumStringBuilder($albumName, $artworkArtistID, $releasedYear, $addUserID) {
+    function insertAlbumStringBuilder($albumName, $artworkArtistID, $producerID, $releasedYear, $addUserID) {
         $query = "INSERT INTO album (album_name";
         if ($artworkArtistID) {$query .= ", album_artwork_artist";}
+        if ($producerID) {$query .= ", album_producer";}
         if ($releasedYear) {$query .= ", album_released_year";}
         if ($addUserID) {$query .= ", album_update_user";}
         $query .= ") VALUES ('${albumName}'";
         if ($artworkArtistID) {$query .= ", ${artworkArtistID}";}
+        if ($producerID) {$query .= ", ${producerID}";}
         if ($releasedYear) {$query .= ", ${releasedYear}";}
         if ($addUserID) {$query .= ", ${addUserID}";}
         $query .= ")";
@@ -164,6 +166,18 @@
         }
     }
     
+    // get the producer of the album given the album ID
+    function getAlbumProducerID($conn, $albumID) {
+        $query = "SELECT album_producer FROM album WHERE album_id = ${albumID}";
+        $result = mysqli_query($conn, $query);
+        if ($result) {
+            return mysqli_fetch_assoc($result)['album_producer'];
+        } else {
+            // error
+            return NULL;
+        }
+    }
+
     // get the year of the album given the album ID
     function getAlbumYear($conn, $albumID) {
         $query = "SELECT album_released_year FROM album WHERE album_id = ${albumID}";
@@ -251,8 +265,8 @@
     // insert a song in to the database
     // note that the id of the album and artist are passed so that the relationships among the song/artist.album can 
     // automatically be created
-    function insertSong($conn, $songName, $albumID, $artistID, $producerID, $genreID, $trackNumber, $addUserID) {
-        $query = insertSongStringBuilder($songName, $producerID, $genreID, $addUserID);
+    function insertSong($conn, $songName, $albumID, $artistID, $genreName, $trackNumber, $addUserID) {
+        $query = insertSongStringBuilder($songName, $genreName, $addUserID);
         $result = mysqli_query($conn, $query);
         if ($result) {
             $songID = mysqli_insert_id($conn);
@@ -262,14 +276,12 @@
         }
     }
 
-    function insertSongStringBuilder($songName, $producerID, $genreID, $addUserID) {
+    function insertSongStringBuilder($songName, $genreName, $addUserID) {
         $query = "INSERT INTO song (song_name";
-        if ($producerID) {$query .= ", song_producer";}
-        if ($genreID) {$query .= ", song_genre";}
+        if ($genreName) {$query .= ", song_genre";}
         if ($addUserID) {$query .= ", song_update_user";}
         $query .= ") VALUES ('${songName}'";
-        if ($producerID) {$query .= ", ${producerID}";}
-        if ($genreID) {$query .= ", ${genreID}";}
+        if ($genreName) {$query .= ", ${genreName}";}
         if ($addUserID) {$query .= ", ${addUserID}";}
         $query .= ")";
         return $query;
@@ -380,30 +392,6 @@
             return 0;
         }
      }
-
-    // returns the id of the genre if exists; returns 0 if the genre isn't found
-    function getGenreID($conn, $name) {
-        $query = "SELECT genre_id FROM genre WHERE genre_name LIKE '${name}'";
-        $result = mysqli_query($conn, $query);
-        if ($result) {
-            $row = mysqli_fetch_assoc($result);
-            return $row['genre_id'];
-        } else {
-            return 0;
-        }
-    }
-
-    // get the name of the genre given the genre ID
-    function getGenreName($conn, $genreID) {
-        $query = "SELECT genre_name FROM genre WHERE genre_id = ${genreID}";
-        $result = mysqli_query($conn, $query);
-        if ($result) {
-            return mysqli_fetch_assoc($result)['genre_name'];
-        } else {
-            // error
-            return NULL;
-        }
-    }
 
     /* relationship queries */
 

@@ -51,9 +51,6 @@
         <label><h4>Genre:</h4>
             <input class="form-control input-info" type="text" name="genre">
         </label>
-        <label><h4>Producer:</h4>
-            <input class="form-control input-info" type="text" name="producer_name">
-        </label>
         <input type="submit" id="submit-song" class="btn btn-outline-dark input-info">
     </div>
 </form>

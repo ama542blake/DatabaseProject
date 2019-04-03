@@ -34,27 +34,6 @@
             $trackNumber = 'NULL';
         }
         
-        // determine the id of the producer; need to check if it's set and nonempty
-        if (isset($_POST['producer_name']) && ($_POST['producer_name'])) {
-            $producerName = mysqli_real_escape_string($conn, $_POST['producer_name']);
-            $producerID = getProducerID($conn, $producerName);
-            if (!($producerID)) {
-                $producerID = insertProducer($conn, $producerName);
-            }
-        } else {
-            $producerID = "NULL";
-        }
-        // determine the id of the genre; need to check if its set and nonempty
-        if (isset($_POST['genre']) && ($_POST['producer_name'])) {
-            $genreName = mysqli_real_escape_string($conn, $_POST['genre']);
-            $genreID = getGenreID($conn, $genreName);
-            if (!$genreID) {
-                $genreID = insertGenre($conn, $genreName);
-            }
-        } else {
-            $genreID = "NULL";
-        }
-        
         // artist and album related entries
         if ($artistID) { // artist is in DB
             if (!$albumID) { // album and therefore song are not in database, so create album
@@ -74,7 +53,7 @@
             echo "${songName} by ${artistName} on the album ${albumName} is already in the database. Redirecting...";
 			exit; //redirects back to song page
         } else {
-            $songID = insertSong($conn, $songName, $albumID, $artistID, $producerID, $genreID, $trackNumber, $userID);
+            $songID = insertSong($conn, $songName, $albumID, $artistID, $genreName, $trackNumber, $userID);
 			header( "location: display_song.php?song_id=${songID}");
         }
     }

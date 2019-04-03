@@ -34,6 +34,9 @@
         <label class="mb-3"><h4>Year released:</h4>
             <input class="form-control input-info" type="number" name="album_year_released" maxlength="4">
         </label>
+        <label><h4>Producer:</h4>
+            <input class="form-control input-info" type="text" name="producer_name">
+        </label>
         <label class="mb-3"><h4>Album artwork artist:</h4>
             <input class="form-control input-info" type="text" name="album_artwork_artist">
         </label>

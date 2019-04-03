@@ -7,12 +7,15 @@ $("#edit-album-info").click(function() {
     // get the HTML elements and text values for all of the information
     var yearSpan = $("#albumYear");
     var yearValue = yearSpan.text();
+    var producerSpan = $("#producerName");
+    var producerValue = producerSpan.text();
     var artworkSpan = $("#albumArtworkArtistName");
     var artworkValue = artworkSpan.text();
     var artistsSpan = $("#album-artists");
     var artistsValue = artistsSpan.text();
 
     yearSpan.html(`<input class='form-control' id='year-input' type='text' name='year' value='${yearValue}'>`);
+    producerSpan.html(`<input class='form-control' id='producer-input' type='text' name='producer' value='${producerValue}'>`);
     artworkSpan.html(`<input class='form-control' id='artwork-artist-input' type='text' name='artwork_artist' value='${artworkValue}'>`);
     artistsSpan.html(`<input class='form-control' id='artists-input' type='text' name='artists' value='${artistsValue}' required>`)
     
@@ -36,6 +39,9 @@ $("#edit-album-info").click(function() {
        $(this).val($(this).val().trim());
    });
    $("#artwork-artist-input").focusout(function() {
+       $(this).val($(this).val().trim());
+   });
+    $("#producer-input").focusout(function() {
        $(this).val($(this).val().trim());
    });
 });
