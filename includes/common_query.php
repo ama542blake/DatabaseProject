@@ -270,7 +270,6 @@
         $result = mysqli_query($conn, $query);
         if ($result) {
             $songID = mysqli_insert_id($conn);
-                        echo $songID; exit;
             insertArtistSong($conn, $artistID, $songID);
             insertAlbumSong($conn, $albumID, $songID, $trackNumber);
             return $songID;
@@ -290,7 +289,7 @@
             foreach($artistIDs as $artistID) {
                 insertArtistSong($conn, $artistID, $songID);
             }
-            insertAlbumSong($conn, $albumID, $songID);
+            insertAlbumSong($conn, $albumID, $songID, $trackNumber);
             return $songID;
         } else {
             return 0;

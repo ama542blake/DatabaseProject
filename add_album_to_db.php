@@ -29,9 +29,13 @@
         // determine the id of the producer; need to check if it's set and nonempty
         if (isset($_POST['producer_name'])) {
             $producerName = mysqli_real_escape_string($conn, $_POST['producer_name']);
-            $producerID = getProducerID($conn, $producerName);
-            if (!($producerID)) {
-                $producerID = insertProducer($conn, $producerName);
+            if ($producerName) {
+                $producerID = getProducerID($conn, $producerName);
+                if (!($producerID)) {
+                    $producerID = insertProducer($conn, $producerName);
+                }
+            } else {
+                $producerID = "NULL";
             }
         } else {
             $producerID = "NULL";

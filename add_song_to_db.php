@@ -15,6 +15,8 @@
     include_once('includes/common_query.php');
     include_once('includes/connection.php');
     session_start();
+
+    // TODO: find way to associate 1 song with multiple albums
     
     if (isset($_POST['song_name']) && isset($_POST['artist_names']) && isset($_POST['album_name']) && isset($_SESSION['user_id'])) {
         // don't commit changes if failure occurs
@@ -114,7 +116,7 @@
                     exit; //redirects back to song page
                 }
             }
-            if ($songID = insertMultipleArtistSong()) {
+            if ($songID = insertMultipleArtistSong($conn, $songName, $albumID, $artistIDs, $genreName, $trackNumber, $addUserID)) {
                 // all artist have been iterated through without error, so commit
                 mysqli_commit($conn);
                 header("Location: display_song.php?song_id=${songID}");

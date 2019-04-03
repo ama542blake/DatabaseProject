@@ -64,8 +64,8 @@ CREATE TABLE album_song (
 	song_id SMALLINT UNSIGNED,
     song_track_number TINYINT UNSIGNED,
 	PRIMARY KEY(album_id, song_id),
-	FOREIGN KEY(album_id) REFERENCES album(album_id),
-	FOREIGN KEY(song_id) REFERENCES song(song_id)
+	FOREIGN KEY(album_id) REFERENCES album(album_id) ON DELETE CASCADE,
+	FOREIGN KEY(song_id) REFERENCES song(song_id) ON DELETE CASCADE
 );
 
 CREATE TABLE artist_song (
