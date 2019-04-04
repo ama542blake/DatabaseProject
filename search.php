@@ -12,12 +12,14 @@
     <!-- our own CSS -->
     <link rel="stylesheet" href="includes/main.css">
 	<link rel="icon" href="images/DB_logo_half.png">
-</head>
+    </head>
 
 <?php 
+    //TODO: make this site use more of the stuff in common_query
     session_start();
     include_once('includes/header.php'); 
     include_once('includes/connection.php');
+    include_once('includes/common_query.php');
 ?>
 <div class="container-fluid jumbotron text-center" id="searchResults">
  <div class="card" id="searchResultsTitle">
@@ -129,10 +131,6 @@
         $result = mysqli_query($conn, $query);
         
         if($result) {
-            //used to count the song number so that the array (0 indexed) can be properly populated
-            $songNum = 0;
-            $songs = array();
-            
             while ($row = mysqli_fetch_assoc($result)) {
                 $songID = $row['song_id'];
                 $songName = $row['song_name'];
@@ -162,24 +160,20 @@
                     $albumID = NULL;
                 }
                 
+                // TODO: update getArtistIDsFromArtistSong to return artist name
+                // so there is no need to requery the db to get their names
                 // get $aristID and $artistName
-                $artistIDQuery = "SELECT artist_id FROM artist_song WHERE song_id=${songID}";
-                $artistIDResult = mysqli_query($conn, $artistIDQuery);
-                if ($artistIDResult) {
-                    $artistID = mysqli_fetch_assoc($artistIDResult)['artist_id'];
-                    $artistNameQuery = "SELECT artist_name FROM artist WHERE artist_id = ${artistID}";
-                    $artistNameResult = mysqli_query($conn, $artistNameQuery);
-                    if ($artistNameResult) {
-                        $artistName = mysqli_fetch_assoc($artistNameResult)['artist_name'];
-                    } else {
-                        //TODO handle in a more comprehensive way
-                        $artistName = NULL;
-                    }
-                } else {
-                    //TODO handle this in a more comprehensive way 
-                    $artistID = NULL;
+                $artistIDs = getArtistIDsFromArtistSong($conn, $songID);
+                $artistLinks = array();
+                foreach($artistIDs as $i => $artistID) {
+                    $artistName = getArtistName($conn, $artistID);
+                    $artistLink = "<a href='display_artist.php?artist_id=${artistID}'>${artistName}</a>";
+                    array_push($artistLinks, $artistLink);
                 }
                 
+                //used to count the song number so that the array (0 indexed) can be properly populated
+                $songNum = 0;
+                $songs = array();
                 // add song to array
                 $songs[$songNum] = 
                     array(
@@ -188,8 +182,7 @@
                             'genreName' => $genreName,
                             'albumName' => $albumName,
                             'albumID' => $albumID,
-                            'artistName' => $artistName,
-                            'artistID' => $artistID
+                            'artistLinks' => $artistLinks
                         );
                 $songNum++;
             }
@@ -249,11 +242,10 @@
             $genreName = $song['genreName'];
             $albumName = $song['albumName'];
             $albumID = $song['albumID'];
-            $artistName = $song['artistName'];
-            $artistID = $song['artistID'];
+            $artistLinks = $song['artistLinks'];
             echo "<div id='song-results'>"
                 .    "<span> <a href='display_song.php?song_id=${songID}'><b>${songName}</b></a></span><br>";
-            echo "<b>By:</b> ${artistName}<br>";
+            echo "<b>By:</b> " . implode(", ", $artistLinks) . "<br>";
             echo "<b>On:</b> ${albumName}<br>";
             if ($genreName) {echo "<b>Genre:</b> ${genreName}<br>";}
             echo "</div>";
