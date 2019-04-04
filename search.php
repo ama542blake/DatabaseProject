@@ -131,6 +131,10 @@
         $result = mysqli_query($conn, $query);
         
         if($result) {
+            //used to count the song number so that the array (0 indexed) can be properly populated
+            $songNum = 0;
+            $songs = array();
+            
             while ($row = mysqli_fetch_assoc($result)) {
                 $songID = $row['song_id'];
                 $songName = $row['song_name'];
@@ -171,9 +175,6 @@
                     array_push($artistLinks, $artistLink);
                 }
                 
-                //used to count the song number so that the array (0 indexed) can be properly populated
-                $songNum = 0;
-                $songs = array();
                 // add song to array
                 $songs[$songNum] = 
                     array(
@@ -230,7 +231,7 @@
           echo "</div>";
         }
 
-    function displaySongSearchResult($songs, $artistList) {
+    function displaySongSearchResult($songs) {
        echo "<div class='card displayResultsTypeDiv my-4 pb-3 text-center'>"; 
         echo "<div class='card'>";
         echo "<h2>Songs</h2>";
