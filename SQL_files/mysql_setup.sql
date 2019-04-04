@@ -104,7 +104,14 @@ JOIN artist_album ON album.album_id = artist_album.album_id
 JOIN artist ON artist_album.artist_id = artist.artist_id;
 
 CREATE VIEW view_artworkartist_album_artist AS
-SELECT artwork_artist.artwork_artist_id, artwork_artist.artwork_artist_name, album.album_id, album.album_name, artist.artist_id, artist.artist_name FROM artwork_artist 
+SELECT artwork_artist.artwork_artist_id, artwork_artist.artwork_artist_name, album.album_id, album.album_name, artist.artist_id, artist.artist_name FROM artwork_artist
 JOIN album ON artwork_artist.artwork_artist_id = album.album_artwork_artist
 JOIN artist_album ON album.album_id = artist_album.album_id
+JOIN artist ON artist_album.artist_id = artist.artist_id;
+
+CREATE VIEW view_producer_album_artist AS 
+SELECT producer.producer_id, producer.producer_name, album.album_id, album.album_name, artist.artist_id, artist.artist_name FROM producer
+JOIN album ON producer.producer_id = album.album_producer
+JOIN artist_album ON album.album_id = artist_album.album_id 
+>>>>>>> additional-features
 JOIN artist ON artist_album.artist_id = artist.artist_id;
