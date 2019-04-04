@@ -27,15 +27,20 @@
     if (isset($_GET['producer_id'])) {
         $producerID = $_GET['producer_id'];
         $producerName = getProducerName($conn, $producerID);
-        echo "<h2>Produced by ${producerName}</h2>";
-        
+         echo "<div class='card container-fluid displayTitle'>";
+		  echo "<h2>Produced by ${producerName}</h2>";
+         echo "</div>";
+		 echo "<div class='displayDetails'";
         // this contains a 3D array, see common_query.php for notes on how this is formed
-        $albums = getAlbumAndArtistByProducer($conn, $producerID);
+        echo "<div class='albumListDiv card container-fluid my-2 p-2'>";
+		$albums = getAlbumAndArtistByProducer($conn, $producerID);
+		echo "</div>";
         foreach($albums as $albumID => $album) {
             // get artist name from 0th index of the array, since there will always be at least
             // one artist (0th index will exist)
-            $albumName = $album[0]['albumName'];
-            echo "<h4>Album: <a href='display_album.php?album_id=${albumID}'>${albumName}</a></h4><br>";
+            echo "<div class='albumListDiv card container-fluid my-2 p-2'>";
+			$albumName = $album[0]['albumName'];
+			echo "<h4><b>Album:</b> <a href='display_album.php?album_id=${albumID}'>${albumName}</a></h4><br>";
             $artistLinks = array();
             foreach($album as $i => $artist) {
                 $artistID = $artist['artistID'];
@@ -43,9 +48,10 @@
                 $artistLinks[$i] = "<a href='display_artist.php?artist_id=${artistID}'>${artistName}</a>";
             }
             echo "<p>By: " . implode(", ", $artistLinks) . "</p>";
+			echo "</div>";
         }
         
-        echo "</div>";
+		echo "</div>";
     }
     include_once("includes/footer.php");
 ?>

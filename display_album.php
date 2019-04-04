@@ -89,7 +89,7 @@
         for ($i = 0; $i < count($albumSongNames); $i++) {
             $id = $albumSongIDs[$i]['song_id'];
             $trackNum = $albumSongIDs[$i]['track_number'];
-            echo "<li>Track ${trackNum}: <a href='display_song.php?song_id=${id}'>${albumSongNames[$i]}</a></li>"
+            echo "<li><b>Track ${trackNum}:</b> <a href='display_song.php?song_id=${id}'>${albumSongNames[$i]}</a></li>"
             . "<input type='hidden' name='song_ids[]' value='${id}'>";
         } 
         echo "</ul>";
