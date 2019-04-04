@@ -28,16 +28,35 @@
         
         $albumID = $_POST['album_id'];   
         
-        // gather info about the artist
-        $artistName = $_POST['artists'];
-        if (isset($_POST['isband'])) {
-            $isBand = $_POST['isband'];
-        } else {
-            $isBand = 0;
+         // gather names and IDs of artist that created the album
+        $rawArtistString = mysqli_real_escape_string($conn, $_POST['artists']);
+        // TODO: make all other inputs in other files that use comma seperate lists use array_map with trim
+        $artistNames = array_map('trim', explode(",", $rawArtistString));
+        $artistIDs = array();
+        // holds the names of artists that aren't in the database
+        $newArtistNames = array();
+        foreach ($artistNames as $i => $name) {
+            if (!($artistIDs[$i] = getArtistID($conn, $name))) {
+                $newArtistNames[$i] = $artistNames[$i];
+            }
         }
-        $artistID = getArtistID($conn, $artistName);
-        if (!($artistID)) {
-            $artistID = insertArtist($conn, $artistName, $isBand, $userID);
+        // if any of the artists the user has entered isn't in the database, force user to first add the artist
+        if (count($newArtistNames)) {
+                    echo "<div class='alert alert-danger' role='alert'>"
+                        . implode(", ", $newArtistNames)
+                        . " must be added to the database before being associated with an album. "
+                        . "Add an artist <a href='add_artist.php'>here</a>."
+                        . "</div>";
+                    exit;
+        }
+        
+        if ($artworkArtistName) {
+            $artworkArtistID = getArtworkArtistID($conn, $artworkArtistName);
+            if(!$artworkArtistID) {
+                $artworkArtistID = insertArtworkArtist($conn, $artworkArtistName);
+            }
+        } else {
+            $artworkArtistID = NULL;
         }
         
         // get IDs of all songs on the album
@@ -88,7 +107,9 @@
         updateAlbum($conn, $albumID, $artworkArtistID, $producerID, $albumYear, $userID);
         // destroy and recreate artist_album and album_song relationships
         deleteArtistAlbum($conn, $albumID);
-        insertArtistAlbum($conn, $artistID, $albumID);
+        foreach($artistIDs as $artistID) {
+            insertArtistAlbum($conn, $artistID, $albumID);
+        }
     
         $redirID = $_POST['redir_id'];
         header("Location: display_album.php" . $redirID);
