@@ -108,14 +108,24 @@
                 } else {
                     $yearReleased = NULL;
                 }
-                //for now we don't care about who the artwork artist is, but we may in the future
+                
+                // get artists associated with the album
+                // TODO; get IDs and names all in one query
+                $artistIDs = getArtistIDsFromArtistAlbum($conn, $albumID);
+                $artistLinks = array();
+                foreach($artistIDs as $artistID) {
+                    $artistName = getArtistName($conn, $artistID);
+                    $artistLink = "<a href='display_artist.php?artist_id=${artistID}'>${artistName}</a>";
+                    array_push($artistLinks, $artistLink);
+                }
                 
                 // add album to array
                 $albums[$albumNum] = 
                     array(
                             'albumName' => $albumName,
                             'albumID' => $albumID,
-                            'albumYear' => $yearReleased
+                            'albumYear' => $yearReleased,
+                            'artistLinks' => $artistLinks
                         );
                 $albumNum++;
             }
@@ -205,7 +215,7 @@
             
             echo "<div class='search-result' id='artist-results'>"
                 .    "<a href='display_artist.php?artist_id=${artistID}'><b>${artistName}</b></a>"
-                . " </div>";
+                . " </div><br>";
         }
             echo "</div>";
     }
@@ -216,7 +226,6 @@
         echo "<div class='card'>";
         echo "<h2>Albums</h2>";
        echo "</div>";
-         echo "<form id='album_selection' action='show_album.php' method='post'>";
         foreach($albums as $album) {
             $albumName = $album['albumName'];
             $albumID = $album['albumID']; // need to to add to link to go to that album's page
@@ -225,9 +234,11 @@
             echo "<div class='search-result' id='artist-results'>"
                 .    "<a href='display_album.php?album_id=${albumID}'><b>${albumName}</b></a>";
             if ($albumYear) {echo " - (${albumYear})";}
+            echo "<br>";
+            echo "By: " . implode(", ", $album['artistLinks']);
+            echo "<br><br>";
             echo "</div>";
             }
-           echo "</form>";
           echo "</div>";
         }
 
@@ -248,6 +259,7 @@
             echo "<b>By:</b> " . implode(", ", $artistLinks) . "<br>";
             echo "<b>On:</b> ${albumName}<br>";
             if ($genreName) {echo "<b>Genre:</b> ${genreName}<br>";}
+            echo "<br>";
             echo "</div>";
             }
             echo "</div>"; 
