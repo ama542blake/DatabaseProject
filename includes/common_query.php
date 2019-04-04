@@ -452,7 +452,7 @@
             return array();
         }
     }
-    
+
     /* relationship queries */
 
     // create a relationship between an artist and an album
@@ -521,6 +521,8 @@
         mysqli_query($conn, $query);
     }
 
+    // TODO: update getArtistIDsFromArtistSong to return artist name
+    // so there is no need to requery the db to get their names
     // get all artists that contributed to a song
     function getArtistIDsFromArtistSong($conn, $songID) {
         // used to index $idArray
