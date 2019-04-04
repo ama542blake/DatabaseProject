@@ -27,14 +27,16 @@
     if (isset($_GET['artwork_artist_id'])) {
         $artworkArtistID = $_GET['artwork_artist_id'];
         $artworkArtistName = getArtworkArtistName($conn, $artworkArtistID);
-        echo "<h2>${artworkArtistName}</h2>";
-        
+        echo "<div class='card container-fluid displayTitle'>";
+		 echo "<h2>${artworkArtistName}</h2>";
+        echo "</div>";
         // this contains a 3D array, see common_query.php for notes on how this is formed
-        $albums = getAlbumAndArtistByArtworkArtist($conn, $artworkArtistID);
+		$albums = getAlbumAndArtistByArtworkArtist($conn, $artworkArtistID);
         foreach($albums as $albumID => $album) {
             // get artist name from 0th index of the array, since there will always be at least
             // one artist (0th index will exist)
-            $albumName = $album[0]['albumName'];
+            echo "<div class='albumListDiv card container-fluid my-2 p-2'>";
+			$albumName = $album[0]['albumName'];
             echo "<h3>Album: <a href='display_album.php?album_id=${albumID}'>${albumName}</a></h3><br>";
             $artistLinks = array();
             foreach($album as $i => $artist) {
@@ -43,6 +45,7 @@
                 $artistLinks[$i] = "<a href='display_artist.php?artist_id=${artistID}'>${artistName}</a>";
             }
             echo "<p>By: " . implode(", ", $artistLinks) . "</p>";
+			echo "</div>";
         }
         
         echo "</div>";
