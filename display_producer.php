@@ -27,7 +27,7 @@
     if (isset($_GET['producer_id'])) {
         $producerID = $_GET['producer_id'];
         $producerName = getProducerName($conn, $producerID);
-        echo "<h2>${producerName}</h2>";
+        echo "<h2>Produced by ${producerName}</h2>";
         
         // this contains a 3D array, see common_query.php for notes on how this is formed
         $albums = getAlbumAndArtistByProducer($conn, $producerID);
@@ -35,7 +35,7 @@
             // get artist name from 0th index of the array, since there will always be at least
             // one artist (0th index will exist)
             $albumName = $album[0]['albumName'];
-            echo "<h3>Album: <a href='display_album.php?album_id=${albumID}'>${albumName}</a></h3><br>";
+            echo "<h4>Album: <a href='display_album.php?album_id=${albumID}'>${albumName}</a></h4><br>";
             $artistLinks = array();
             foreach($album as $i => $artist) {
                 $artistID = $artist['artistID'];
