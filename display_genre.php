@@ -21,12 +21,14 @@
     include_once("includes/common_query.php");
 ?>
 
-<div class="container-fluid displayContainer jumbotron p-0 pb-2 text-center">
+<div class="container-fluid displayContainer genreList jumbotron p-0 pb-2 text-center">
 
 <?php
     if (isset($_GET['genre'])) {
         $genreName = $_GET['genre'];
-        echo "<h2>${genreName} Songs</h2>";
+		echo "<div class='card container-fluid displayTitle'>";
+         echo "<h2>${genreName} Songs</h2>";
+		echo "</div>";
         // TODO; possibly move this to common_query
         $query = "SELECT song.song_id, song.song_name, album.album_id, album.album_name, artist.artist_id, artist.artist_name " 
                . "FROM song "
@@ -68,7 +70,7 @@
             $albumID = $song['albumID'];
             $artistName = $song['artistName'];
             $artistID = $song['artistID'];
-            echo "<div id='song-results'>"
+            echo "<div class='albumListDiv card container-fluid my-2 p-2' id='song-results'>"
                 .    "<span> <a href='display_song.php?song_id=${songID}'><b>${songName}</b></a></span><br>";
             echo "<b>By:</b> <a href='display_artist.php?artist_id=${artistID}'>${artistName}</a><br>";
             echo "<b>On:</b> <a href='display_album.php?album_id=${albumID}'>${albumName}</a><br>";
