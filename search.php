@@ -237,7 +237,7 @@
           echo "</div>";
         }
 
-    function displaySongSearchResult($songs) {
+    function displaySongSearchResult($songs, $artistList) {
        echo "<div class='card displayResultsTypeDiv my-4 pb-3 text-center'>"; 
         echo "<div class='card'>";
         echo "<h2>Songs</h2>";
